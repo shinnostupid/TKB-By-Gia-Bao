@@ -31,8 +31,15 @@ jobs:
 
       - name: Build Xcode Archive
         run: |
+          if [ -d "ios/App/App.xcworkspace" ]; then
+            TARGET="-workspace ios/App/App.xcworkspace"
+          else
+            TARGET="-project ios/App/App.xcodeproj"
+          fi
+          echo "Using target: $TARGET"
+          
           xcodebuild clean archive \
-            -workspace ios/App/App.xcworkspace \
+            $TARGET \
             -scheme App \
             -configuration Release \
             -destination 'generic/platform=iOS' \
