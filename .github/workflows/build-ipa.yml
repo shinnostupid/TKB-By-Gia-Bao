@@ -33,27 +33,19 @@ jobs:
         run: |
           xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
-      - name: Compile iOS App Bundle
+      - name: Compile iOS App Bundle (Ad-Hoc Signed)
         run: |
-          set -o pipefail
           xcodebuild \
             -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Release \
             -destination 'generic/platform=iOS' \
             -derivedDataPath build/DerivedData \
-            ARCHS=arm64 \
-            ONLY_ACTIVE_ARCH=NO \
             CODE_SIGN_STYLE=Manual \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            AD_HOC_CODE_SIGNING_ALLOWED=YES \
-            build 2>&1 | tee build.log || {
-              echo "=== XCODEBUILD FAILED! DISPLAYING ERRORS ===";
-              grep -E "(error:|fatal error:|BUILD FAILED)" build.log -B 2 -A 3 | head -n 80 || tail -n 80 build.log;
-              exit 1;
-            }
+            CODE_SIGN_IDENTITY="-" \
+            DEVELOPMENT_TEAM="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            build
 
       - name: Package Payload into .ipa
         run: |
@@ -81,3 +73,11 @@ jobs:
           name: GiaBao_StudyOS_iOS_Package
           path: build/GiaBao_StudyOS.ipa
           retention-days: 14
+
+      - name: Upload Build Log if Failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build_Error_Log
+          path: build/DerivedData/Logs/Build/
+          if-no-files-found: ignore
