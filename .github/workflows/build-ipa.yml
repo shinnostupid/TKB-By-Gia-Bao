@@ -17,6 +17,7 @@ jobs:
         run: |
           sudo xcode-select -switch /Applications/Xcode_15.4.app 2>/dev/null || sudo xcode-select -switch /Applications/Xcode.app 2>/dev/null || true
           xcodebuild -version
+          xcodebuild -list -project ios/App/App.xcodeproj
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,15 +43,22 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             AD_HOC_CODE_SIGNING_ALLOWED=YES \
-            build 2>&1 | tee build.log
+            build 2>&1 | tee build.log || { echo "=== XCODEBUILD FAILED - LAST LOGS ==="; tail -n 120 build.log; exit 1; }
 
       - name: Package Payload into .ipa
         run: |
           mkdir -p build/Payload
-          find build/DerivedData -name "App.app" -type d -exec cp -r {} build/Payload/ \;
+          APP_DIR=$(find build/DerivedData -name "App.app" -type d | head -n 1)
+          if [ -z "$APP_DIR" ]; then
+            echo "ERROR: App.app was not found!"
+            find build/DerivedData
+            exit 1
+          fi
+          echo "Found App.app at: $APP_DIR"
+          cp -r "$APP_DIR" build/Payload/
           cd build
           zip -qr GiaBao_StudyOS.ipa Payload
-          ls -la GiaBao_StudyOS.ipa
+          ls -lh GiaBao_StudyOS.ipa
           echo "IPA build completed successfully!"
 
       - name: Upload .ipa Artifact
