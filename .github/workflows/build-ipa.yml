@@ -47,10 +47,10 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="" \
             build 2>&1 | tee xcode_output.txt || true
 
-          echo "==================== XCODEBUILD ERROR SUMMARY ===================="
-          grep -E "(error:|fatal error:|BUILD FAILED)" xcode_output.txt -B 2 -A 4 || true
-          echo "==================== LAST 50 LINES OF LOG ===================="
-          tail -n 50 xcode_output.txt
+          ERR_LINES=$(grep -E "(error:|fatal error:)" xcode_output.txt | head -n 3 | tr '\n' ' ')
+          if [ -n "$ERR_LINES" ]; then
+            echo "::error::$ERR_LINES"
+          fi
 
           if grep -q "BUILD FAILED" xcode_output.txt; then
             echo "Build failed!"
@@ -73,8 +73,17 @@ jobs:
           echo "IPA build completed successfully!"
 
       - name: Upload .ipa Artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: GiaBao_StudyOS_iOS_Package
           path: build/GiaBao_StudyOS.ipa
           retention-days: 14
+
+      - name: Upload Xcode Log on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Xcode_Log
+          path: xcode_output.txt
+          if-no-files-found: ignore
