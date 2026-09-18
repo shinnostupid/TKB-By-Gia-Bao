@@ -1,0 +1,9 @@
+{
+  "appId": "com.giabao.studyos",
+  "appName": "Gia Bảo Study OS",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "automatic"
+  }
+}

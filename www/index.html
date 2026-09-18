@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#080c18">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Gia Bảo">
+  <meta name="description" content="Góc học tập Gia Bảo — Thời khóa biểu thông minh, bài tập về nhà, báo thức và ghi chú cá nhân.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=JetBrains+Mono:wght@500;700&family=STIX+Two+Text:ital,wght@0,600;0,700;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <title>Góc Học Tập — Gia Bảo</title>
+  <link rel="stylesheet" href="style.css?v=20">
+  <script>
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(console.error);
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="app">
+    <div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+    <aside id="sidebar">
+      <div class="brand">
+        <img src="icons/logo.png" alt="Study OS Logo" class="brand-logo-img">
+        <span>GIA BẢO<small>Góc học tập cá nhân</small></span>
+      </div>
+      <nav>
+        <button class="active" data-view="dashboard">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Tổng quan</span>
+        </button>
+        <button data-view="timetable">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+          <span>Thời khóa biểu</span>
+        </button>
+        <button data-view="formulas">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10M6 14h6"/></svg>
+          <span>Công thức 10</span>
+        </button>
+        <button data-view="tasks">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span>Bài tập về nhà</span>
+        </button>
+        <button data-view="alarms">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg>
+          <span>Báo thức & Nhắc việc</span>
+        </button>
+        <button data-view="notes">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+          <span>Ghi chú</span>
+        </button>
+        <button data-view="progress">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <span>Tiến độ</span>
+        </button>
+        <button data-view="testing">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.12 19a2 2 0 0 0 1.71 3h12.34a2 2 0 0 0 1.71-3L14 9.31V2"/><path d="M8.5 2h7"/></svg>
+          <span>Kiểm tra hệ thống</span>
+        </button>
+      </nav>
+      <div class="sidebottom">
+        <button data-view="settings">
+          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Cài đặt</span>
+        </button>
+        <small>● Offline ready</small>
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <button id="menu" aria-label="Menu"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg></button>
+        <strong>GIA BẢO</strong>
+        <div>
+          <button id="notify" title="Cài đặt thông báo" aria-label="Thông báo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button>
+          <button class="primary" id="quick">＋ BTVN</button>
+        </div>
+      </header>
+      <section id="content"></section>
+    </main>
+
+    <!-- iOS Modern Bottom Navigation Bar -->
+    <nav id="mobileBottomNav" class="mobile-bottom-nav">
+      <button class="active" data-view="dashboard">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <span class="nav-label">Tổng quan</span>
+        <span class="nav-active-pill"></span>
+      </button>
+      <button data-view="timetable">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg></span>
+        <span class="nav-label">TKB</span>
+        <span class="nav-active-pill"></span>
+      </button>
+      <button data-view="formulas">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10M6 14h6"/></svg></span>
+        <span class="nav-label">Công thức</span>
+        <span class="nav-active-pill"></span>
+      </button>
+      <button data-view="tasks">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <span class="nav-label">BTVN</span>
+        <span class="nav-active-pill"></span>
+      </button>
+      <button data-view="alarms">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg></span>
+        <span class="nav-label">Báo thức</span>
+        <span class="nav-active-pill"></span>
+      </button>
+      <button data-view="notes">
+        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span>
+        <span class="nav-label">Ghi chú</span>
+        <span class="nav-active-pill"></span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Reusable Modal Container -->
+  <div id="modal" class="hidden">
+    <div class="modalbox">
+      <div class="modalhead">
+        <h3 id="mtitle"></h3>
+        <button id="close" aria-label="Đóng">×</button>
+      </div>
+      <div id="mbody"></div>
+    </div>
+  </div>
+
+  <!-- ALARM RINGING OVERLAY (IPHONE STYLE) -->
+  <div id="alarmOverlay" class="hidden">
+    <div class="alarm-card">
+      <div class="alarm-pulse-ring">
+        <svg class="alarm-ring-svg" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="8"/>
+          <path d="M12 9v4l2 2"/>
+          <path d="M5 3 2 6"/>
+          <path d="m22 6-3-3"/>
+          <path d="M6.38 18.7 4 21"/>
+          <path d="M17.64 18.67 20 21"/>
+        </svg>
+      </div>
+      <div class="alarm-time-now" id="alarmTriggerTime">21:00</div>
+      <h2 id="alarmTriggerTitle">🎒 Chuẩn bị sách vở cho ngày mai</h2>
+      <p id="alarmTriggerDesc">Chuông báo thức đang reo & điện thoại đang rung liên tục. Hãy kiểm tra sách vở và bấm TẮT bên dưới!</p>
+      <div id="alarmTomorrowSubjects" class="alarm-subjects-box"></div>
+      <div class="alarm-actions">
+        <button class="ghost alarm-snooze-btn" type="button" onclick="snoozeAlarm()">💤 Báo lại 5p</button>
+        <button class="primary alarm-dismiss-btn" type="button" onclick="dismissAlarm()">🛑 TẮT BÁO THỨC</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="app.js?v=20"></script>
+</body>
+</html>
