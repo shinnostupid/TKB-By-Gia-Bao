@@ -33,7 +33,7 @@ jobs:
         run: |
           xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
-      - name: Compile iOS App Bundle (Ad-Hoc Signed)
+      - name: Compile iOS App Bundle (Diagnostic)
         run: |
           xcodebuild \
             -project ios/App/App.xcodeproj \
@@ -45,22 +45,27 @@ jobs:
             CODE_SIGN_IDENTITY="-" \
             DEVELOPMENT_TEAM="" \
             PROVISIONING_PROFILE_SPECIFIER="" \
-            build
+            build 2>&1 | tee xcode_output.txt || true
+
+          echo "==================== XCODEBUILD ERROR SUMMARY ===================="
+          grep -E "(error:|fatal error:|BUILD FAILED)" xcode_output.txt -B 2 -A 4 || true
+          echo "==================== LAST 50 LINES OF LOG ===================="
+          tail -n 50 xcode_output.txt
+
+          if grep -q "BUILD FAILED" xcode_output.txt; then
+            echo "Build failed!"
+            exit 1
+          fi
 
       - name: Package Payload into .ipa
         run: |
           mkdir -p build/Payload
-          APP_DIR=$(find build/DerivedData/Build/Products -name "App.app" -type d | head -n 1)
+          APP_DIR=$(find build/DerivedData -name "App.app" -type d | head -n 1)
           if [ -z "$APP_DIR" ]; then
-            APP_DIR=$(find build/DerivedData -name "*.app" -type d | head -n 1)
-          fi
-          if [ -z "$APP_DIR" ]; then
-            echo "ERROR: No .app bundle found in DerivedData!"
-            find build/DerivedData -maxdepth 4
+            echo "ERROR: No App.app found!"
             exit 1
           fi
           echo "Found .app at: $APP_DIR"
-          ls -la "$APP_DIR"
           cp -r "$APP_DIR" build/Payload/
           cd build
           zip -qr GiaBao_StudyOS.ipa Payload
@@ -73,11 +78,3 @@ jobs:
           name: GiaBao_StudyOS_iOS_Package
           path: build/GiaBao_StudyOS.ipa
           retention-days: 14
-
-      - name: Upload Build Log if Failed
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Build_Error_Log
-          path: build/DerivedData/Logs/Build/
-          if-no-files-found: ignore
