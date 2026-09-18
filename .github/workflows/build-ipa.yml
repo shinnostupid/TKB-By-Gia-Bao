@@ -17,7 +17,6 @@ jobs:
         run: |
           sudo xcode-select -switch /Applications/Xcode_15.4.app 2>/dev/null || sudo xcode-select -switch /Applications/Xcode.app 2>/dev/null || true
           xcodebuild -version
-          xcodebuild -list -project ios/App/App.xcodeproj
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
