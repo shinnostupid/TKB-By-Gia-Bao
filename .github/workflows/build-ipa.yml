@@ -48,8 +48,11 @@ jobs:
             build 2>&1 | tee xcode_output.txt
 
           if grep -q "BUILD FAILED" xcode_output.txt; then
-            echo "::error::Xcode build failed!"
-            grep -E "(error:|fatal error:)" xcode_output.txt | head -n 10 || true
+            echo "::error title=XcodeBuildFailed::Build failed! Printing error lines:"
+            grep -E "(error:|fatal error:)" xcode_output.txt | head -n 20 | while read -r line; do
+              echo "::error title=XcodeError::$line"
+            done
+            tail -n 80 xcode_output.txt
             exit 1
           fi
 
