@@ -33,27 +33,23 @@ jobs:
         run: |
           xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
-      - name: Compile iOS App Bundle (Diagnostic)
+      - name: Compile iOS App Bundle (Unsigned)
         run: |
-          xcodebuild \
+          xcodebuild clean build \
             -project ios/App/App.xcodeproj \
             -scheme App \
             -configuration Release \
-            -destination 'generic/platform=iOS' \
+            -sdk iphoneos \
             -derivedDataPath build/DerivedData \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="-" \
-            DEVELOPMENT_TEAM="" \
-            PROVISIONING_PROFILE_SPECIFIER="" \
-            build 2>&1 | tee xcode_output.txt || true
-
-          ERR_LINES=$(grep -E "(error:|fatal error:)" xcode_output.txt | head -n 3 | tr '\n' ' ')
-          if [ -n "$ERR_LINES" ]; then
-            echo "::error::$ERR_LINES"
-          fi
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | tee xcode_output.txt
 
           if grep -q "BUILD FAILED" xcode_output.txt; then
-            echo "Build failed!"
+            echo "::error::Xcode build failed!"
+            grep -E "(error:|fatal error:)" xcode_output.txt | head -n 10 || true
             exit 1
           fi
 
@@ -62,14 +58,22 @@ jobs:
           mkdir -p build/Payload
           APP_DIR=$(find build/DerivedData -name "App.app" -type d | head -n 1)
           if [ -z "$APP_DIR" ]; then
-            echo "ERROR: No App.app found!"
+            echo "ERROR: No App.app found in DerivedData!"
+            find build/DerivedData -maxdepth 4
             exit 1
           fi
           echo "Found .app at: $APP_DIR"
+          ls -la "$APP_DIR"
           cp -r "$APP_DIR" build/Payload/
           cd build
           zip -qr GiaBao_StudyOS.ipa Payload
           ls -lh GiaBao_StudyOS.ipa
+          FILE_SIZE=$(stat -f%z GiaBao_StudyOS.ipa 2>/dev/null || stat -c%s GiaBao_StudyOS.ipa 2>/dev/null || echo 0)
+          echo "Built IPA size: $FILE_SIZE bytes"
+          if [ "$FILE_SIZE" -lt 100000 ]; then
+            echo "ERROR: IPA file too small ($FILE_SIZE bytes), payload might be empty!"
+            exit 1
+          fi
           echo "IPA build completed successfully!"
 
       - name: Upload .ipa Artifact
