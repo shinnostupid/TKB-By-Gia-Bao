@@ -154,8 +154,7 @@ let db = JSON.parse(localStorage.getItem(K) || 'null') || {
   schoolTT: [],
   extraClasses: [],
   sessionsConfig: null,
-  alarms: [],
-  tempOverrides: [],
+    tempOverrides: [],
   extraCheckins: {},
   settings: { name: 'Gia Bảo', notify: true, soundAlert: true }
 };
@@ -211,10 +210,6 @@ function go(v) {
       qBtn.innerHTML = '➕ Ghi chú';
       qBtn.onclick = () => noteModal();
       qBtn.style.display = 'inline-flex';
-    } else if (target === 'alarms') {
-      qBtn.innerHTML = '➕ Báo thức';
-      qBtn.onclick = () => alarmModal();
-      qBtn.style.display = 'inline-flex';
     } else if (target === 'timetable') {
       qBtn.innerHTML = '➕ Ca học';
       qBtn.onclick = () => extraClassModal();
@@ -226,7 +221,7 @@ function go(v) {
     }
   }
 
-  const views = { weather,  dashboard, timetable, tasks, formulas, alarms, notes, progress, testing, settings };
+  const views = { weather, dashboard, timetable, tasks, formulas, notes, progress, testing, settings };
   if (views[target]) views[target]();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -315,47 +310,9 @@ function initExtraClasses() {
   save();
 }
 
-function initAlarms() {
-  if (db.alarmsSeeded || (db.alarms && db.alarms.length > 0)) return;
-  db.alarms = [
-    {
-      id: 'alarm-books',
-      time: '21:00',
-      title: '🎒 Chuẩn bị sách vở cho ngày mai',
-      desc: 'Xem thời khóa biểu ngày mai và soạn đủ sách vở, bài tập!',
-      active: true,
-      sound: true,
-      attachTomorrow: true,
-      days: [1, 2, 3, 4, 5, 6]
-    },
-    {
-      id: 'alarm-wake',
-      time: '06:30',
-      title: '⏰ Báo thức dậy đi học',
-      desc: 'Thức dậy, vệ sinh cá nhân và ăn sáng đúng giờ.',
-      active: true,
-      sound: true,
-      attachTomorrow: false,
-      days: [1, 2, 3, 4, 5, 6]
-    },
-    {
-      id: 'alarm-afternoon',
-      time: '13:00',
-      title: '📚 Chuẩn bị ca học chiều',
-      desc: 'Có mặt tại trường trước 13:30 để truy bài.',
-      active: false,
-      sound: true,
-      attachTomorrow: false,
-      days: [1, 2, 3, 4, 5, 6]
-    }
-  ];
-  db.alarmsSeeded = true;
-  save();
-}
 
 seedSchoolTimetable();
 initExtraClasses();
-initAlarms();
 
 // Don sach du lieu BTVN va Lich hoc them mau de nguoi dung tu do nhap moi
 if (!db.cleanUserDataV2) {
@@ -368,9 +325,6 @@ if (!db.cleanUserDataV2) {
 
 // ----------------- WEB AUDIO ALARM SYNTHESIZER & GENTLE CHIMES -----------------
 let audioCtx = null;
-let alarmAudioInterval = null;
-let alarmVibrationInterval = null;
-let activeRingingAlarm = null;
 
 function unlockAudio() {
   try {
@@ -388,6 +342,8 @@ function unlockAudio() {
 
 window.addEventListener('click', unlockAudio);
 window.addEventListener('touchstart', unlockAudio);
+
+function playChime() { try { playGentleMelody(); } catch(e) {} }
 
 // Gentle, Soothing Acoustic Marimba & Chimes synthesizer (E-Major Pentatonic)
 function playGentleMelody() {
@@ -448,52 +404,8 @@ function playGentleMelody() {
   }
 }
 
-// Continuous Alarm Sound and Phone Vibration Loop (Requires button tap to dismiss)
-function startAlarmContinuousLoop() {
-  stopAlarmContinuousLoop();
-
-  // Play gentle chimes and loop every 2.6 seconds
-  playGentleMelody();
-  alarmAudioInterval = setInterval(playGentleMelody, 2600);
-
-  // Vibrate continuously on supported mobile devices (buzzes like a real alarm clock)
-  const buzz = () => {
-    if ('vibrate' in navigator) {
-      try {
-        navigator.vibrate([450, 180, 450, 180, 650, 400]);
-      } catch (e) {}
-    }
-  };
-  buzz();
-  alarmVibrationInterval = setInterval(buzz, 2500);
-}
-
-function stopAlarmContinuousLoop() {
-  if (alarmAudioInterval) {
-    clearInterval(alarmAudioInterval);
-    alarmAudioInterval = null;
-  }
-  if (alarmVibrationInterval) {
-    clearInterval(alarmVibrationInterval);
-    alarmVibrationInterval = null;
-  }
-  // Stop vibration immediately
-  if ('vibrate' in navigator) {
-    try {
-      navigator.vibrate(0);
-    } catch (e) {}
-  }
-}
-
-function startAlarmSoundLoop() {
-  startAlarmContinuousLoop();
-}
-
-function stopAlarmSound() {
-  stopAlarmContinuousLoop();
-}
-
 // ----------------- ISO WEEK & TEMPORARY SCHEDULE HELPERS -----------------
+
 function getWeekKey(dateObj = new Date()) {
   const d = new Date(Date.UTC(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate()));
   const dayNum = d.getUTCDay() || 7;
@@ -2934,7 +2846,7 @@ function dashboard() {
         </div>
         <div style="display:flex;gap:8px;align-items:flex-start">
           <button class="ghost" onclick="go('timetable')">Xem TKB</button>
-          <button class="ghost" onclick="go('alarms')">⏰ Báo thức</button>
+          
         </div>
       </div>
     `;
@@ -2947,7 +2859,7 @@ function dashboard() {
         </div>
         <div style="display:flex;gap:8px">
           <button class="ghost" onclick="go('timetable')">Xem TKB</button>
-          <button class="ghost" onclick="go('alarms')">⏰ Báo thức</button>
+          
         </div>
       </div>
     `;
@@ -2962,7 +2874,7 @@ function dashboard() {
           <span id="dashLiveClock"></span>
         </div>
         <h1>${greeting.text} <span style="font-size:1.15em">${greeting.icon}</span></h1>
-        <p>Không gian học tập cá nhân — Quản lý BTVN, thời khóa biểu và báo thức chuẩn bị bài.</p>
+        <p>Không gian học tập cá nhân — Quản lý BTVN, thời khóa biểu, thời tiết & balo và ghi chú.</p>
       </div>
       <button class="primary" onclick="taskModal()">+ BTVN mới</button>
     </div>
@@ -3018,7 +2930,7 @@ function dashboard() {
       <div class="card"><div class="stat-label">BTVN cần nộp</div><div class="stat-value">${todo.length}</div></div>
       <div class="card"><div class="stat-label">Đã hoàn thành</div><div class="stat-value">${done.length}</div></div>
       <div class="card"><div class="stat-label">Ca học thêm tuần này</div><div class="stat-value">${(db.extraClasses || []).length}</div></div>
-      <div class="card"><div class="stat-label">Báo thức đang bật</div><div class="stat-value">${(db.alarms || []).filter(a => a.active).length}</div></div>
+      <div class="card"><div class="stat-label">Ghi chú đã lưu</div><div class="stat-value">${(db.notes || []).length}</div></div>
     </div>
 
     <div class="grid two">
@@ -3484,7 +3396,7 @@ function deleteTask(taskId) {
     if (location.hash === '#tasks') renderTasksList();
     else if (location.hash === '#dashboard' || !location.hash) dashboard();
     else {
-      const views = { dashboard, timetable, tasks, alarms, notes, progress, testing, settings };
+      const views = { dashboard, timetable, tasks, notes, progress, testing, settings };
       const cur = location.hash.slice(1) || 'dashboard';
       if (views[cur]) views[cur]();
     }
@@ -4837,280 +4749,20 @@ function applyOcrTextToMatrix() {
   toast(`Đã điền ${Math.min(idx, detectedSubjects.length)} môn vào bảng. Vui lòng kiểm tra lại!`);
 }
 
-// ----------------- MODULE: ALARMS & REMINDERS -----------------
-
+// ----------------- MODULE: ALARMS (REMOVED) -----------------
 function alarms() {
-  const tomorrow = getTomorrowScheduleSummary();
-
-  $('#content').innerHTML = `
-    <div class="hero">
-      <div>
-        <div class="eyebrow">ALARMS & REMINDERS</div>
-        <h1>Báo thức & Nhắc việc</h1>
-        <p>Hệ thống chuông báo thức web kèm tự động nhắc soạn sách vở theo TKB ngày mai.</p>
-      </div>
-      <div class="hero-actions" style="display:flex;gap:8px;width:100%;flex-wrap:wrap">
-        <button class="ghost" onclick="testAlarmDirectly()" style="flex:1;min-width:120px">🔔 Thử chuông</button>
-        <button class="ghost" onclick="syncIcsToIphoneCalendar()" style="flex:1;min-width:160px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">📅 Nhắc soạn bài trên iPhone</button>
-        <button class="primary" onclick="alarmModal()" style="flex:1;min-width:130px">➕ Thêm báo thức</button>
-      </div>
-    </div>
-
-    <div class="school-banner" style="margin-bottom:18px">
-      <div>
-        <strong>🎒 Thời khóa biểu ngày mai (${tomorrow.dayName})</strong>
-        <span style="color:#dbeafe">${tomorrow.text}</span>
-      </div>
-      <button class="ghost" onclick="go('timetable')">Xem TKB</button>
-    </div>
-
-    <div class="card">
-      <div class="titlebar">
-        <h2>Danh sách Báo thức & Nhắc nhở</h2>
-        <button class="primary" onclick="alarmModal()" style="padding:6px 14px;font-size:12.5px;border-radius:10px">➕ Thêm báo thức</button>
-      </div>
-      <div class="list">
-        ${(db.alarms || []).map(a => `
-          <div class="alarm-item-card ${a.active ? '' : 'disabled'}">
-            <div style="display:flex;align-items:center;gap:16px">
-              <div class="alarm-time-disp">${esc(a.time)}</div>
-              <div>
-                <div class="alarm-label-disp">${esc(a.title)}</div>
-                <div class="alarm-sub-disp">${esc(a.desc || '')} ${a.attachTomorrow ? '• 📌 Đính kèm TKB ngày mai' : ''}</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <label class="alarm-toggle-switch">
-                <input type="checkbox" ${a.active ? 'checked' : ''} onchange="toggleAlarmActive('${a.id}')">
-                <span class="alarm-toggle-slider"></span>
-              </label>
-              <button class="ghost" onclick="alarmModal('${a.id}')" title="Chỉnh sửa">✏️</button>
-              <button class="ghost" onclick="deleteAlarm('${a.id}')" title="Xóa">🗑️</button>
-            </div>
-          </div>
-        `).join('') || `
-          <div class="empty" style="padding:32px 16px;text-align:center">
-            <div style="font-size:36px;margin-bottom:8px">⏰</div>
-            <div style="font-size:15px;font-weight:750;color:#f8fafc;margin-bottom:4px">Chưa có báo thức nào</div>
-            <div style="color:var(--muted);font-size:12.5px;margin-bottom:14px">Đặt báo thức dậy đi học, chuẩn bị bài hoặc nhắc nhở làm BTVN.</div>
-            <button class="primary" onclick="alarmModal()" style="margin:0 auto;display:inline-flex;align-items:center;gap:6px;padding:9px 20px">➕ Thêm báo thức ngay</button>
-          </div>
-        `}
-      </div>
-    </div>
-  `;
+  go('dashboard');
 }
-
-function toggleAlarmActive(alarmId) {
-  const a = (db.alarms || []).find(x => x.id === alarmId);
-  if (a) {
-    a.active = !a.active;
-    save();
-    toast(a.active ? `Đã bật báo thức ${a.time}` : `Đã tắt báo thức ${a.time}`);
-    alarms();
-  }
-}
-
-function deleteAlarm(alarmId) {
-  if (confirm('Xóa báo thức này?')) {
-    db.alarms = (db.alarms || []).filter(x => x.id !== alarmId);
-    save();
-    toast('Đã xóa báo thức');
-    alarms();
-  }
-}
-
-function alarmModal(editId = null) {
-  const existing = editId ? (db.alarms || []).find(x => x.id === editId) : null;
-  const isEdit = !!existing;
-
-  modal(isEdit ? 'Chỉnh sửa Báo thức' : 'Thêm Báo thức mới', `
-    <div class="form">
-      <div class="field full">
-        <label style="display:flex;justify-content:space-between;align-items:center">
-          <span>Giờ báo thức *</span>
-          <span style="color:#38bdf8;font-weight:700;font-size:12.5px">⚡ Bấm chọn nhanh:</span>
-        </label>
-        <div class="time-preset-chips">
-          <button type="button" class="time-chip" onclick="$('#faTime').value='06:00';">⏰ 06:00 (Thức dậy)</button>
-          <button type="button" class="time-chip" onclick="$('#faTime').value='06:30';">🎒 06:30 (Đến trường)</button>
-          <button type="button" class="time-chip" onclick="$('#faTime').value='13:00';">☀️ 13:00 (Học chiều)</button>
-          <button type="button" class="time-chip" onclick="$('#faTime').value='21:00';">📚 21:00 (Soạn bài)</button>
-          <button type="button" class="time-chip" onclick="$('#faTime').value='22:30';">🌙 22:30 (Đi ngủ)</button>
-        </div>
-        <input id="faTime" class="input" type="time" value="${existing?.time || '21:00'}" required style="font-size:15px;font-weight:750">
-      </div>
-      <div class="field">
-        <label>Nhãn / Tiêu đề *</label>
-        <input id="faTitle" class="input" value="${esc(existing?.title || '🎒 Chuẩn bị sách vở cho ngày mai')}" placeholder="Ví dụ: Chuẩn bị sách vở...">
-      </div>
-      <div class="field full">
-        <label>Nội dung nhắc nhở</label>
-        <textarea id="faDesc" class="textarea" rows="2" placeholder="Nội dung hiển thị khi chuông reo...">${esc(existing?.desc || '')}</textarea>
-      </div>
-      <div class="field full">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-          <input type="checkbox" id="faAttachTomorrow" ${(!existing || existing?.attachTomorrow) ? 'checked' : ''}>
-          <span>Tự động tra cứu và đính kèm danh sách môn học ngày mai vào chuông</span>
-        </label>
-      </div>
-      <div class="field full">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-          <input type="checkbox" id="faSound" ${(!existing || existing?.sound) ? 'checked' : ''}>
-          <span>Phát chuông âm thanh (Web Audio Synthesizer)</span>
-        </label>
-      </div>
-    </div>
-  `, () => {
-    const time = $('#faTime').value.trim();
-    const title = $('#faTitle').value.trim();
-    if (!time || !title) return toast('Vui lòng nhập giờ và tiêu đề'), false;
-
-    if (isEdit) {
-      existing.time = time;
-      existing.title = title;
-      existing.desc = $('#faDesc').value.trim();
-      existing.attachTomorrow = $('#faAttachTomorrow').checked;
-      existing.sound = $('#faSound').checked;
-    } else {
-      db.alarms = db.alarms || [];
-      db.alarms.push({
-        id: id(),
-        time,
-        title,
-        desc: $('#faDesc').value.trim(),
-        attachTomorrow: $('#faAttachTomorrow').checked,
-        sound: $('#faSound').checked,
-        active: true,
-        days: [1, 2, 3, 4, 5, 6]
-      });
-    }
-    save();
-    toast(isEdit ? 'Đã cập nhật báo thức' : 'Đã thêm báo thức');
-    alarms();
-    return true;
-  });
-}
-
-function triggerAlarmRing(alarmObj) {
-  activeRingingAlarm = alarmObj;
-
-  $('#alarmTriggerTime').textContent = alarmObj.time;
-  $('#alarmTriggerTitle').textContent = alarmObj.title;
-  $('#alarmTriggerDesc').textContent = alarmObj.desc || 'Đã đến giờ thông báo!';
-
-  const tomorrowBox = $('#alarmTomorrowSubjects');
-  if (alarmObj.attachTomorrow) {
-    const tInfo = getTomorrowScheduleSummary();
-    const urgentBtvn = (db.tasks || []).filter(t => !t.done && (t.due <= tInfo.dateStr || t.due <= today()));
-
-    let urgentBtvnHtml = '';
-    if (urgentBtvn.length) {
-      urgentBtvnHtml = `
-        <div style="margin-top:10px;padding-top:8px;border-top:1px solid #1e2c47">
-          <b style="color:#f87171">🚨 BTVN CẦN NỘP NGÀY MAI / CÒN TỒN (${urgentBtvn.length} bài):</b>
-          <div style="display:grid;gap:4px;margin-top:5px">
-            ${urgentBtvn.map(t => {
-        const sub = t.subtasks || [];
-        const doneSub = sub.filter(s => s.done).length;
-        const prog = sub.length ? ` (${doneSub}/${sub.length} câu)` : '';
-        return `<div style="font-size:11px;color:#fecaca">• <b>${esc(t.subject || 'BTVN')}:</b> ${esc(t.title)}${prog}</div>`;
-      }).join('')}
-          </div>
-        </div>
-      `;
-    }
-
-    tomorrowBox.innerHTML = `
-      <b>📚 Lịch học ngày mai (${tInfo.dayName}):</b>
-      <div>${tInfo.text}</div>
-      ${urgentBtvnHtml}
-    `;
-    tomorrowBox.classList.remove('hidden');
-    tomorrowBox.style.display = 'block';
-  } else {
-    tomorrowBox.classList.add('hidden');
-    tomorrowBox.style.display = 'none';
-  }
-
-  const overlay = $('#alarmOverlay');
-  if (overlay) {
-    overlay.classList.remove('hidden');
-    overlay.style.display = 'grid';
-  }
-
-  if (alarmObj.sound) {
-    unlockAudio();
-    startAlarmSoundLoop();
-  }
-
-  if ('Notification' in window && Notification.permission === 'granted') {
-    new Notification(`⏰ ${alarmObj.title}`, {
-      body: alarmObj.desc || 'Đến giờ kiểm tra lịch học!',
-      icon: 'icons/icon.svg',
-      requireInteraction: true
-    });
-  }
-}
-
-function dismissAlarm() {
-  try {
-    stopAlarmContinuousLoop();
-  } catch (e) {
-    console.warn('stopAlarm error:', e);
-  }
-  const el = $('#alarmOverlay');
-  if (el) {
-    el.classList.add('hidden');
-    el.style.display = 'none';
-  }
-  activeRingingAlarm = null;
-  toast('✓ Đã tắt báo thức! Chúc Gia Bảo ngày mai học tập thật tốt.');
-}
-
-function snoozeAlarm() {
-  try {
-    stopAlarmSound();
-  } catch (e) {
-    console.warn('stopAlarmSound error:', e);
-  }
-  const el = $('#alarmOverlay');
-  if (el) {
-    el.classList.add('hidden');
-    el.style.display = 'none';
-  }
-  activeRingingAlarm = null;
-  toast('💤 Sẽ báo lại sau 5 phút');
-  setTimeout(() => {
-    triggerAlarmRing({
-      id: 'snooze',
-      time: 'Báo lại',
-      title: '⏰ Báo lại: Chuẩn bị bài & Sách vở',
-      desc: 'Nhắc lại sau 5 phút.',
-      sound: true,
-      attachTomorrow: true
-    });
-  }, 5 * 60 * 1000);
-}
-
-function testAlarmDirectly() {
-  triggerAlarmRing({
-    id: 'test',
-    time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
-    title: '🎒 [Thử nghiệm] Chuẩn bị sách vở cho ngày mai',
-    desc: 'Đây là giao diện chuông báo thức trực quan với âm thanh Web Audio!',
-    sound: true,
-    attachTomorrow: true
-  });
-}
+function dismissAlarm() {}
+function snoozeAlarm() {}
+function testAlarmDirectly() {}
 
 // ----------------- MODULE: TESTING SUITE -----------------
 const testResults = {
   timetable: { status: 'idle', logs: [] },
   tasks: { status: 'idle', logs: [] },
   notes: { status: 'idle', logs: [] },
-  notifications: { status: 'idle', logs: [] },
-  pwa: { status: 'idle', logs: [] }
+    pwa: { status: 'idle', logs: [] }
 };
 
 let globalTestConsole = '';
@@ -5131,7 +4783,7 @@ function testing() {
       <div>
         <div class="eyebrow">DIAGNOSTICS & SYSTEM TESTS</div>
         <h1>Kiểm tra từng Module</h1>
-        <p>Kiểm tra độc lập chức năng từng phân hệ: Thời khóa biểu, Bài tập, Ghi chú, Báo thức và PWA.</p>
+        <p>Kiểm tra độc lập chức năng từng phân hệ: Thời khóa biểu, Bài tập, Ghi chú và PWA & Offline Cache.</p>
       </div>
       <div style="display:flex;gap:8px">
         <button class="ghost" onclick="clearTestLogs()">🧹 Xóa Log</button>
@@ -5185,22 +4837,7 @@ function testing() {
         <button class="ghost" style="width:100%" onclick="runNotesTest()">Kiểm tra Module Ghi chú</button>
       </div>
 
-      <!-- TEST MODULE 4: THÔNG BÁO & BÁO THỨC -->
-      <div class="test-card">
-        <div class="test-card-head">
-          <h3>🔔 Báo thức & Thông báo</h3>
-          <span class="test-badge ${testResults.notifications.status}" id="badge-notify">${getBadgeText(testResults.notifications.status)}</span>
-        </div>
-        <div class="test-step-list">
-          <div class="test-step-row"><span>Quyền Notification API</span><b id="step-notif-1">—</b></div>
-          <div class="test-step-row"><span>Web Audio Synthesizer</span><b id="step-notif-2">—</b></div>
-          <div class="test-step-row"><span>Pop-up Chuông Báo thức</span><b id="step-notif-3">—</b></div>
-          <div class="test-step-row"><span>Kích hoạt Báo thức</span><b id="step-notif-4">—</b></div>
-        </div>
-        <button class="ghost" style="width:100%" onclick="runNotificationTest()">Kiểm tra Thông báo/Chuông</button>
-      </div>
-
-      <!-- TEST MODULE 5: PWA & OFFLINE -->
+      <!-- TEST MODULE 4: PWA & OFFLINE -->
       <div class="test-card">
         <div class="test-card-head">
           <h3>⚡ PWA & Offline Cache</h3>
@@ -5350,35 +4987,6 @@ async function runNotesTest() {
   logTest(`--- Kết thúc Test Ghi chú: ${pass ? 'HOÀN TOÀN ĐẠT ✅' : 'CÓ LỖI ❌'} ---`);
 }
 
-async function runNotificationTest() {
-  logTest('--- Bắt đầu Test Module Báo thức & Thông báo ---');
-  testResults.notifications.status = 'running';
-  testing();
-
-  let pass = true;
-  try {
-    const perm = ('Notification' in window) ? Notification.permission : 'not_supported';
-    $('#step-notif-1').textContent = `✅ ${perm}`;
-    logTest(`✓ Trạng thái quyền Notification API: ${perm}`);
-
-    playChime();
-    $('#step-notif-2').textContent = '✅ Đã phát âm thanh';
-    logTest('✓ Web Audio API Synthesizer phát chuông thành công.');
-
-    $('#step-notif-3').textContent = '✅ ĐẠT';
-    logTest('✓ Giao diện Popup Chuông Báo thức iPhone Overlay sẵn sàng.');
-
-    $('#step-notif-4').textContent = '✅ ĐẠT';
-    logTest('✓ Bộ kích hoạt báo thức và tính năng Snooze 5 phút hoạt động.');
-  } catch (e) {
-    pass = false;
-    logTest(`❌ Lỗi ngoại lệ Báo thức: ${e.message}`);
-  }
-
-  testResults.notifications.status = pass ? 'pass' : 'fail';
-  testing();
-  logTest(`--- Kết thúc Test Báo thức: ${pass ? 'HOÀN TOÀN ĐẠT ✅' : 'CÓ LỖI ❌'} ---`);
-}
 
 async function runPwaTest() {
   logTest('--- Bắt đầu Test Module PWA & Offline Cache ---');
@@ -5434,8 +5042,7 @@ async function runAllTests() {
   await runTimetableTest();
   await runTasksTest();
   await runNotesTest();
-  await runNotificationTest();
-  await runPwaTest();
+    await runPwaTest();
   toast('Đã hoàn thành toàn bộ kiểm tra hệ thống!');
 }
 
@@ -5734,40 +5341,20 @@ function resetData() {
       schoolTT: [],
       extraClasses: [],
       sessionsConfig: null,
-      alarms: [],
-      settings: { name: 'Gia Bảo', notify: true, soundAlert: true },
+            settings: { name: 'Gia Bảo', notify: true, soundAlert: true },
       schoolTTSeeded: true,
       extraClassesSeeded: true,
-      alarmsSeeded: true,
-      tasksSeeded: true
+            tasksSeeded: true
     };
     seedSchoolTimetable(true);
     initExtraClasses();
-    initAlarms();
-    save();
+        save();
     go('dashboard');
     toast('Đã đặt lại dữ liệu thành công');
   }
 }
 
-// ----------------- BACKGROUND ALARM CHECKER -----------------
-let lastTriggeredMinute = '';
-
-function checkAlarmsAndEvents() {
-  const now = new Date();
-  const tm = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-
-  if (lastTriggeredMinute === tm) return;
-  lastTriggeredMinute = tm;
-
-  (db.alarms || []).forEach(a => {
-    if (a.active && a.time === tm) {
-      triggerAlarmRing(a);
-    }
-  });
-}
-
-setInterval(checkAlarmsAndEvents, 10000);
+// ----------------- BACKGROUND CHECKER -----------------
 
 // Global Navigation events (Sidebar + Mobile Bottom Nav)
 $$('nav button, .sidebottom button, #mobileBottomNav button').forEach(b => b.onclick = () => {

@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Gia Bảo">
-  <meta name="description" content="Góc học tập Gia Bảo — Thời khóa biểu thông minh, bài tập về nhà, báo thức và ghi chú cá nhân.">
+  <meta name="description" content="Góc học tập Gia Bảo — Thời khóa biểu thông minh, bài tập về nhà, thời tiết & balo và ghi chú cá nhân.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=JetBrains+Mono:wght@500;700&family=STIX+Two+Text:ital,wght@0,600;0,700;1,500;1,700&display=swap" rel="stylesheet">
@@ -53,10 +53,6 @@
 <button data-view="tasks">
           <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span>Bài tập về nhà</span>
-        </button>
-        <button data-view="alarms">
-          <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg>
-          <span>Báo thức & Nhắc việc</span>
         </button>
         <button data-view="notes">
           <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
@@ -119,11 +115,6 @@
         <span class="nav-label">BTVN</span>
         <span class="nav-active-pill"></span>
       </button>
-      <button data-view="alarms">
-        <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M5 3 2 6"/><path d="m22 6-3-3"/><path d="M6.38 18.7 4 21"/><path d="M17.64 18.67 20 21"/></svg></span>
-        <span class="nav-label">Báo thức</span>
-        <span class="nav-active-pill"></span>
-      </button>
       <button data-view="notes">
         <span class="nav-icon-wrap"><svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span>
         <span class="nav-label">Ghi chú</span>
@@ -143,29 +134,7 @@
     </div>
   </div>
 
-  <!-- ALARM RINGING OVERLAY (IPHONE STYLE) -->
-  <div id="alarmOverlay" class="hidden">
-    <div class="alarm-card">
-      <div class="alarm-pulse-ring">
-        <svg class="alarm-ring-svg" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="13" r="8"/>
-          <path d="M12 9v4l2 2"/>
-          <path d="M5 3 2 6"/>
-          <path d="m22 6-3-3"/>
-          <path d="M6.38 18.7 4 21"/>
-          <path d="M17.64 18.67 20 21"/>
-        </svg>
-      </div>
-      <div class="alarm-time-now" id="alarmTriggerTime">21:00</div>
-      <h2 id="alarmTriggerTitle">🎒 Chuẩn bị sách vở cho ngày mai</h2>
-      <p id="alarmTriggerDesc">Chuông báo thức đang reo & điện thoại đang rung liên tục. Hãy kiểm tra sách vở và bấm TẮT bên dưới!</p>
-      <div id="alarmTomorrowSubjects" class="alarm-subjects-box"></div>
-      <div class="alarm-actions">
-        <button class="ghost alarm-snooze-btn" type="button" onclick="snoozeAlarm()">💤 Báo lại 5p</button>
-        <button class="primary alarm-dismiss-btn" type="button" onclick="dismissAlarm()">🛑 TẮT BÁO THỨC</button>
-      </div>
-    </div>
-  </div>
+  
   </div>
 
   <div id="toast"></div>
