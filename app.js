@@ -2619,13 +2619,13 @@ function renderIosWeatherModalContent() {
           <!-- Real-time Inspector Hero -->
           <div class="ios-inspector-hero">
             <div class="ios-inspector-time" id="iosInspectorTimeText">
-              ${selHour < 10 ? '0' + selHour : selHour}:00
+              ${isToday ? 'Bây giờ' : fullDateStr}
             </div>
             <div class="ios-inspector-temp-row">
-              <span id="iosInspectorIconBox">${getWeatherSvgIcon(hourCond.iconType, 36)}</span>
-              <b id="iosInspectorTempText">${displayTemp}°</b>
+              <span id="iosInspectorIconBox">${getWeatherSvgIcon(hourCond.iconType, 38)}</span>
+              <b id="iosInspectorTempText">${activeDay.maxTemp}°<span style="font-size:24px;color:#94a3b8;font-weight:400;margin-left:4px">${activeDay.minTemp}°</span></b>
             </div>
-            <div style="font-size:14px;color:#cbd5e1;font-weight:600" id="iosInspectorCondText">${hourCond.text}</div>
+            <div style="font-size:14.5px;color:#cbd5e1;font-weight:600" id="iosInspectorCondText">${hourCond.text}</div>
           </div>
 
           <!-- 24-Hour Temperature Curve Chart Container -->
@@ -2796,7 +2796,7 @@ function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
     return `<text x="${pt.x.toFixed(1)}" y="${(H - 6)}" fill="#8e8e93" font-size="11" text-anchor="middle" font-weight="600">${item.label}</text>`;
   }).join('');
 
-  // Scrubber element for selected hour
+  // Scrubber element: ẨN MẶC ĐỊNH (display: none), chỉ hiện lên khi người dùng bấm/chạm giữ và kéo
   const selPt = points[selHour] || points[12];
 
   return `
@@ -2828,9 +2828,11 @@ function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
       <circle cx="${minPoint.x.toFixed(1)}" cy="${minPoint.y.toFixed(1)}" r="3.2" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
       <text x="${minPoint.x.toFixed(1)}" y="${(minPoint.y - 7).toFixed(1)}" fill="#f8fafc" font-size="10" font-weight="800" text-anchor="middle">T</text>
 
-      <!-- Interactive Scrubber Vertical Line & Glowing Dot -->
-      <line id="iosScrubberLine" x1="${selPt.x.toFixed(1)}" y1="24" x2="${selPt.x.toFixed(1)}" y2="${bottomY}" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-      <circle id="iosScrubberDot" cx="${selPt.x.toFixed(1)}" cy="${selPt.y.toFixed(1)}" r="5.5" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+      <!-- Interactive Scrubber Vertical Line & Glowing Dot (ẨN MẶC ĐỊNH - CHỈ HIỆN KHI CHẠM GIỮ) -->
+      <g id="iosScrubberGroup" style="display: none;">
+        <line id="iosScrubberLine" x1="${selPt.x.toFixed(1)}" y1="24" x2="${selPt.x.toFixed(1)}" y2="${bottomY}" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+        <circle id="iosScrubberDot" cx="${selPt.x.toFixed(1)}" cy="${selPt.y.toFixed(1)}" r="5.5" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+      </g>
 
       <!-- Bottom time labels -->
       ${xLabels}
@@ -2916,7 +2918,7 @@ function generateIosRainChartSvg(hours) {
   `;
 }
 
-// Continuous Sub-Minute High-Performance Interactive Scrubber (Siêu mượt 60fps)
+// Continuous Sub-Minute High-Performance Interactive Scrubber (CHỈ HIỆN KHI CHẠM GIỮ)
 function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
   const svg = document.getElementById('iosInteractiveChartSvg');
   if (!svg) return;
@@ -2941,7 +2943,8 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
     points.push({ h, val, x, y, code: item.code, wind: item.wind, temp: item.temp });
   }
 
-  // Pre-cached DOM elements for 60fps sub-minute scrubber
+  // Pre-cached DOM elements
+  const scrubberGroup = document.getElementById('iosScrubberGroup');
   const line = document.getElementById('iosScrubberLine');
   const dot = document.getElementById('iosScrubberDot');
   const timeEl = document.getElementById('iosInspectorTimeText');
@@ -2949,12 +2952,19 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
   const condEl = document.getElementById('iosInspectorCondText');
   const iconEl = document.getElementById('iosInspectorIconBox');
 
+  // Lưu trạng thái mặc định của Header để hồi phục khi thả tay
+  const defaultTimeHtml = timeEl ? timeEl.innerHTML : '';
+  const defaultTempHtml = tempEl ? tempEl.innerHTML : '';
+  const defaultCondHtml = condEl ? condEl.innerHTML : '';
+  const defaultIconHtml = iconEl ? iconEl.innerHTML : '';
+
   let rafId = null;
   let targetClientX = null;
+  let isDragging = false;
 
   const renderFrame = () => {
     rafId = null;
-    if (targetClientX === null) return;
+    if (targetClientX === null || !isDragging) return;
 
     const rect = svg.getBoundingClientRect();
     const relX = ((targetClientX - rect.left) / rect.width) * 380;
@@ -2981,23 +2991,22 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
     const cp1y = p0.y + (p1.y - pPrev.y) / 6;
     const cp2y = p1.y - (pNext.y - p0.y) / 6;
 
-    // Cubic Bézier formula: B(t) = (1-t)^3*P0 + 3(1-t)^2*t*CP1 + 3(1-t)*t^2*CP2 + t^3*P1
     const oneMinusT = 1 - tRatio;
     const smoothY = oneMinusT * oneMinusT * oneMinusT * p0.y
       + 3 * oneMinusT * oneMinusT * tRatio * cp1y
       + 3 * oneMinusT * tRatio * tRatio * cp2y
       + tRatio * tRatio * tRatio * p1.y;
 
-    // Nearest integer hour for condition code & icon
     const nearestHour = Math.round(fracHour);
     iosWeatherModalState.selectedHour = nearestHour;
     const activeItem = points[nearestHour] || points[h0];
     const cond = getWmoCondition(activeItem.code, displayH, activeItem.temp, activeItem.wind);
 
-    // Continuous interpolated temperature (rounded to integer for clean iOS display)
     const smoothVal = Math.round(p0.val + (p1.val - p0.val) * tRatio);
 
-    // Update SVG elements instantly with sub-pixel precision
+    // Hiện scrubber khi đang chạm giữ
+    if (scrubberGroup) scrubberGroup.style.display = 'block';
+
     if (line) {
       line.setAttribute('x1', clampedX.toFixed(2));
       line.setAttribute('x2', clampedX.toFixed(2));
@@ -3007,7 +3016,7 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
       dot.setAttribute('cy', smoothY.toFixed(2));
     }
 
-    // Update Header Text with exact minute
+    // Cập nhật Header với giờ:phút khi đang giữ
     if (timeEl) timeEl.textContent = timeStr;
     if (tempEl) tempEl.textContent = smoothVal + '°';
     if (condEl) condEl.textContent = cond.text;
@@ -3021,7 +3030,6 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
     }
   };
 
-  let isDragging = false;
   svg.addEventListener('pointerdown', e => {
     isDragging = true;
     svg.setPointerCapture?.(e.pointerId);
@@ -3032,12 +3040,29 @@ function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
     if (isDragging) queueUpdate(e.clientX);
   });
 
-  window.addEventListener('pointerup', e => {
+  const onPointerRelease = (e) => {
     if (isDragging) {
       isDragging = false;
+      targetClientX = null;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       try { svg.releasePointerCapture?.(e.pointerId); } catch(_) {}
+
+      // Khi thả tay ra: ẨN NGAY tâm/vạch scrubber giữa đồ thị
+      if (scrubberGroup) scrubberGroup.style.display = 'none';
+
+      // Khôi phục lại trạng thái hiển thị tổng quan của ngày
+      if (timeEl) timeEl.innerHTML = defaultTimeHtml;
+      if (tempEl) tempEl.innerHTML = defaultTempHtml;
+      if (condEl) condEl.innerHTML = defaultCondHtml;
+      if (iconEl) iconEl.innerHTML = defaultIconHtml;
     }
-  });
+  };
+
+  window.addEventListener('pointerup', onPointerRelease);
+  window.addEventListener('pointercancel', onPointerRelease);
 }
 
 
