@@ -1703,7 +1703,32 @@ let studyWeatherState = {
 };
 
 // SVG Weather Art generator without external icons
+// SVG Weather Art generator with full iOS day/night and weather state support
 function getWeatherSvgIcon(type, size = 38) {
+  // Clear Night: Moon with stars
+  if (type === 'moon') {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#e0f2fe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="rgba(224, 242, 254, 0.28)"/>
+      <circle cx="18" cy="5" r="1" fill="#fde047" stroke="none"/>
+      <circle cx="14" cy="2.5" r="0.75" fill="#fde047" stroke="none"/>
+    </svg>`;
+  }
+  // Partly Cloudy Night: Moon behind soft night cloud
+  if (type === 'moon-cloud') {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#93c5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2.5a6.5 6.5 0 0 0 7 7 7 7 0 1 1-7-7z" fill="rgba(253, 224, 71, 0.25)" stroke="#fde047" stroke-width="1.6"/>
+      <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(148, 163, 184, 0.35)" stroke="#cbd5e1" stroke-width="1.8"/>
+    </svg>`;
+  }
+  // Cool Breeze / Pleasant Weather (Trời mát mẻ)
+  if (type === 'cool-breeze') {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17.5 13H9a4.5 4.5 0 0 1-1-8.9 5 5 0 0 1 9.5 2.5A4 4 0 0 1 17.5 13z" fill="rgba(52, 211, 153, 0.18)" stroke="#6ee7b7" stroke-width="1.8"/>
+      <path d="M4 17h12a2 2 0 1 0-2-2" stroke="#34d399" stroke-width="2"/>
+      <path d="M2 20.5h10a2 2 0 1 0-2-2" stroke="#10b981" stroke-width="2"/>
+    </svg>`;
+  }
+  // Clear Day Sun
   if (type === 'sun') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="4" fill="rgba(245,158,11,0.25)"/>
@@ -1713,36 +1738,42 @@ function getWeatherSvgIcon(type, size = 38) {
       <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
     </svg>`;
   }
+  // Partly Cloudy Day
   if (type === 'sun-cloud') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="9" r="3" stroke="#f59e0b" fill="rgba(245,158,11,0.3)"/>
       <path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/>
-      <circle cx="12" cy="10" r="3" stroke="#f59e0b" fill="rgba(245,158,11,0.25)"/>
-      <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(56,189,248,0.18)" stroke="#38bdf8"/>
+      <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(56,189,248,0.2)" stroke="#38bdf8"/>
     </svg>`;
   }
+  // Overcast / Cloudy
   if (type === 'cloud') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(148,163,184,0.2)" stroke="#cbd5e1"/>
+      <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(148,163,184,0.25)" stroke="#cbd5e1"/>
     </svg>`;
   }
+  // Drizzle / Light Rain
   if (type === 'drizzle') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(56,189,248,0.15)"/>
+      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(56,189,248,0.18)"/>
       <path d="M8 19v2" stroke-width="2" stroke="#38bdf8"/><path d="M12 18v2" stroke-width="2" stroke="#38bdf8"/><path d="M16 19v2" stroke-width="2" stroke="#38bdf8"/>
     </svg>`;
   }
+  // Rain
   if (type === 'rain') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(96,165,250,0.22)"/>
       <path d="M8 18v4" stroke-width="2.5" stroke="#60a5fa"/><path d="M12 17v4" stroke-width="2.5" stroke="#60a5fa"/><path d="M16 18v4" stroke-width="2.5" stroke="#60a5fa"/>
     </svg>`;
   }
+  // Thunderstorm
   if (type === 'thunder' || type === 'heavy-rain') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9" fill="rgba(192,132,252,0.25)"/>
       <polyline points="13 11 9 17 15 17 11 23" stroke="#fbbf24" stroke-width="2.5" fill="#fde047"/>
     </svg>`;
   }
+  // Fog / Mist
   if (type === 'fog') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 14h16"/><path d="M4 18h16"/><path d="M7 10h10"/>
@@ -1754,17 +1785,76 @@ function getWeatherSvgIcon(type, size = 38) {
   </svg>`;
 }
 
-function getWmoCondition(code) {
-  if (code === 0) return { text: 'Nắng rực rỡ (Trời quang)', iconType: 'sun', mood: 'hot' };
-  if (code === 1 || code === 2) return { text: 'Nắng ráo • Ít mây', iconType: 'sun-cloud', mood: 'pleasant' };
-  if (code === 3) return { text: 'Mây râm mát', iconType: 'cloud', mood: 'pleasant' };
-  if (code === 45 || code === 48) return { text: 'Sương mù ẩm ướt', iconType: 'fog', mood: 'cold' };
-  if (code >= 51 && code <= 57) return { text: 'Mưa phùn / Bay hạt', iconType: 'drizzle', mood: 'rain' };
-  if (code >= 61 && code <= 67) return { text: 'Mưa rào từng đợt', iconType: 'rain', mood: 'rain' };
-  if (code >= 71 && code <= 77) return { text: 'Trời rất lạnh', iconType: 'fog', mood: 'cold' };
-  if (code >= 80 && code <= 82) return { text: 'Mưa rào dồn dập', iconType: 'rain', mood: 'heavy-rain' };
-  if (code >= 95 && code <= 99) return { text: 'Dông bão • Sấm sét', iconType: 'thunder', mood: 'heavy-rain' };
-  return { text: 'Nắng dịu nhẹ', iconType: 'sun-cloud', mood: 'pleasant' };
+function getWmoCondition(code, hour = 12, temp = 27, wind = 10) {
+  const isNight = hour >= 18 || hour < 6;
+
+  // Clear Sky
+  if (code === 0) {
+    if (isNight) {
+      return { text: 'Trời quang mây', iconType: 'moon', mood: 'pleasant', badge: 'Trăng thanh gió mát 🌙' };
+    }
+    if (temp >= 33) {
+      return { text: 'Nắng rực rỡ • Trời quang', iconType: 'sun', mood: 'hot', badge: 'Nắng nóng ☀️' };
+    }
+    return { text: 'Trời quang đãng • Nắng đẹp', iconType: 'sun', mood: 'pleasant', badge: 'Nắng ráo ☀️' };
+  }
+
+  // Mainly Clear / Partly Cloudy (1, 2)
+  if (code === 1 || code === 2) {
+    if (isNight) {
+      return { text: 'Trời mát dịu • Có mây', iconType: 'moon-cloud', mood: 'pleasant', badge: 'Mát mẻ về đêm 🌙' };
+    }
+    if (temp <= 27) {
+      return { text: 'Trời mát mẻ • Nắng dịu', iconType: 'cool-breeze', mood: 'pleasant', badge: 'Thời tiết mát mẻ 🍃' };
+    }
+    return { text: 'Nắng gián đoạn • Có mây', iconType: 'sun-cloud', mood: 'pleasant', badge: 'Nắng ấm 🌤️' };
+  }
+
+  // Overcast / Cloudy (3)
+  if (code === 3) {
+    if (isNight) {
+      return { text: 'Nhiều mây về đêm', iconType: 'cloud', mood: 'pleasant', badge: 'Mây đêm ☁️' };
+    }
+    if (temp <= 26) {
+      return { text: 'Trời râm mát • Dễ chịu', iconType: 'cool-breeze', mood: 'pleasant', badge: 'Rất mát mẻ 🍃' };
+    }
+    return { text: 'Trời râm mát • Nhiều mây', iconType: 'cloud', mood: 'pleasant', badge: 'Trời râm mát ⛅' };
+  }
+
+  // Fog (45, 48)
+  if (code === 45 || code === 48) {
+    return { text: 'Sương mù ẩm ướt', iconType: 'fog', mood: 'cold', badge: 'Sương mù 🌫️' };
+  }
+
+  // Drizzle / Light Rain (51-57)
+  if (code >= 51 && code <= 57) {
+    return { text: 'Mưa phùn / Bay lất phất', iconType: 'drizzle', mood: 'rain', badge: 'Mưa bay 🌦️' };
+  }
+
+  // Rain (61-67)
+  if (code >= 61 && code <= 67) {
+    return { text: 'Mưa rào từng đợt', iconType: 'rain', mood: 'rain', badge: 'Có mưa rào 🌧️' };
+  }
+
+  // Cold / Snow (71-77)
+  if (code >= 71 && code <= 77) {
+    return { text: 'Trời lạnh buốt', iconType: 'cool-breeze', mood: 'cold', badge: 'Trời rét buốt ❄️' };
+  }
+
+  // Heavy Rain (80-82)
+  if (code >= 80 && code <= 82) {
+    return { text: 'Mưa rào dồn dập', iconType: 'rain', mood: 'heavy-rain', badge: 'Mưa lớn 🌧️' };
+  }
+
+  // Thunderstorm (95-99)
+  if (code >= 95 && code <= 99) {
+    return { text: 'Dông bão • Sấm sét', iconType: 'thunder', mood: 'heavy-rain', badge: 'Dông sét nguy hiểm ⛈️' };
+  }
+
+  // Default pleasant fallback
+  return isNight 
+    ? { text: 'Đêm mát dịu', iconType: 'moon-cloud', mood: 'pleasant', badge: 'Dịu mát 🌙' }
+    : { text: 'Trời mát mẻ', iconType: 'sun-cloud', mood: 'pleasant', badge: 'Mát mẻ 🌤️' };
 }
 
 function getUvAnalysis(uv) {
@@ -2360,274 +2450,182 @@ function buildWeatherWidgetHtml(isFullView = false) {
   };
 
   const advice = analyzeWeatherForStudent(activeDay);
-  const activeCondition = getWmoCondition(activeDay.code);
   const activeDayLabel = formatWeatherDayName(activeDay.date, selectedIdx);
-  const uvAnalysis = getUvAnalysis(activeDay.uv);
-  const rainAnalysis = getRainAnalysis(activeDay.rainProb, activeDay.rainSum);
-  const windAnalysis = getWindAnalysis(activeDay.wind);
+  const isToday = activeDay.date === today();
+  const currentHour = new Date().getHours();
+
+  // Current real-time hour data
+  const currentHourData = (activeDay.hours || []).find(h => h.hour === currentHour) || activeDay.hours?.[0] || {
+    hour: currentHour,
+    temp: Math.round((activeDay.maxTemp + activeDay.minTemp) / 2),
+    code: activeDay.code,
+    wind: activeDay.wind,
+    rainProb: activeDay.rainProb
+  };
+
+  const currentCondition = getWmoCondition(
+    isToday ? currentHourData.code : activeDay.code,
+    isToday ? currentHour : 12,
+    isToday ? currentHourData.temp : activeDay.maxTemp,
+    activeDay.wind
+  );
+
+  // 24-Hour Timeline: If today, starts from "Bây giờ" and continues 24 consecutive hours!
+  let hourlyList = [];
+  if (isToday) {
+    const todayRemaining = (activeDay.hours || []).slice(currentHour);
+    const tomorrowComing = (days[1]?.hours || []).slice(0, currentHour);
+    hourlyList = [...todayRemaining, ...tomorrowComing];
+  } else {
+    hourlyList = activeDay.hours || [];
+  }
+
+  // Dynamic iOS Weather Notification Summary
+  let iosNoticeText = 'Thời tiết thuận lợi, đường sá khô ráo.';
+  const nextRainHour = hourlyList.find(h => h.rainProb >= 40);
+  const nextCloudHour = hourlyList.find(h => [1, 2, 3].includes(h.code));
+  if (nextRainHour) {
+    const rTime = nextRainHour.hour === currentHour ? 'trong giờ tới' : `vào khoảng ${nextRainHour.hour < 10 ? '0' + nextRainHour.hour : nextRainHour.hour}:00`;
+    iosNoticeText = `Dự báo có mưa rào rải rác (${nextRainHour.rainProb}%) ${rTime}. Bạn nên chuẩn bị sẵn áo mưa trong cặp sách.`;
+  } else if (nextCloudHour) {
+    const cTime = nextCloudHour.hour === currentHour ? 'hiện tại' : `vào khoảng ${nextCloudHour.hour < 10 ? '0' + nextCloudHour.hour : nextCloudHour.hour}:00`;
+    iosNoticeText = `Dự báo trời mát mẻ, có mây vài nơi ${cTime}. Gió giật lên đến ${activeDay.wind || 11} km/h.`;
+  } else {
+    iosNoticeText = `Trời quang đãng, khô ráo suốt cả ngày. Gió nhẹ ${activeDay.wind || 10} km/h, rất thuận tiện đi học.`;
+  }
 
   // 24-Hour Rain Analysis & Commute Slots
   const rainTimeAnalysis = analyzeRainTimeWindows(activeDay.hours);
   const commuteSlots = evaluateStudentCommuteSlots(activeDay.hours);
 
-  // Current hour calculation for "Hôm nay"
-  const currentHour = new Date().getHours();
-  const isToday = activeDay.date === today();
-
-  // Checked items
-  const checkedItems = getCheckedItemsForDate(activeDay.date);
-  const totalChecklist = advice.checklist.length;
-  const progressPercent = totalChecklist > 0 ? Math.round((checkedItems.length / totalChecklist) * 100) : 0;
+  // Temperature range for gradient bars
+  const minWeek = Math.min(...days.map(d => d.minTemp), 20);
+  const maxWeek = Math.max(...days.map(d => d.maxTemp), 35);
+  const tempRange = Math.max(1, maxWeek - minWeek);
 
   return `
-    <div class="weather-forecast-widget ${advice.mood}">
-      <!-- Header Row -->
-      <div class="weather-header-row">
-        <div class="weather-title-wrap">
-          <div class="weather-hero-icon-pulsing">${getWeatherSvgIcon(activeCondition.iconType, 30)}</div>
-          <div>
-            <h3>Dự Báo Thời Tiết 24H & Balo Học Đường</h3>
-            <div style="font-size:11.8px;color:#94a3b8;margin-top:2px">
-              Theo dõi chi tiết 00:00 – 23:59 • Khung giờ có mưa & tỉ lệ chuẩn xác
-            </div>
+    <div class="weather-forecast-widget ios-weather-theme ${advice.mood}">
+      <!-- iOS Apple Weather Top Header -->
+      <div class="ios-weather-header">
+        <div class="ios-location-row">
+          <div class="ios-location-title">
+            <span class="ios-loc-icon">📍</span>
+            <select class="ios-city-picker" onchange="changeWeatherCity(this.value)" aria-label="Chọn tỉnh thành">
+              ${WEATHER_CITIES.map(c => `<option value="${c.id}" ${c.id === currentCityId ? 'selected' : ''}>${c.name}</option>`).join('')}
+            </select>
           </div>
-        </div>
-
-        <div class="weather-controls-wrap">
-          <select class="weather-city-select" onchange="changeWeatherCity(this.value)" aria-label="Chọn tỉnh thành">
-            ${WEATHER_CITIES.map(c => `<option value="${c.id}" ${c.id === currentCityId ? 'selected' : ''}>📍 ${c.name}</option>`).join('')}
-          </select>
-          <button class="weather-refresh-btn" onclick="loadWeatherData(true)" title="Làm mới dự báo">
-            ${state.loading ? '⏳...' : '🔄 Làm mới'}
+          <button class="ios-refresh-pill" onclick="loadWeatherData(true)" title="Cập nhật trực tiếp">
+            ${state.loading ? '⏳' : '🔄'} Cập nhật
           </button>
         </div>
-      </div>
 
-      <!-- 7-Day Carousel -->
-      <div class="weather-days-carousel-label">
-        <span>📅 Dự báo 7 ngày (Bấm vào ngày để xem diễn biến 24 giờ & balo):</span>
-      </div>
-      <div class="weather-days-scroll">
-        ${days.map((d, idx) => {
-          const cond = getWmoCondition(d.code);
-          const dayLabel = formatWeatherDayName(d.date, idx);
-          const dateVi = formatDayMonth(d.date);
-          const isSelected = idx === selectedIdx;
-          const rainAn = getRainAnalysis(d.rainProb, d.rainSum);
-
-          return `
-            <div class="weather-day-card ${isSelected ? 'active' : ''}" onclick="selectWeatherDay(${idx})">
-              <span class="weather-day-label" style="${idx === 0 ? 'color:#38bdf8' : ''}">${dayLabel}</span>
-              <span class="weather-day-date">${dateVi}</span>
-              <div class="weather-icon-svg-box">
-                ${getWeatherSvgIcon(cond.iconType, 34)}
-              </div>
-              <div class="weather-day-temp">
-                ${d.maxTemp}° <span class="weather-day-min-temp">/ ${d.minTemp}°</span>
-              </div>
-              <div class="weather-rain-prob-pill ${rainAn.level}">
-                <span>💧 ${d.rainProb}%</span>
-                ${d.rainSum > 0 ? `<span style="opacity:0.85;font-size:9.5px">(${d.rainSum}mm)</span>` : ''}
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-
-      <!-- ================= 24-HOUR HOURLY RADAR & TIMELINE ================= -->
-      <div class="weather-hourly-card">
-        <div class="weather-hourly-head">
-          <div style="display:flex;align-items:center;gap:8px">
-            <span style="font-size:17px">⏱️</span>
-            <div>
-              <strong style="font-size:13.5px;color:#f8fafc">Diễn Biến 24 Giờ (${activeDayLabel} 00:00 – 23:59)</strong>
-              <div style="font-size:11px;color:#94a3b8">Nhiệt độ, xác suất & lượng mưa từng giờ chuẩn khí tượng</div>
-            </div>
-          </div>
-          <span class="hourly-now-badge">${isToday ? '🟢 Đang cập nhật trực tiếp' : '📅 Lịch dự báo'}</span>
-        </div>
-
-        <!-- Exact Rain Window Analysis Banner -->
-        <div class="weather-rain-window-box ${rainTimeAnalysis.hasRain ? 'has-rain' : 'no-rain'}">
-          <div class="rain-window-icon">${rainTimeAnalysis.hasRain ? '🌧️' : '☀️'}</div>
-          <div class="rain-window-text">
-            <strong>${rainTimeAnalysis.hasRain ? 'Khoảng thời gian có mưa trong ngày:' : 'Trạng thái mưa trong ngày:'}</strong>
-            <p>${rainTimeAnalysis.summaryText}</p>
+        <!-- Big Center Temperature Display -->
+        <div class="ios-hero-display">
+          <div class="ios-hero-big-temp">${isToday ? currentHourData.temp : activeDay.maxTemp}°</div>
+          <div class="ios-hero-cond-name">${currentCondition.text}</div>
+          <div class="ios-hero-high-low">
+            <span>C: ${activeDay.maxTemp}°</span>
+            <span style="opacity:0.5;margin:0 4px">•</span>
+            <span>T: ${activeDay.minTemp}°</span>
           </div>
         </div>
 
-        <!-- 24-Hour Horizontal Scrollable Track -->
-        <div class="weather-hourly-scroll-track">
-          ${(activeDay.hours || []).map(h => {
-            const isNow = isToday && h.hour === currentHour;
-            const cond = getWmoCondition(h.code);
+        <!-- iOS Weather Alert / Summary Pill -->
+        <div class="ios-notice-banner">
+          <div class="ios-notice-text">
+            ${iosNoticeText}
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 24-HOUR HOURLY FORECAST (STARTING FROM BÂY GIỜ) ================= -->
+      <div class="ios-hourly-card">
+        <div class="ios-card-header">
+          <span style="font-size:14px">⏱️ DỰ BÁO THEO GIỜ (${isToday ? 'Bắt đầu từ Bây giờ' : activeDayLabel})</span>
+        </div>
+
+        <div class="ios-hourly-scroll">
+          ${hourlyList.map((h, hIdx) => {
+            const isNow = isToday && hIdx === 0;
+            const hourLabel = isNow ? 'Bây giờ' : `${h.hour < 10 ? '0' + h.hour : h.hour} giờ`;
+            const cond = getWmoCondition(h.code, h.hour, h.temp, h.wind);
+            const hasRain = h.rainProb > 0;
             const rainColor = h.rainProb >= 60 ? '#f87171' : (h.rainProb >= 30 ? '#fbbf24' : '#38bdf8');
-            const barHeight = Math.max(4, Math.round((h.rainProb / 100) * 36));
 
             return `
-              <div class="weather-hour-col ${isNow ? 'is-current-hour' : ''}">
-                <div class="hour-label">${isNow ? 'Bây giờ' : h.time}</div>
-                <div class="hour-icon">${getWeatherSvgIcon(cond.iconType, 22)}</div>
-                <div class="hour-temp">${h.temp}°</div>
-                
-                <!-- Vertical Mini Rain Bar Gauge -->
-                <div class="hour-rain-gauge-track" title="Tỉ lệ mưa: ${h.rainProb}% - Lượng mưa: ${h.rainSum}mm">
-                  <div class="hour-rain-gauge-fill" style="height:${barHeight}px;background:${rainColor}"></div>
+              <div class="ios-hour-col ${isNow ? 'is-now-hour' : ''}">
+                <div class="ios-hour-time">${hourLabel}</div>
+                <div class="ios-hour-icon-box">
+                  ${getWeatherSvgIcon(cond.iconType, 26)}
                 </div>
-                
-                <div class="hour-rain-prob" style="color:${h.rainProb > 0 ? rainColor : '#64748b'}">
-                  ${h.rainProb > 0 ? `${h.rainProb}%` : '0%'}
+                <div class="ios-hour-temp">${h.temp}°</div>
+                <div class="ios-hour-rain-pill" style="opacity:${hasRain ? '1' : '0'}">
+                  <span style="color:${rainColor}">💧${h.rainProb}%</span>
                 </div>
               </div>
             `;
           }).join('')}
         </div>
+      </div>
 
-        <!-- 4 School Commute Slots Grid -->
-        <div class="weather-commute-slots-title">
-          <span>🎒</span> <span>Thời tiết các khung giờ đi học & tan trường:</span>
+      <!-- ================= 7-DAY FORECAST WITH APPLE GRADIENT BARS ================= -->
+      <div class="ios-daily-card">
+        <div class="ios-card-header">
+          <span style="font-size:14px">📅 DỰ BÁO 7 NGÀY TỚI</span>
         </div>
-        <div class="weather-commute-grid">
-          ${commuteSlots.map(slot => `
-            <div class="commute-slot-card ${slot.badgeClass}">
-              <div class="commute-slot-header">
-                <strong>${slot.name}</strong>
-                <span class="commute-slot-badge ${slot.badgeClass}">${slot.badge}</span>
+
+        <div class="ios-daily-list">
+          ${days.map((d, idx) => {
+            const cond = getWmoCondition(d.code, 12, d.maxTemp, d.wind);
+            const dayLabel = formatWeatherDayName(d.date, idx);
+            const isSelected = idx === selectedIdx;
+            const isDayToday = idx === 0;
+
+            // Compute bar offsets
+            const leftPct = Math.max(0, Math.min(100, Math.round(((d.minTemp - minWeek) / tempRange) * 100)));
+            const rightPct = Math.max(0, Math.min(100, Math.round(((d.maxTemp - minWeek) / tempRange) * 100)));
+            const barWidth = Math.max(12, rightPct - leftPct);
+
+            return `
+              <div class="ios-day-row ${isSelected ? 'active-day-row' : ''}" onclick="selectWeatherDay(${idx})">
+                <div class="ios-day-name ${isDayToday ? 'is-today-label' : ''}">${dayLabel}</div>
+                <div class="ios-day-icon">
+                  ${getWeatherSvgIcon(cond.iconType, 24)}
+                </div>
+                <div class="ios-day-min-temp">${d.minTemp}°</div>
+
+                <!-- Apple Style Horizontal Temperature Gradient Bar -->
+                <div class="ios-temp-bar-track">
+                  <div class="ios-temp-bar-fill" style="left:${leftPct}%;width:${barWidth}%"></div>
+                  ${isDayToday ? `<div class="ios-temp-bar-dot" style="left:${Math.max(leftPct, Math.min(rightPct, Math.round(((currentHourData.temp - minWeek) / tempRange) * 100)))}%"></div>` : ''}
+                </div>
+
+                <div class="ios-day-max-temp">${d.maxTemp}°</div>
               </div>
-              <div class="commute-slot-time">${slot.timeRange}</div>
-              <div class="commute-slot-metrics">
-                <span>🌡️ ${slot.temp}°C</span>
-                <span>💧 Mưa: ${slot.rainProb}%</span>
-              </div>
-              <div class="commute-slot-desc">${slot.desc}</div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       </div>
 
-      <!-- Active Day Comprehensive Weather & Student Advice Card -->
-      <div class="student-weather-advice-card ${advice.mood}">
-        <!-- Top banner with Badge -->
-        <div class="advice-card-header">
-          <div class="advice-header-left">
-            <span class="advice-hero-day-tag">${activeDayLabel} (${formatDayMonth(activeDay.date)})</span>
-            <span class="advice-condition-tag">${activeCondition.text}</span>
-          </div>
-          <span class="advice-badge-outfit">${advice.badge}</span>
-        </div>
-
-        <div class="advice-main-title">
-          ${advice.headline}
-        </div>
-        <div class="advice-main-desc">
-          ${advice.briefing}
-        </div>
-
-        <!-- 4 Key Meteorological Metrics Gauges -->
-        <div class="advice-metrics-row">
-          <!-- Metric 1: Temp -->
-          <div class="advice-metric-box">
-            <div class="advice-metric-label">🌡️ Nhiệt độ</div>
-            <div class="advice-metric-val" style="color:#38bdf8">${activeDay.minTemp}° – ${activeDay.maxTemp}°C</div>
-            <div class="advice-metric-sub">Biên độ nhiệt ${activeDay.maxTemp - activeDay.minTemp}°C</div>
-          </div>
-
-          <!-- Metric 2: Rain Prob & Volume -->
-          <div class="advice-metric-box">
-            <div class="advice-metric-label">💧 Tỉ lệ & Lượng mưa</div>
-            <div class="advice-metric-val" style="color:${rainAnalysis.color}">${activeDay.rainProb}% • ${activeDay.rainSum} mm</div>
-            <div class="advice-metric-sub">${rainAnalysis.label}</div>
-          </div>
-
-          <!-- Metric 3: Wind & Storm -->
-          <div class="advice-metric-box">
-            <div class="advice-metric-label">🌬️ Sức gió & Cấp độ</div>
-            <div class="advice-metric-val" style="color:${windAnalysis.color}">${activeDay.wind} km/h</div>
-            <div class="advice-metric-sub">${windAnalysis.level}</div>
-          </div>
-
-          <!-- Metric 4: UV Index -->
-          <div class="advice-metric-box">
-            <div class="advice-metric-label">☀️ Chỉ số bức xạ UV</div>
-            <div class="advice-metric-val" style="color:${uvAnalysis.color}">UVI ${activeDay.uv}</div>
-            <div class="advice-metric-sub">${uvAnalysis.text}</div>
-          </div>
-        </div>
-
-        <!-- 3 Deep Student Preparation Columns -->
-        <div class="advice-pillars-grid">
-          <!-- Pillar 1: Outfit -->
-          <div class="advice-pillar-card">
-            <div class="pillar-card-title">
-              <span>🧥</span>
-              <span>Trang Phục Khi Ra Đường</span>
+      <!-- 4 School Commute Slots Grid -->
+      <div class="weather-commute-slots-title" style="margin-top:16px">
+        <span>🎒</span> <span>Thời tiết các khung giờ đi học & tan trường:</span>
+      </div>
+      <div class="weather-commute-grid">
+        ${commuteSlots.map(slot => `
+          <div class="commute-slot-card ${slot.badgeClass}">
+            <div class="commute-slot-header">
+              <strong>${slot.name}</strong>
+              <span class="commute-slot-badge ${slot.badgeClass}">${slot.badge}</span>
             </div>
-            <ul class="pillar-card-list">
-              ${advice.outfit.map(item => `<li>${item}</li>`).join('')}
-            </ul>
-          </div>
-
-          <!-- Pillar 2: Skincare & Hydration -->
-          <div class="advice-pillar-card">
-            <div class="pillar-card-title">
-              <span>🧴</span>
-              <span>Chăm Sóc Da & Sức Khỏe</span>
+            <div class="commute-slot-time">${slot.timeRange}</div>
+            <div class="commute-slot-metrics">
+              <span>🌡️ ${slot.temp}°C</span>
+              <span>💧 Mưa: ${slot.rainProb}%</span>
             </div>
-            <ul class="pillar-card-list">
-              ${advice.skincare.map(item => `<li>${item}</li>`).join('')}
-            </ul>
+            <div class="commute-slot-desc">${slot.desc}</div>
           </div>
-
-          <!-- Pillar 3: Casio & Notebook Protection -->
-          <div class="advice-pillar-card highlight-casio">
-            <div class="pillar-card-title">
-              <span>💻</span>
-              <span>Bảo Vệ Máy Tính Casio & Sách Vở</span>
-            </div>
-            <ul class="pillar-card-list">
-              ${advice.casioProtection.map(item => `<li>${item}</li>`).join('')}
-            </ul>
-          </div>
-        </div>
-
-        <!-- Safety Road Reminder -->
-        ${advice.safetyAlert ? `
-          <div class="advice-safety-bar">
-            <span style="font-size:18px">⚠️</span>
-            <span><strong>Lưu ý giao thông:</strong> ${advice.safetyAlert}</span>
-          </div>
-        ` : ''}
-
-        <!-- Interactive Backpack Checklist (1-Click) -->
-        <div class="advice-checklist-box">
-          <div class="advice-checklist-top">
-            <div class="advice-checklist-title">
-              <span>🎒</span>
-              <span>Checklist Balo Đi Học (${activeDayLabel}):</span>
-            </div>
-            <div class="advice-checklist-prog-label" id="checkProgText_${activeDay.date}">
-              Đã chuẩn bị ${checkedItems.length}/${totalChecklist} món (${progressPercent}%)
-            </div>
-          </div>
-
-          <div class="weather-checklist-track">
-            <div class="weather-checklist-bar" id="checkProg_${activeDay.date}" style="width:${progressPercent}%"></div>
-          </div>
-
-          <div class="advice-checklist-items">
-            ${advice.checklist.map((item, cIdx) => {
-              const isChecked = checkedItems.includes(cIdx);
-              return `
-                <div class="advice-check-row ${isChecked ? 'checked' : ''}" id="checkItem_${activeDay.date}_${cIdx}" onclick="toggleWeatherCheckItem('${activeDay.date}', ${cIdx})">
-                  <div class="advice-checkbox-box">
-                    ${isChecked ? '✓' : ''}
-                  </div>
-                  <span class="advice-check-text">${item}</span>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
+        `).join('')}
       </div>
     </div>
   `;
