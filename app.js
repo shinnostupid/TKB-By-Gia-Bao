@@ -2612,94 +2612,103 @@ function renderIosWeatherModalContent() {
       </div>
       <div class="ios-modal-selected-date-str">${fullDateStr}</div>
 
-      <!-- Real-time Inspector Hero -->
-      <div class="ios-inspector-hero">
-        <div class="ios-inspector-time" id="iosInspectorTimeText">
-          ${selHour < 10 ? '0' + selHour : selHour}:00
-        </div>
-        <div class="ios-inspector-temp-row">
-          <span id="iosInspectorIconBox">${getWeatherSvgIcon(hourCond.iconType, 36)}</span>
-          <b id="iosInspectorTempText">${displayTemp}°</b>
-        </div>
-        <div style="font-size:14px;color:#cbd5e1;font-weight:600" id="iosInspectorCondText">${hourCond.text}</div>
-      </div>
-
-      <!-- 24-Hour Temperature Curve Chart Container -->
-      <div class="ios-chart-container" id="iosTempChartContainer">
-        ${chartSvg}
-
-        <!-- Actual vs Feels-like Toggle -->
-        <div class="ios-temp-mode-switch">
-          <button type="button" class="ios-mode-btn ${isActual ? 'active' : ''}" onclick="switchIosModalTempMode('actual')">Thực tế</button>
-          <button type="button" class="ios-mode-btn ${!isActual ? 'active' : ''}" onclick="switchIosModalTempMode('feels_like')">Cảm nhận</button>
-        </div>
-        <div style="text-align:center;font-size:11.5px;color:#8e8e93;margin-top:2px">
-          ${isActual ? 'Nhiệt độ thực tế khí tượng.' : 'Nhiệt độ cơ thể cảm nhận theo độ ẩm & gió.'}
-        </div>
-      </div>
-
-      <!-- Rain Probability Chart Card -->
-      <div class="ios-detail-card">
-        <div class="ios-detail-card-title">Khả năng có mưa</div>
-        <div class="ios-detail-card-sub">Khả năng có mưa vào hôm nay: ${activeDay.rainProb}%</div>
-        ${rainChartSvg}
-        <div class="ios-rain-card-footer">
-          Khả năng có mưa hàng ngày có xu hướng cao hơn khả năng cho mỗi giờ.
-        </div>
-      </div>
-
-      <!-- Total Rain Metrics Card -->
-      <div class="ios-detail-card">
-        <div class="ios-detail-card-title" style="margin-bottom:10px">Tổng lượng mưa</div>
-        <div class="ios-rain-metric-row">
-          <span style="font-size:13px;color:#cbd5e1">24 GIỜ QUA</span>
-          <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${Math.max(0, activeDay.rainSum - 0.2).toFixed(1)} mm</span>
-        </div>
-        <div class="ios-rain-metric-row">
-          <span style="font-size:13px;color:#cbd5e1">24 GIỜ TỚI</span>
-          <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${activeDay.rainSum > 0 ? activeDay.rainSum + ' mm' : '<1 mm'}</span>
-        </div>
-      </div>
-
-      <!-- Detailed Summary Card -->
-      <div class="ios-detail-card">
-        <div class="ios-detail-card-title" style="margin-bottom:8px">Dự báo chi tiết</div>
-        <div style="font-size:13px;color:#cbd5e1;line-height:1.55">
-          ${summaryDesc}
-        </div>
-      </div>
-
-      <!-- Daily Comparison Card -->
-      <div class="ios-detail-card">
-        <div class="ios-detail-card-title" style="margin-bottom:4px">So sánh hàng ngày</div>
-        <div style="font-size:12.5px;color:#98989f;margin-bottom:12px">${compDesc}</div>
-
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
-            <span style="font-weight:700;color:#fff;width:80px">Hôm nay</span>
-            <span style="color:#94a3b8;width:30px;text-align:right">${activeDay.minTemp}°</span>
-            <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
-              <div style="position:absolute;left:20%;width:60%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b,#ef4444);border-radius:4px"></div>
+      <!-- Responsive Grid: 1 Column on Mobile, 2 Columns on Desktop -->
+      <div class="ios-modal-grid">
+        <!-- Primary Left Column: Hero, 24H Temperature Curve, Rain Chart -->
+        <div class="ios-modal-col-primary">
+          <!-- Real-time Inspector Hero -->
+          <div class="ios-inspector-hero">
+            <div class="ios-inspector-time" id="iosInspectorTimeText">
+              ${selHour < 10 ? '0' + selHour : selHour}:00
             </div>
-            <span style="font-weight:750;color:#fff;width:30px">${activeDay.maxTemp}°</span>
+            <div class="ios-inspector-temp-row">
+              <span id="iosInspectorIconBox">${getWeatherSvgIcon(hourCond.iconType, 36)}</span>
+              <b id="iosInspectorTempText">${displayTemp}°</b>
+            </div>
+            <div style="font-size:14px;color:#cbd5e1;font-weight:600" id="iosInspectorCondText">${hourCond.text}</div>
           </div>
 
-          <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
-            <span style="font-weight:700;color:#cbd5e1;width:80px">Hôm qua</span>
-            <span style="color:#94a3b8;width:30px;text-align:right">${prevDay.minTemp}°</span>
-            <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
-              <div style="position:absolute;left:18%;width:58%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b);border-radius:4px"></div>
+          <!-- 24-Hour Temperature Curve Chart Container -->
+          <div class="ios-chart-container" id="iosTempChartContainer">
+            ${chartSvg}
+
+            <!-- Actual vs Feels-like Toggle -->
+            <div class="ios-temp-mode-switch">
+              <button type="button" class="ios-mode-btn ${isActual ? 'active' : ''}" onclick="switchIosModalTempMode('actual')">Thực tế</button>
+              <button type="button" class="ios-mode-btn ${!isActual ? 'active' : ''}" onclick="switchIosModalTempMode('feels_like')">Cảm nhận</button>
             </div>
-            <span style="font-weight:750;color:#fff;width:30px">${prevDay.maxTemp}°</span>
+            <div style="text-align:center;font-size:11.5px;color:#8e8e93;margin-top:2px">
+              ${isActual ? 'Nhiệt độ thực tế khí tượng.' : 'Nhiệt độ cơ thể cảm nhận theo độ ẩm & gió.'}
+            </div>
+          </div>
+
+          <!-- Rain Probability Chart Card -->
+          <div class="ios-detail-card">
+            <div class="ios-detail-card-title">Khả năng có mưa</div>
+            <div class="ios-detail-card-sub">Khả năng có mưa vào hôm nay: ${activeDay.rainProb}%</div>
+            ${rainChartSvg}
+            <div class="ios-rain-card-footer">
+              Khả năng có mưa hàng ngày có xu hướng cao hơn khả năng cho mỗi giờ.
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Feels Like Note -->
-      <div class="ios-detail-card" style="margin-bottom:0">
-        <div class="ios-detail-card-title" style="margin-bottom:6px">Giới thiệu về Nhiệt độ cảm nhận</div>
-        <div style="font-size:12.5px;color:#98989f;line-height:1.5">
-          Nhiệt độ cảm nhận biểu thị độ ấm hoặc độ lạnh mà bạn cảm thấy và có thể khác với nhiệt độ thực tế. Nhiệt độ cảm nhận bị ảnh hưởng bởi độ ẩm, ánh nắng và gió.
+        <!-- Secondary Right Column: Total Rain, Summary, Comparison, Feels Like Info -->
+        <div class="ios-modal-col-secondary">
+          <!-- Total Rain Metrics Card -->
+          <div class="ios-detail-card">
+            <div class="ios-detail-card-title" style="margin-bottom:10px">Tổng lượng mưa</div>
+            <div class="ios-rain-metric-row">
+              <span style="font-size:13px;color:#cbd5e1">24 GIỜ QUA</span>
+              <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${Math.max(0, activeDay.rainSum - 0.2).toFixed(1)} mm</span>
+            </div>
+            <div class="ios-rain-metric-row">
+              <span style="font-size:13px;color:#cbd5e1">24 GIỜ TỚI</span>
+              <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${activeDay.rainSum > 0 ? activeDay.rainSum + ' mm' : '<1 mm'}</span>
+            </div>
+          </div>
+
+          <!-- Detailed Summary Card -->
+          <div class="ios-detail-card">
+            <div class="ios-detail-card-title" style="margin-bottom:8px">Dự báo chi tiết</div>
+            <div style="font-size:13px;color:#cbd5e1;line-height:1.55">
+              ${summaryDesc}
+            </div>
+          </div>
+
+          <!-- Daily Comparison Card -->
+          <div class="ios-detail-card">
+            <div class="ios-detail-card-title" style="margin-bottom:4px">So sánh hàng ngày</div>
+            <div style="font-size:12.5px;color:#98989f;margin-bottom:12px">${compDesc}</div>
+
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
+                <span style="font-weight:700;color:#fff;width:80px">Hôm nay</span>
+                <span style="color:#94a3b8;width:30px;text-align:right">${activeDay.minTemp}°</span>
+                <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
+                  <div style="position:absolute;left:20%;width:60%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b,#ef4444);border-radius:4px"></div>
+                </div>
+                <span style="font-weight:750;color:#fff;width:30px">${activeDay.maxTemp}°</span>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
+                <span style="font-weight:700;color:#cbd5e1;width:80px">Hôm qua</span>
+                <span style="color:#94a3b8;width:30px;text-align:right">${prevDay.minTemp}°</span>
+                <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
+                  <div style="position:absolute;left:18%;width:58%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b);border-radius:4px"></div>
+                </div>
+                <span style="font-weight:750;color:#fff;width:30px">${prevDay.maxTemp}°</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feels Like Note -->
+          <div class="ios-detail-card" style="margin-bottom:0">
+            <div class="ios-detail-card-title" style="margin-bottom:6px">Giới thiệu về Nhiệt độ cảm nhận</div>
+            <div style="font-size:12.5px;color:#98989f;line-height:1.5">
+              Nhiệt độ cảm nhận biểu thị độ ấm hoặc độ lạnh mà bạn cảm thấy và có thể khác với nhiệt độ thực tế. Nhiệt độ cảm nhận bị ảnh hưởng bởi độ ẩm, ánh nắng và gió.
+            </div>
+          </div>
         </div>
       </div>
     </div>

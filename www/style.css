@@ -5171,14 +5171,15 @@ aside nav button.active .nav-svg,
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   z-index: 10000;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   opacity: 1;
   transition: opacity 0.25s ease;
+  padding: 0;
 }
 
 .ios-weather-modal-overlay.hidden {
@@ -5189,13 +5190,13 @@ aside nav button.active .nav-svg,
 
 .ios-weather-modal-box {
   width: 100%;
-  max-width: 440px;
-  max-height: 88vh;
+  max-width: 480px;
+  max-height: 90vh;
   background: #1c1c1e;
   border-radius: 28px 28px 0 0;
   overflow-y: auto;
   overflow-x: hidden;
-  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.75);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-bottom: none;
@@ -5203,20 +5204,35 @@ aside nav button.active .nav-svg,
   -webkit-overflow-scrolling: touch;
 }
 
-@media (min-width: 641px) {
-  .ios-weather-modal-overlay {
-    align-items: center;
-  }
-  .ios-weather-modal-box {
-    border-radius: 24px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    max-height: 84vh;
-  }
+/* Custom modern scrollbar for desktop modal */
+.ios-weather-modal-box::-webkit-scrollbar {
+  width: 6px;
+}
+.ios-weather-modal-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ios-weather-modal-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+}
+.ios-weather-modal-box::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 @keyframes slideUpIosModal {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
+}
+
+@keyframes zoomInIosModal {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .ios-modal-inner {
@@ -5265,7 +5281,7 @@ aside nav button.active .nav-svg,
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
-  gap: 4px;
+  gap: 6px;
 }
 
 .ios-date-pill {
@@ -5275,9 +5291,12 @@ aside nav button.active .nav-svg,
   align-items: center;
   gap: 3px;
   cursor: pointer;
-  padding: 4px 0;
-  border-radius: 12px;
+  padding: 5px 0;
+  border-radius: 14px;
   transition: all 0.15s;
+}
+.ios-date-pill:hover {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .ios-date-pill-day {
@@ -5312,10 +5331,24 @@ aside nav button.active .nav-svg,
   margin-bottom: 14px;
 }
 
+/* Modal Grid Structure: 1 Column on Mobile, 2 Columns on Desktop */
+.ios-modal-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ios-modal-col-primary,
+.ios-modal-col-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 /* Big Inspector Header */
 .ios-inspector-hero {
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .ios-inspector-time {
@@ -5329,7 +5362,7 @@ aside nav button.active .nav-svg,
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 300;
   color: #ffffff;
   line-height: 1.1;
@@ -5341,10 +5374,10 @@ aside nav button.active .nav-svg,
   position: relative;
   background: #242426;
   border-radius: 16px;
-  padding: 10px 8px 8px;
-  margin-bottom: 14px;
+  padding: 12px 10px 10px;
   user-select: none;
   touch-action: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ios-chart-svg {
@@ -5355,10 +5388,11 @@ aside nav button.active .nav-svg,
 
 .ios-temp-mode-switch {
   display: flex;
-  background: #3a3a3c;
-  border-radius: 9px;
-  padding: 2px;
+  background: #2c2c2e;
+  padding: 3px;
+  border-radius: 10px;
   margin: 10px auto 4px;
+  width: 100%;
   max-width: 260px;
 }
 
@@ -5367,38 +5401,43 @@ aside nav button.active .nav-svg,
   padding: 5px 0;
   border: none;
   background: transparent;
-  color: #98989f;
+  color: #8e8e93;
   font-size: 12px;
   font-weight: 650;
-  border-radius: 7px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s;
 }
 
 .ios-mode-btn.active {
   background: #636366;
   color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Rain Probability Chart Card */
+/* iOS Detail Cards */
 .ios-detail-card {
   background: #242426;
   border-radius: 16px;
-  padding: 14px;
-  margin-bottom: 12px;
+  padding: 14px 16px;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .ios-detail-card-title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 750;
-  color: #ffffff;
+  color: #98989f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 2px;
 }
 
 .ios-detail-card-sub {
-  font-size: 12.5px;
-  color: #98989f;
-  margin-bottom: 10px;
+  font-size: 13.5px;
+  font-weight: 650;
+  color: #f8fafc;
+  margin-bottom: 12px;
 }
 
 .ios-rain-chart-svg {
@@ -5418,9 +5457,72 @@ aside nav button.active .nav-svg,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 9px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .ios-rain-metric-row:last-child {
   border-bottom: none;
+}
+
+/* ================= DESKTOP & TABLET EXPANSIVE LAYOUT (PC RESPONSIVE) ================= */
+@media (min-width: 768px) {
+  .ios-weather-modal-overlay {
+    align-items: center;
+    padding: 24px;
+  }
+
+  .ios-weather-modal-box {
+    max-width: 980px;
+    width: 92vw;
+    max-height: 88vh;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: zoomInIosModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ios-modal-inner {
+    padding: 22px 28px 32px;
+  }
+
+  .ios-modal-top-bar {
+    margin-bottom: 12px;
+  }
+
+  .ios-date-pills-row {
+    max-width: 540px;
+    margin: 0 auto 6px;
+    gap: 10px;
+  }
+
+  .ios-date-pill {
+    padding: 6px 4px;
+  }
+
+  .ios-date-pill-num {
+    width: 32px;
+    height: 32px;
+    font-size: 15px;
+  }
+
+  .ios-modal-selected-date-str {
+    margin-bottom: 18px;
+    font-size: 13.5px;
+  }
+
+  /* 2-Column Side-by-Side Grid on PC */
+  .ios-modal-grid {
+    display: grid;
+    grid-template-columns: 1.18fr 0.82fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .ios-chart-svg {
+    height: 190px;
+  }
+
+  .ios-rain-chart-svg {
+    height: 130px;
+  }
 }
