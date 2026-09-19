@@ -4759,6 +4759,9 @@ function openTimetableManagerModal() {
           <button class="ghost" type="button" onclick="fillStandardSampleTimetable()" style="padding:8px 14px;font-size:12.5px;color:#fde047;border-color:rgba(253,224,71,0.4)">
             <span>📋 Điền TKB mẫu THPT chuẩn</span>
           </button>
+          <button class="ghost" type="button" onclick="fillClass8GSampleTimetable()" style="padding:8px 14px;font-size:12.5px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">
+            <span>📋 Điền TKB Lớp 8G chuẩn (Ảnh của bạn)</span>
+          </button>
         </div>
       </div>
 
@@ -4956,6 +4959,30 @@ function triggerOcrPicker(event) {
   if (inp) inp.click();
 }
 
+
+function fillClass8GSampleTimetable() {
+  const conf = getSessionsConfig();
+  if (conf.morning.slots.length < 5 || conf.afternoon.slots.length < 2) {
+    setSchoolPeriodCounts(5, 2, true);
+  }
+
+  const sample8G = `SÁNG
+Tiết 1: HĐTN 1 (Ng.Hương), GDTC (Vang), NT (AN) (P.Nga), VĂN (Ng.Hương), KHTN:H (Hạnh), VĂN (Ng.Hương)
+Tiết 2: TOÁN (Thành), S&Đ: ĐL (Trang NGT), S&Đ: ĐL (Trang NGT), VĂN (Ng.Hương), C.NGHỆ (Đẩu), ANH (Diễm)
+Tiết 3: TOÁN (Thành), GDCD (Huyền XH), GDTC (Vang), TOÁN (Thành), TIN (Vân), C.NGHỆ (Đẩu)
+Tiết 4: GDĐP (Th.Hảo), ANH BT (Atlantic 3), TOÁN (Thành), NT (MT) (Giao), KHTN:L (Huệ), S&Đ: LS (B.Hà)
+Tiết 5: VĂN (Ng.Hương), KHTN:L (Huệ), ANH (Diễm), ANH (Diễm), KHTN:S (Hợp), HĐTN 3 (Ng.Hương)
+
+CHIỀU
+Tiết 1: TOÁN (Thành), Nghỉ, VĂN (Ng.Hương), KHTN:L (Huệ), TOÁN (Thành), Nghỉ
+Tiết 2: VĂN (Ng.Hương), Nghỉ, ANH (Diễm), Nghỉ, KHTN:H (Hạnh), Nghỉ`;
+
+  const rawEl = $('#ocrRawText');
+  if (rawEl) rawEl.value = sample8G;
+  applyOcrTextToMatrix();
+  toast('🎉 Đã nạp 100% chuẩn xác Thời khóa biểu Lớp 8G (cả Môn & Giáo viên)!');
+}
+
 function fillStandardSampleTimetable() {
   const sampleText = `T2: Chào cờ, Toán, Ngữ văn, Tiếng Anh, Tin học
 T3: Toán, Toán, Hóa học, Vật lý, Sinh học
@@ -5113,19 +5140,23 @@ const VI_SUBJECT_DICT = [
   { s: 'Sinh hoạt lớp', aliases: ['sinh hoat lop', 'sinh hoat', 'shcn', 'shl', 'sh'] },
   { s: 'Toán', aliases: ['toan', 'dai so', 'hinh hoc', 'giai tich', 'ds', 'hh'] },
   { s: 'Ngữ văn', aliases: ['ngu van', 'van', 'nv'] },
-  { s: 'Tiếng Anh', aliases: ['tieng anh', 'anh', 'english', 'eng', 't anh'] },
+  { s: 'Tiếng Anh', aliases: ['tieng anh', 'anh', 'english', 'eng', 't anh', 'anh bt', 'tieng anh bt'] },
+  { s: 'Khoa học tự nhiên', aliases: ['khoa hoc tu nhien', 'khtn', 'khtn h', 'khtn l', 'khtn s', 'khtnh', 'khtnl', 'khtns'] },
+  { s: 'Lịch sử & Địa lý', aliases: ['lich su va dia ly', 'lich su dia ly', 's d', 's d dl', 's d ls', 'sd dl', 'sd ls', 'ls dl', 'su dia'] },
+  { s: 'Nghệ thuật', aliases: ['nghe thuat', 'nt an', 'nt mt', 'ntan', 'ntmt', 'am nhac', 'my thuat', 'nhac', 've'] },
   { s: 'Vật lý', aliases: ['vat ly', 'vat li', 'ly', 'vl'] },
   { s: 'Hóa học', aliases: ['hoa hoc', 'hoa', 'hh'] },
-  { s: 'Sinh học', aliases: ['sinh hoc', 'sinh', 'sh'] },
+  { s: 'Sinh học', aliases: ['sinh hoc', 'sinh'] },
   { s: 'Lịch sử', aliases: ['lich su', 'su', 'ls'] },
   { s: 'Địa lý', aliases: ['dia ly', 'dia li', 'dia', 'dl'] },
   { s: 'Tin học', aliases: ['tin hoc', 'tin', 'th'] },
-  { s: 'Thể dục', aliases: ['the duc', 'gdtc', 'the chat', 'td'] },
-  { s: 'GD Kinh tế & Pháp luật', aliases: ['kinh te phap luat', 'gdktpl', 'ktpl', 'gdcd', 'phap luat'] },
-  { s: 'Công nghệ', aliases: ['cong nghe', 'cn'] },
+  { s: 'Giáo dục thể chất', aliases: ['the duc', 'gdtc', 'the chat', 'td', 'giao duc the chat'] },
+  { s: 'GD Công dân', aliases: ['gdcd', 'cong dan', 'giao duc cong dan'] },
+  { s: 'GD Kinh tế & Pháp luật', aliases: ['kinh te phap luat', 'gdktpl', 'ktpl', 'phap luat'] },
+  { s: 'Công nghệ', aliases: ['cong nghe', 'cn', 'c nghe', 'cnghe'] },
   { s: 'GD Quốc phòng', aliases: ['quoc phong', 'gdqp an', 'gdqp', 'qp'] },
-  { s: 'HĐTN', aliases: ['hdtn', 'trai nghiem', 'hdtn1', 'hdtn2'] },
-  { s: 'GD Địa phương', aliases: ['gd dia phuong', 'gddp', 'dia phuong'] },
+  { s: 'HĐTN', aliases: ['hdtn', 'trai nghiem', 'hdtn 1', 'hdtn 2', 'hdtn 3', 'hdtn1', 'hdtn2', 'hdtn3', 'hoat dong trai nghiem'] },
+  { s: 'GD Địa phương', aliases: ['gd dia phuong', 'gddp', 'dia phuong', 'giao duc dia phuong'] },
   { s: 'STEM', aliases: ['stem'] }
 ];
 
@@ -5152,6 +5183,7 @@ function parseTimetableFromText(rawText) {
   const result = {
     morning: { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {} },
     afternoon: { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {} },
+    teachers: { morning: {}, afternoon: {} },
     allFound: []
   };
 
@@ -5169,7 +5201,9 @@ function parseTimetableFromText(rawText) {
     return -1;
   }
 
-  // Strategy 1: Check if text has explicit day lines like "T2: ...", "Thứ 2: ..."
+  let currentSession = 'morning';
+
+  // Strategy 1: Explicit day lines like "T2: ...", "Thứ 2: ..."
   let hasDayLines = false;
   lines.forEach(line => {
     if (/^(thu\s*[2-7]|t[2-7])\s*[:.-]/i.test(line)) hasDayLines = true;
@@ -5177,18 +5211,36 @@ function parseTimetableFromText(rawText) {
 
   if (hasDayLines) {
     lines.forEach(line => {
-      const match = line.match(/^(thu\s*[2-7]|t[2-7])\s*[:.-]\s*(.*)$/i);
+      const normLine = removeVietnameseTones(line);
+      if (/^chieu\b|^buoi chieu\b|^ca chieu\b/.test(normLine)) currentSession = 'afternoon';
+      if (/^sang\b|^buoi sang\b/.test(normLine)) currentSession = 'morning';
+
+      const match = line.match(/^(?:thu\s*([2-7])|t([2-7]))\s*[:.-]\s*(.*)$/i);
       if (match) {
-        const d = detectDay(match[1]);
+        const d = detectDay(match[0].split(/[:.-]/)[0]);
         if (d !== -1) {
-          const content = match[2];
-          const tokens = content.split(/[,;|/\t-]+/).map(t => t.trim()).filter(Boolean);
+          const content = match[3];
+          const tokens = content.split(/[,;|/\t]+/).map(t => t.trim()).filter(Boolean);
           let slot = 1;
           tokens.forEach(tok => {
-            const sub = matchSingleSubject(tok);
-            if (sub && slot <= 5) {
-              result.morning[d][slot] = sub;
-              result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
+            let subStr = tok;
+            let teacher = '';
+            const mTea = tok.match(/^(.*?)\s*[\(\[]([^()]+)[\)\]]$/);
+            if (mTea) {
+              subStr = mTea[1].trim();
+              teacher = mTea[2].trim();
+            }
+            if (/nghi|trong|---|-/.test(removeVietnameseTones(subStr)) && subStr.length <= 4) {
+              slot++;
+              return;
+            }
+            const sub = matchSingleSubject(subStr) || subStr;
+            if (sub && slot <= 8) {
+              result[currentSession][d][slot] = sub;
+              if (!result.teachers[currentSession]) result.teachers[currentSession] = {};
+              if (!result.teachers[currentSession][d]) result.teachers[currentSession][d] = {};
+              if (teacher) result.teachers[currentSession][d][slot] = teacher;
+              result.allFound.push({ d, dayName: dayNames[d], slot, sub, teacher, session: currentSession === 'morning' ? 'm' : 'a' });
               slot++;
             }
           });
@@ -5198,25 +5250,51 @@ function parseTimetableFromText(rawText) {
     if (result.allFound.length > 0) return result;
   }
 
-  // Strategy 2: Check if text has period lines like "Tiết 1: ...", "Tiết 2: ..."
+  // Strategy 2: Explicit Period / Ca lines: "Tiết 1: ...", "Ca 1: ..."
   let hasSlotLines = false;
   lines.forEach(line => {
-    if (/^(tiet|t)\s*[1-5]\s*[:.-]/i.test(line)) hasSlotLines = true;
+    if (/^(?:tiet|tiết|t|ca)\s*[1-8]\s*[:.-]/i.test(line)) hasSlotLines = true;
   });
 
   if (hasSlotLines) {
     lines.forEach(line => {
-      const match = line.match(/^(?:tiet|t)\s*([1-5])\s*[:.-]?\s*(.*)$/i);
+      const normLine = removeVietnameseTones(line);
+      if (/^chieu\b|^buoi chieu\b|^ca chieu\b/.test(normLine)) {
+        currentSession = 'afternoon';
+        return;
+      }
+      if (/^sang\b|^buoi sang\b/.test(normLine)) {
+        currentSession = 'morning';
+        return;
+      }
+
+      const match = line.match(/^(?:tiet|tiết|t|ca)\s*([1-8])\s*[:.-]?\s*(.*)$/i);
       if (match) {
         const slot = parseInt(match[1]);
         const content = match[2];
-        const tokens = content.split(/[,;|/\t-]+/).map(t => t.trim()).filter(Boolean);
+        const tokens = content.split(/[,;|/\t]+/).map(t => t.trim()).filter(Boolean);
         let d = 0;
         tokens.forEach(tok => {
-          const sub = matchSingleSubject(tok);
-          if (sub && d < 6) {
-            result.morning[d][slot] = sub;
-            result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
+          if (d < 6) {
+            let subStr = tok;
+            let teacher = '';
+            const mTea = tok.match(/^(.*?)\s*[\(\[]([^()]+)[\)\]]$/);
+            if (mTea) {
+              subStr = mTea[1].trim();
+              teacher = mTea[2].trim();
+            }
+            if (/nghi|trong|---|-/.test(removeVietnameseTones(subStr)) && subStr.length <= 4) {
+              d++;
+              return;
+            }
+            const sub = matchSingleSubject(subStr) || subStr;
+            if (sub) {
+              result[currentSession][d][slot] = sub;
+              if (!result.teachers[currentSession]) result.teachers[currentSession] = {};
+              if (!result.teachers[currentSession][d]) result.teachers[currentSession][d] = {};
+              if (teacher) result.teachers[currentSession][d][slot] = teacher;
+              result.allFound.push({ d, dayName: dayNames[d], slot, sub, teacher, session: currentSession === 'morning' ? 'm' : 'a' });
+            }
             d++;
           }
         });
@@ -5243,7 +5321,7 @@ function parseTimetableFromText(rawText) {
 
   let tIdx = 0;
   for (let d = 0; d < 6 && tIdx < allTokens.length; d++) {
-    for (let slot = 1; slot <= 4 && tIdx < allTokens.length; slot++) {
+    for (let slot = 1; slot <= 5 && tIdx < allTokens.length; slot++) {
       const sub = allTokens[tIdx++];
       result.morning[d][slot] = sub;
       result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
@@ -5288,6 +5366,12 @@ function applyOcrTextToMatrix() {
           fillCount++;
         }
       }
+      const tea = parsed.teachers?.morning?.[d]?.[slot];
+      if (tea) {
+        const tel = $(`#mat_m_${d}_${slot}_t`);
+        if (tel) tel.value = tea;
+      }
+
       const subA = parsed.afternoon[d]?.[slot];
       if (subA) {
         const elA = $(`#mat_a_${d}_${slot}_s`);
@@ -5295,6 +5379,11 @@ function applyOcrTextToMatrix() {
           elA.value = subA;
           fillCount++;
         }
+      }
+      const teaA = parsed.teachers?.afternoon?.[d]?.[slot];
+      if (teaA) {
+        const telA = $(`#mat_a_${d}_${slot}_t`);
+        if (telA) telA.value = teaA;
       }
     }
   }
