@@ -2718,7 +2718,7 @@ function renderIosWeatherModalContent() {
   attachChartScrubberListeners(hours, isActual, getFeelsLike);
 }
 
-// Generate SVG Temperature Curve with cubic bezier spline
+// Generate SVG Temperature Curve with cubic bezier spline (Nét liền mượt mà chuẩn Apple)
 function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
   const W = 380;
   const H = 160;
@@ -2803,7 +2803,7 @@ function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
     <svg class="ios-chart-svg" id="iosInteractiveChartSvg" viewBox="0 0 ${W} ${H}">
       <defs>
         <linearGradient id="tempAreaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
+          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.65"/>
           <stop offset="50%" stop-color="#d97706" stop-opacity="0.25"/>
           <stop offset="100%" stop-color="#1c1917" stop-opacity="0.02"/>
         </linearGradient>
@@ -2818,18 +2818,18 @@ function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
       <!-- Gradient Area Fill -->
       <path d="${areaD}" fill="url(#tempAreaGrad)"/>
 
-      <!-- Spline Stroke -->
-      <path d="${curveD}" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4,3"/>
+      <!-- Spline Solid Stroke (Nét liền hoàn toàn chuẩn iOS) -->
+      <path d="${curveD}" fill="none" stroke="#f59e0b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
 
       <!-- Max / Min Points C and T -->
-      <circle cx="${maxPoint.x.toFixed(1)}" cy="${maxPoint.y.toFixed(1)}" r="3" fill="#ffffff"/>
+      <circle cx="${maxPoint.x.toFixed(1)}" cy="${maxPoint.y.toFixed(1)}" r="3.2" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
       <text x="${maxPoint.x.toFixed(1)}" y="${(maxPoint.y - 7).toFixed(1)}" fill="#f8fafc" font-size="10" font-weight="800" text-anchor="middle">C</text>
 
-      <circle cx="${minPoint.x.toFixed(1)}" cy="${minPoint.y.toFixed(1)}" r="3" fill="#ffffff"/>
+      <circle cx="${minPoint.x.toFixed(1)}" cy="${minPoint.y.toFixed(1)}" r="3.2" fill="#ffffff" stroke="#f59e0b" stroke-width="1.5"/>
       <text x="${minPoint.x.toFixed(1)}" y="${(minPoint.y - 7).toFixed(1)}" fill="#f8fafc" font-size="10" font-weight="800" text-anchor="middle">T</text>
 
       <!-- Interactive Scrubber Vertical Line & Glowing Dot -->
-      <line id="iosScrubberLine" x1="${selPt.x.toFixed(1)}" y1="24" x2="${selPt.x.toFixed(1)}" y2="${bottomY}" stroke="#ffffff" stroke-width="1.8"/>
+      <line id="iosScrubberLine" x1="${selPt.x.toFixed(1)}" y1="24" x2="${selPt.x.toFixed(1)}" y2="${bottomY}" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
       <circle id="iosScrubberDot" cx="${selPt.x.toFixed(1)}" cy="${selPt.y.toFixed(1)}" r="5.5" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
 
       <!-- Bottom time labels -->
@@ -2838,7 +2838,7 @@ function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
   `;
 }
 
-// Generate Rain Probability Chart
+// Generate Rain Probability Continuous Wave & Area Chart (Nét uốn lượn liền mạch chuẩn iOS)
 function generateIosRainChartSvg(hours) {
   const W = 380;
   const H = 110;
@@ -2858,19 +2858,33 @@ function generateIosRainChartSvg(hours) {
     `;
   }).join('');
 
-  // Bars for each hour
-  const barW = Math.max(3, (plotW / 24) - 2.5);
-  const bars = hours.map((h, i) => {
-    const x = padLeft + (i / 24) * plotW;
-    const bHeight = Math.max(2, (h.rainProb / 100) * plotH);
-    const y = padTop + plotH - bHeight;
-    const isZero = h.rainProb === 0;
-    const col = h.rainProb >= 50 ? '#38bdf8' : '#0284c7';
+  // Rain probability curve points across 24 hours
+  const points = [];
+  for (let i = 0; i < 24; i++) {
+    const h = hours[i] || { rainProb: 0 };
+    const x = padLeft + (i / 23) * plotW;
+    const y = padTop + plotH - (Math.max(0, Math.min(100, h.rainProb)) / 100) * plotH;
+    points.push({ x, y, prob: h.rainProb });
+  }
 
-    return `
-      <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${bHeight.toFixed(1)}" fill="${isZero ? 'rgba(255,255,255,0.08)' : col}" rx="2"/>
-    `;
-  }).join('');
+  // Smooth spline curve for rain probability
+  let rainCurveD = 'M ' + points[0].x.toFixed(1) + ' ' + points[0].y.toFixed(1);
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i === 0 ? 0 : i - 1];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[i + 2] || p2;
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    rainCurveD += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+  }
+
+  const bottomY = padTop + plotH;
+  const rainAreaD = `${rainCurveD} L ${points[points.length - 1].x.toFixed(1)} ${bottomY} L ${points[0].x.toFixed(1)} ${bottomY} Z`;
 
   // X labels
   const xLabels = [
@@ -2879,78 +2893,153 @@ function generateIosRainChartSvg(hours) {
     { h: 12, label: '12 giờ' },
     { h: 18, label: '18 giờ' }
   ].map(item => {
-    const x = padLeft + (item.h / 24) * plotW;
+    const x = padLeft + (item.h / 23) * plotW;
     return `<text x="${x.toFixed(1)}" y="${H - 6}" fill="#8e8e93" font-size="10.5" text-anchor="middle" font-weight="600">${item.label}</text>`;
   }).join('');
 
   return `
     <svg class="ios-rain-chart-svg" viewBox="0 0 ${W} ${H}">
+      <defs>
+        <linearGradient id="rainAreaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
+          <stop offset="70%" stop-color="#0284c7" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#0369a1" stop-opacity="0.02"/>
+        </linearGradient>
+      </defs>
       ${yGrids}
-      ${bars}
+      <!-- Gradient Fill under continuous rain curve -->
+      <path d="${rainAreaD}" fill="url(#rainAreaGrad)"/>
+      <!-- Smooth Solid Line for rain curve -->
+      <path d="${rainCurveD}" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
       ${xLabels}
     </svg>
   `;
 }
 
-// Interactive Scrubber Touch/Mouse Handler
+// Continuous Sub-Minute High-Performance Interactive Scrubber (Siêu mượt 60fps)
 function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
   const svg = document.getElementById('iosInteractiveChartSvg');
   if (!svg) return;
 
-  const updateScrubber = (clientX) => {
-    const rect = svg.getBoundingClientRect();
-    const padLeft = 14;
-    const padRight = 44;
-    const plotW = 380 - padLeft - padRight;
-    const relX = ((clientX - rect.left) / rect.width) * 380;
-    const clampedX = Math.max(padLeft, Math.min(380 - padRight, relX));
+  const padLeft = 14;
+  const padRight = 44;
+  const padTop = 32;
+  const padBottom = 26;
+  const plotW = 380 - padLeft - padRight;
+  const plotH = 160 - padTop - padBottom;
+  const minScale = 18;
+  const maxScale = 39;
+  const scaleRange = maxScale - minScale;
 
-    const h = Math.max(0, Math.min(23, Math.round(((clampedX - padLeft) / plotW) * 23)));
-    iosWeatherModalState.selectedHour = h;
-
+  // Precompute hour data points
+  const points = [];
+  for (let h = 0; h < 24; h++) {
     const item = hours[h] || { temp: 26, code: 1, wind: 10 };
     const val = isActual ? item.temp : getFeelsLike(item.temp, item.wind, item.code);
-    const cond = getWmoCondition(item.code, h, item.temp, item.wind);
-
     const x = padLeft + (h / 23) * plotW;
-    const y = 32 + (160 - 32 - 26) - ((val - 18) / (39 - 18)) * (160 - 32 - 26);
+    const y = padTop + plotH - ((val - minScale) / scaleRange) * plotH;
+    points.push({ h, val, x, y, code: item.code, wind: item.wind, temp: item.temp });
+  }
 
-    // Update scrubber DOM elements
-    const line = document.getElementById('iosScrubberLine');
-    const dot = document.getElementById('iosScrubberDot');
+  // Pre-cached DOM elements for 60fps sub-minute scrubber
+  const line = document.getElementById('iosScrubberLine');
+  const dot = document.getElementById('iosScrubberDot');
+  const timeEl = document.getElementById('iosInspectorTimeText');
+  const tempEl = document.getElementById('iosInspectorTempText');
+  const condEl = document.getElementById('iosInspectorCondText');
+  const iconEl = document.getElementById('iosInspectorIconBox');
+
+  let rafId = null;
+  let targetClientX = null;
+
+  const renderFrame = () => {
+    rafId = null;
+    if (targetClientX === null) return;
+
+    const rect = svg.getBoundingClientRect();
+    const relX = ((targetClientX - rect.left) / rect.width) * 380;
+    const clampedX = Math.max(padLeft, Math.min(380 - padRight, relX));
+
+    // Continuous fractional hour: 0.000 to 23.000
+    const fracHour = ((clampedX - padLeft) / plotW) * 23;
+    const h0 = Math.max(0, Math.min(22, Math.floor(fracHour)));
+    const h1 = Math.min(23, h0 + 1);
+    const tRatio = Math.max(0, Math.min(1, fracHour - h0));
+
+    // Exact sub-minute calculation
+    const totalMinutes = Math.round(fracHour * 60);
+    const displayH = Math.floor(totalMinutes / 60);
+    const displayM = totalMinutes % 60;
+    const timeStr = (displayH < 10 ? '0' + displayH : displayH) + ':' + (displayM < 10 ? '0' + displayM : displayM);
+
+    // Continuous cubic Bézier interpolation for Y coordinate
+    const pPrev = points[h0 === 0 ? 0 : h0 - 1];
+    const p0 = points[h0];
+    const p1 = points[h1];
+    const pNext = points[h1 === 23 ? 23 : h1 + 1];
+
+    const cp1y = p0.y + (p1.y - pPrev.y) / 6;
+    const cp2y = p1.y - (pNext.y - p0.y) / 6;
+
+    // Cubic Bézier formula: B(t) = (1-t)^3*P0 + 3(1-t)^2*t*CP1 + 3(1-t)*t^2*CP2 + t^3*P1
+    const oneMinusT = 1 - tRatio;
+    const smoothY = oneMinusT * oneMinusT * oneMinusT * p0.y
+      + 3 * oneMinusT * oneMinusT * tRatio * cp1y
+      + 3 * oneMinusT * tRatio * tRatio * cp2y
+      + tRatio * tRatio * tRatio * p1.y;
+
+    // Nearest integer hour for condition code & icon
+    const nearestHour = Math.round(fracHour);
+    iosWeatherModalState.selectedHour = nearestHour;
+    const activeItem = points[nearestHour] || points[h0];
+    const cond = getWmoCondition(activeItem.code, displayH, activeItem.temp, activeItem.wind);
+
+    // Continuous interpolated temperature (rounded to integer for clean iOS display)
+    const smoothVal = Math.round(p0.val + (p1.val - p0.val) * tRatio);
+
+    // Update SVG elements instantly with sub-pixel precision
     if (line) {
-      line.setAttribute('x1', x.toFixed(1));
-      line.setAttribute('x2', x.toFixed(1));
+      line.setAttribute('x1', clampedX.toFixed(2));
+      line.setAttribute('x2', clampedX.toFixed(2));
     }
     if (dot) {
-      dot.setAttribute('cx', x.toFixed(1));
-      dot.setAttribute('cy', y.toFixed(1));
+      dot.setAttribute('cx', clampedX.toFixed(2));
+      dot.setAttribute('cy', smoothY.toFixed(2));
     }
 
-    // Update text elements above
-    const timeEl = document.getElementById('iosInspectorTimeText');
-    const tempEl = document.getElementById('iosInspectorTempText');
-    const condEl = document.getElementById('iosInspectorCondText');
-    const iconEl = document.getElementById('iosInspectorIconBox');
-
-    if (timeEl) timeEl.textContent = (h < 10 ? '0' + h : h) + ':00';
-    if (tempEl) tempEl.textContent = val + '°';
+    // Update Header Text with exact minute
+    if (timeEl) timeEl.textContent = timeStr;
+    if (tempEl) tempEl.textContent = smoothVal + '°';
     if (condEl) condEl.textContent = cond.text;
     if (iconEl) iconEl.innerHTML = getWeatherSvgIcon(cond.iconType, 36);
+  };
+
+  const queueUpdate = (clientX) => {
+    targetClientX = clientX;
+    if (!rafId) {
+      rafId = requestAnimationFrame(renderFrame);
+    }
   };
 
   let isDragging = false;
   svg.addEventListener('pointerdown', e => {
     isDragging = true;
-    updateScrubber(e.clientX);
+    svg.setPointerCapture?.(e.pointerId);
+    queueUpdate(e.clientX);
   });
+
   window.addEventListener('pointermove', e => {
-    if (isDragging) updateScrubber(e.clientX);
+    if (isDragging) queueUpdate(e.clientX);
   });
-  window.addEventListener('pointerup', () => {
-    isDragging = false;
+
+  window.addEventListener('pointerup', e => {
+    if (isDragging) {
+      isDragging = false;
+      try { svg.releasePointerCapture?.(e.pointerId); } catch(_) {}
+    }
   });
 }
+
 
 function buildWeatherWidgetHtml(isFullView = false) {
   const state = studyWeatherState;
