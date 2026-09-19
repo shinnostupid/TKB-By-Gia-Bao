@@ -1763,10 +1763,10 @@ function formulas() {
 
 
 // ==========================================================================
-// WEATHER SERVICE & 7-DAY FORECAST WITH STUDENT OUTFIT / BALO ASSISTANT
+// WEATHER SERVICE & 7-DAY FORECAST WITH HOURLY 24H RAIN TIMELINE & STUDENT BALO ASSISTANT
 // ==========================================================================
 const WEATHER_CITIES = [
-  { id: 'hanoi', name: 'Hà Nội', lat: 21.0285, lon: 105.8542 },
+  { id: 'hanoi', name: 'Hà Nội (Mặc định)', lat: 21.0285, lon: 105.8542 },
   { id: 'hcm', name: 'TP. Hồ Chí Minh', lat: 10.8231, lon: 106.6297 },
   { id: 'danang', name: 'Đà Nẵng', lat: 16.0544, lon: 108.2022 },
   { id: 'haiphong', name: 'Hải Phòng', lat: 20.8449, lon: 106.6881 },
@@ -1900,6 +1900,120 @@ function getWindAnalysis(wind) {
     return { level: 'Cấp 3 (Gió vừa)', desc: 'Gió thổi nhẹ mát, lá cây rung rinh, dễ chịu', color: '#38bdf8' };
   }
   return { level: 'Cấp 1-2 (Gió nhẹ)', desc: 'Gió hiu hiu, không khí yên ả êm dịu', color: '#10b981' };
+}
+
+// 24-HOUR RAIN WINDOW SCANNER (00:00 - 23:59)
+function analyzeRainTimeWindows(hours = []) {
+  if (!hours || !hours.length) {
+    return {
+      hasRain: false,
+      summaryText: 'Dự báo suốt 24 giờ khô ráo, không có mưa.',
+      windows: [],
+      maxProb: 0,
+      totalRain: 0
+    };
+  }
+
+  const windows = [];
+  let current = null;
+
+  for (let i = 0; i < hours.length; i++) {
+    const h = hours[i];
+    const isRain = h.rainProb >= 35 || h.rainSum >= 0.4;
+    if (isRain) {
+      if (!current) {
+        current = {
+          startHour: h.hour,
+          endHour: h.hour + 1,
+          maxProb: h.rainProb,
+          totalRain: h.rainSum,
+          peakHour: h.hour
+        };
+      } else {
+        current.endHour = h.hour + 1;
+        if (h.rainProb > current.maxProb) {
+          current.maxProb = h.rainProb;
+          current.peakHour = h.hour;
+        }
+        current.totalRain += h.rainSum;
+      }
+    } else {
+      if (current) {
+        windows.push(current);
+        current = null;
+      }
+    }
+  }
+  if (current) windows.push(current);
+
+  const maxProb = Math.max(...hours.map(h => h.rainProb || 0));
+  const totalRain = +(hours.reduce((acc, h) => acc + (h.rainSum || 0), 0)).toFixed(1);
+
+  if (!windows.length) {
+    return {
+      hasRain: false,
+      summaryText: '☀️ Khô ráo trọn vẹn suốt 24 giờ (00:00 – 23:59) • Xác suất mưa cao nhất chỉ ' + maxProb + '%, đường sá tạnh ráo thuận lợi!',
+      windows: [],
+      maxProb,
+      totalRain
+    };
+  }
+
+  // Format primary window description
+  const winDesc = windows.map(w => {
+    const startStr = (w.startHour < 10 ? '0' + w.startHour : w.startHour) + ':00';
+    const endStr = (w.endHour < 10 ? '0' + w.endHour : w.endHour) + ':00';
+    const peakStr = (w.peakHour < 10 ? '0' + w.peakHour : w.peakHour) + ':00';
+    return `${startStr} – ${endStr} (Cao điểm lúc ${peakStr} với tỉ lệ ${w.maxProb}%)`;
+  }).join(' và ');
+
+  return {
+    hasRain: true,
+    summaryText: `🌧️ Có mưa trong khoảng: ${winDesc} • Tổng lượng mưa ~${totalRain} mm.`,
+    windows,
+    maxProb,
+    totalRain
+  };
+}
+
+// Student Commute Slots Evaluator (Sáng đi học, Trưa tan, Chiều về, Tối học thêm)
+function evaluateStudentCommuteSlots(hours = []) {
+  if (!hours || hours.length < 24) return [];
+
+  const slots = [
+    { name: '🌅 Sáng đến trường', timeRange: '06:30 – 07:45', hourIdx: 7, desc: 'Lúc truy bài & chuẩn bị vào tiết 1' },
+    { name: '☀️ Trưa tan trường', timeRange: '11:00 – 12:30', hourIdx: 11, desc: 'Giờ tan học chính khóa buổi sáng' },
+    { name: '🌤️ Chiều tan học', timeRange: '16:30 – 17:45', hourIdx: 17, desc: 'Tan học ca chiều hoặc thể dục' },
+    { name: '🌙 Ca học thêm tối', timeRange: '19:00 – 21:30', hourIdx: 19, desc: 'Đi học thêm ca tối ngoài trường' }
+  ];
+
+  return slots.map(s => {
+    const hData = hours[s.hourIdx] || hours[0];
+    const isRainy = hData.rainProb >= 40 || hData.rainSum >= 0.6;
+    const isHot = hData.temp >= 32;
+
+    let badge = 'Tạnh ráo';
+    let badgeClass = 'dry';
+    if (isRainy) {
+      badge = 'Có mưa (' + hData.rainProb + '%)';
+      badgeClass = 'rain';
+    } else if (isHot) {
+      badge = 'Nắng nóng';
+      badgeClass = 'hot';
+    }
+
+    return {
+      name: s.name,
+      timeRange: s.timeRange,
+      desc: s.desc,
+      temp: hData.temp,
+      rainProb: hData.rainProb,
+      rainSum: hData.rainSum,
+      code: hData.code,
+      badge,
+      badgeClass
+    };
+  });
 }
 
 // Student Checklist Helper in localStorage
@@ -2133,7 +2247,7 @@ function analyzeWeatherForStudent(day) {
   };
 }
 
-// Fetch 7-day weather forecast from Open-Meteo
+// Fetch 7-day weather forecast with HOURLY 24H data from Open-Meteo
 async function loadWeatherData(forceRefresh = false) {
   const cityId = db.weatherCity || 'hanoi';
   studyWeatherState.selectedCityId = cityId;
@@ -2156,7 +2270,7 @@ async function loadWeatherData(forceRefresh = false) {
   }
 
   const city = WEATHER_CITIES.find(c => c.id === cityId) || WEATHER_CITIES[0];
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,uv_index_max&timezone=Asia%2FBangkok`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,windspeed_10m_max,uv_index_max&hourly=temperature_2m,precipitation_probability,precipitation,weathercode,windspeed_10m&timezone=Asia%2FBangkok`;
 
   studyWeatherState.loading = true;
   studyWeatherState.error = null;
@@ -2168,7 +2282,23 @@ async function loadWeatherData(forceRefresh = false) {
     const json = await res.json();
 
     const days = [];
-    for (let i = 0; i < (json.daily.time || []).length; i++) {
+    const totalDaily = (json.daily.time || []).length;
+    for (let i = 0; i < totalDaily; i++) {
+      // Extract 24 hourly points for day i
+      const dayHours = [];
+      for (let h = 0; h < 24; h++) {
+        const hIdx = i * 24 + h;
+        dayHours.push({
+          hour: h,
+          time: (h < 10 ? '0' + h : h) + ':00',
+          temp: Math.round(json.hourly?.temperature_2m?.[hIdx] ?? 25),
+          rainProb: Math.round(json.hourly?.precipitation_probability?.[hIdx] ?? 0),
+          rainSum: +(json.hourly?.precipitation?.[hIdx] ?? 0).toFixed(1),
+          code: json.hourly?.weathercode?.[hIdx] ?? 1,
+          wind: Math.round(json.hourly?.windspeed_10m?.[hIdx] ?? 10)
+        });
+      }
+
       days.push({
         date: json.daily.time[i],
         code: json.daily.weathercode[i],
@@ -2177,7 +2307,8 @@ async function loadWeatherData(forceRefresh = false) {
         rainProb: json.daily.precipitation_probability_max[i] || 0,
         rainSum: +(json.daily.precipitation_sum[i] || 0).toFixed(1),
         wind: Math.round(json.daily.windspeed_10m_max[i] || 0),
-        uv: +(json.daily.uv_index_max[i] || 0).toFixed(1)
+        uv: +(json.daily.uv_index_max[i] || 0).toFixed(1),
+        hours: dayHours
       });
     }
 
@@ -2212,16 +2343,32 @@ function getOfflineFallbackWeather(city) {
     city: city.name,
     cityId: city.id,
     isOffline: true,
-    days: dates.map((d, idx) => ({
-      date: d,
-      code: idx % 3 === 0 ? 1 : (idx % 3 === 1 ? 61 : 0),
-      maxTemp: 32 - (idx % 4),
-      minTemp: 24,
-      rainProb: idx % 3 === 1 ? 65 : 20,
-      rainSum: idx % 3 === 1 ? 8.5 : 0.0,
-      wind: 14 + (idx * 2),
-      uv: 7.2
-    }))
+    days: dates.map((d, idx) => {
+      const dayHours = [];
+      for (let h = 0; h < 24; h++) {
+        const isRainHour = (idx % 2 === 1 && h >= 13 && h <= 16);
+        dayHours.push({
+          hour: h,
+          time: (h < 10 ? '0' + h : h) + ':00',
+          temp: 25 + (h >= 11 && h <= 15 ? 6 : 0),
+          rainProb: isRainHour ? 70 : 10,
+          rainSum: isRainHour ? 2.5 : 0,
+          code: isRainHour ? 61 : 1,
+          wind: 12
+        });
+      }
+      return {
+        date: d,
+        code: idx % 3 === 0 ? 1 : (idx % 3 === 1 ? 61 : 0),
+        maxTemp: 32 - (idx % 4),
+        minTemp: 24,
+        rainProb: idx % 3 === 1 ? 65 : 20,
+        rainSum: idx % 3 === 1 ? 8.5 : 0.0,
+        wind: 14 + (idx * 2),
+        uv: 7.2,
+        hours: dayHours
+      };
+    })
   };
 }
 
@@ -2271,7 +2418,7 @@ function formatDayMonth(dateStr) {
   return `${parts[2]}/${parts[1]}`;
 }
 
-// MAIN WEATHER WIDGET BUILDER
+// MAIN WEATHER WIDGET BUILDER WITH 24H HOURLY RAIN RADAR
 function buildWeatherWidgetHtml(isFullView = false) {
   const state = studyWeatherState;
   const currentCityId = db.weatherCity || 'hanoi';
@@ -2280,7 +2427,7 @@ function buildWeatherWidgetHtml(isFullView = false) {
     return `
       <div class="weather-forecast-widget" style="text-align:center;padding:36px 20px">
         <div style="font-size:32px;animation:spin 1s linear infinite;display:inline-block">🌤️</div>
-        <div style="font-weight:800;color:#38bdf8;margin-top:10px;font-size:15px">Đang cập nhật dự báo thời tiết 7 ngày & phân tích balo học đường...</div>
+        <div style="font-weight:800;color:#38bdf8;margin-top:10px;font-size:15px">Đang cập nhật dự báo thời tiết 24h & cả tuần theo giờ chuẩn...</div>
         <div style="font-size:12px;color:#94a3b8;margin-top:4px">Đang lấy dữ liệu khí tượng Open-Meteo</div>
       </div>
     `;
@@ -2296,7 +2443,8 @@ function buildWeatherWidgetHtml(isFullView = false) {
     rainProb: 30,
     rainSum: 0.5,
     wind: 12,
-    uv: 6.5
+    uv: 6.5,
+    hours: []
   };
 
   const advice = analyzeWeatherForStudent(activeDay);
@@ -2305,6 +2453,14 @@ function buildWeatherWidgetHtml(isFullView = false) {
   const uvAnalysis = getUvAnalysis(activeDay.uv);
   const rainAnalysis = getRainAnalysis(activeDay.rainProb, activeDay.rainSum);
   const windAnalysis = getWindAnalysis(activeDay.wind);
+
+  // 24-Hour Rain Analysis & Commute Slots
+  const rainTimeAnalysis = analyzeRainTimeWindows(activeDay.hours);
+  const commuteSlots = evaluateStudentCommuteSlots(activeDay.hours);
+
+  // Current hour calculation for "Hôm nay"
+  const currentHour = new Date().getHours();
+  const isToday = activeDay.date === today();
 
   // Checked items
   const checkedItems = getCheckedItemsForDate(activeDay.date);
@@ -2318,9 +2474,9 @@ function buildWeatherWidgetHtml(isFullView = false) {
         <div class="weather-title-wrap">
           <div class="weather-hero-icon-pulsing">${getWeatherSvgIcon(activeCondition.iconType, 30)}</div>
           <div>
-            <h3>Trạm Dự Báo Thời Tiết 7 Ngày & Balo Học Đường</h3>
+            <h3>Dự Báo Thời Tiết 24H & Balo Học Đường</h3>
             <div style="font-size:11.8px;color:#94a3b8;margin-top:2px">
-              Phân tích tỉ mỉ lượng mưa, gió bão, tia UV & tư vấn đồ dùng học tập
+              Theo dõi chi tiết 00:00 – 23:59 • Khung giờ có mưa & tỉ lệ chuẩn xác
             </div>
           </div>
         </div>
@@ -2330,14 +2486,14 @@ function buildWeatherWidgetHtml(isFullView = false) {
             ${WEATHER_CITIES.map(c => `<option value="${c.id}" ${c.id === currentCityId ? 'selected' : ''}>📍 ${c.name}</option>`).join('')}
           </select>
           <button class="weather-refresh-btn" onclick="loadWeatherData(true)" title="Làm mới dự báo">
-            ${state.loading ? '⏳ Đang tải...' : '🔄 Làm mới'}
+            ${state.loading ? '⏳...' : '🔄 Làm mới'}
           </button>
         </div>
       </div>
 
       <!-- 7-Day Carousel -->
       <div class="weather-days-carousel-label">
-        <span>📅 Dự báo cả tuần (Bấm vào ngày để xem phân tích chi tiết):</span>
+        <span>📅 Dự báo 7 ngày (Bấm vào ngày để xem diễn biến 24 giờ & balo):</span>
       </div>
       <div class="weather-days-scroll">
         ${days.map((d, idx) => {
@@ -2357,7 +2513,6 @@ function buildWeatherWidgetHtml(isFullView = false) {
               <div class="weather-day-temp">
                 ${d.maxTemp}° <span class="weather-day-min-temp">/ ${d.minTemp}°</span>
               </div>
-              <!-- Mini Rain Bar & Prob -->
               <div class="weather-rain-prob-pill ${rainAn.level}">
                 <span>💧 ${d.rainProb}%</span>
                 ${d.rainSum > 0 ? `<span style="opacity:0.85;font-size:9.5px">(${d.rainSum}mm)</span>` : ''}
@@ -2365,6 +2520,77 @@ function buildWeatherWidgetHtml(isFullView = false) {
             </div>
           `;
         }).join('')}
+      </div>
+
+      <!-- ================= 24-HOUR HOURLY RADAR & TIMELINE ================= -->
+      <div class="weather-hourly-card">
+        <div class="weather-hourly-head">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:17px">⏱️</span>
+            <div>
+              <strong style="font-size:13.5px;color:#f8fafc">Diễn Biến 24 Giờ (${activeDayLabel} 00:00 – 23:59)</strong>
+              <div style="font-size:11px;color:#94a3b8">Nhiệt độ, xác suất & lượng mưa từng giờ chuẩn khí tượng</div>
+            </div>
+          </div>
+          <span class="hourly-now-badge">${isToday ? '🟢 Đang cập nhật trực tiếp' : '📅 Lịch dự báo'}</span>
+        </div>
+
+        <!-- Exact Rain Window Analysis Banner -->
+        <div class="weather-rain-window-box ${rainTimeAnalysis.hasRain ? 'has-rain' : 'no-rain'}">
+          <div class="rain-window-icon">${rainTimeAnalysis.hasRain ? '🌧️' : '☀️'}</div>
+          <div class="rain-window-text">
+            <strong>${rainTimeAnalysis.hasRain ? 'Khoảng thời gian có mưa trong ngày:' : 'Trạng thái mưa trong ngày:'}</strong>
+            <p>${rainTimeAnalysis.summaryText}</p>
+          </div>
+        </div>
+
+        <!-- 24-Hour Horizontal Scrollable Track -->
+        <div class="weather-hourly-scroll-track">
+          ${(activeDay.hours || []).map(h => {
+            const isNow = isToday && h.hour === currentHour;
+            const cond = getWmoCondition(h.code);
+            const rainColor = h.rainProb >= 60 ? '#f87171' : (h.rainProb >= 30 ? '#fbbf24' : '#38bdf8');
+            const barHeight = Math.max(4, Math.round((h.rainProb / 100) * 36));
+
+            return `
+              <div class="weather-hour-col ${isNow ? 'is-current-hour' : ''}">
+                <div class="hour-label">${isNow ? 'Bây giờ' : h.time}</div>
+                <div class="hour-icon">${getWeatherSvgIcon(cond.iconType, 22)}</div>
+                <div class="hour-temp">${h.temp}°</div>
+                
+                <!-- Vertical Mini Rain Bar Gauge -->
+                <div class="hour-rain-gauge-track" title="Tỉ lệ mưa: ${h.rainProb}% - Lượng mưa: ${h.rainSum}mm">
+                  <div class="hour-rain-gauge-fill" style="height:${barHeight}px;background:${rainColor}"></div>
+                </div>
+                
+                <div class="hour-rain-prob" style="color:${h.rainProb > 0 ? rainColor : '#64748b'}">
+                  ${h.rainProb > 0 ? `${h.rainProb}%` : '0%'}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <!-- 4 School Commute Slots Grid -->
+        <div class="weather-commute-slots-title">
+          <span>🎒</span> <span>Thời tiết các khung giờ đi học & tan trường:</span>
+        </div>
+        <div class="weather-commute-grid">
+          ${commuteSlots.map(slot => `
+            <div class="commute-slot-card ${slot.badgeClass}">
+              <div class="commute-slot-header">
+                <strong>${slot.name}</strong>
+                <span class="commute-slot-badge ${slot.badgeClass}">${slot.badge}</span>
+              </div>
+              <div class="commute-slot-time">${slot.timeRange}</div>
+              <div class="commute-slot-metrics">
+                <span>🌡️ ${slot.temp}°C</span>
+                <span>💧 Mưa: ${slot.rainProb}%</span>
+              </div>
+              <div class="commute-slot-desc">${slot.desc}</div>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- Active Day Comprehensive Weather & Student Advice Card -->
@@ -2632,10 +2858,10 @@ function weather() {
         <div class="eyebrow" style="display:flex;align-items:center;gap:6px">
           <span style="font-weight:700;color:#38bdf8">TRẠM DỰ BÁO KHÍ TƯỢNG HỌC ĐƯỜNG</span>
           <span>•</span>
-          <span>CHUYÊN SÂU 7 NGÀY</span>
+          <span>CHUYÊN SÂU 24H & 7 NGÀY</span>
         </div>
         <h1>Dự Báo Thời Tiết & Balo Học Đường 🌤️</h1>
-        <p>Phân tích tỉ mỉ lượng mưa, xác suất mưa, gió bão, chỉ số UV và gợi ý outfit bảo vệ máy tính Casio & sách vở.</p>
+        <p>Phân tích tỉ mỉ thời gian có mưa 00:00 – 23:59, tỉ lệ mưa chuẩn xác, khung giờ đi học và gợi ý bảo vệ máy tính Casio & sách vở.</p>
       </div>
       <button class="primary" onclick="loadWeatherData(true)">🔄 Cập nhật ngay</button>
     </div>
