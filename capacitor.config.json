@@ -3,6 +3,10 @@
   "appName": "Gia Bảo Study OS",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "server": {
+    "url": "https://giabao-study-os.vercel.app",
+    "cleartext": true
+  },
   "ios": {
     "contentInset": "automatic"
   }
