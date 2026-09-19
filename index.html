@@ -16,7 +16,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icons/icon-192.png">
   <title>Góc Học Tập — Gia Bảo</title>
-  <link rel="stylesheet" href="style.css?v=35">
+  <link rel="stylesheet" href="style.css?v=36">
   <script>
     if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
@@ -120,6 +120,14 @@
   </div>
 
   <!-- Reusable Modal Container -->
+  
+  <!-- iOS Apple Weather Detail Modal / Bottom Sheet -->
+  <div id="iosWeatherModal" class="ios-weather-modal-overlay hidden" onclick="if(event.target === this) closeWeatherDetailModal()">
+    <div class="ios-weather-modal-box">
+      <div id="iosWeatherModalContent"></div>
+    </div>
+  </div>
+
   <div id="modal" class="hidden">
     <div class="modalbox">
       <div class="modalhead">
@@ -134,6 +142,6 @@
   </div>
 
   <div id="toast"></div>
-  <script src="app.js?v=35"></script>
+  <script src="app.js?v=36"></script>
 </body>
 </html>

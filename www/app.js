@@ -2464,6 +2464,485 @@ function formatDayMonth(dateStr) {
 }
 
 // MAIN WEATHER WIDGET BUILDER WITH 24H HOURLY RAIN RADAR
+
+// ================= APPLE iOS WEATHER DETAIL MODAL & CHART ENGINE =================
+let iosWeatherModalState = {
+  dayIdx: 0,
+  selectedHour: 12,
+  mode: 'actual' // 'actual' or 'feels_like'
+};
+
+function openWeatherDetailModal(dayIdx = 0, initialHour = null) {
+  const days = studyWeatherState.data?.days || [];
+  if (days.length === 0) return toast('Đang nạp dữ liệu thời tiết, vui lòng thử lại sau giây lát');
+
+  iosWeatherModalState.dayIdx = Math.max(0, Math.min(days.length - 1, dayIdx));
+  if (initialHour !== null) {
+    iosWeatherModalState.selectedHour = initialHour;
+  } else if (iosWeatherModalState.dayIdx === 0) {
+    iosWeatherModalState.selectedHour = new Date().getHours();
+  } else {
+    iosWeatherModalState.selectedHour = 12;
+  }
+
+  renderIosWeatherModalContent();
+
+  const overlay = document.getElementById('iosWeatherModal');
+  if (overlay) {
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeWeatherDetailModal() {
+  const overlay = document.getElementById('iosWeatherModal');
+  if (overlay) {
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+}
+
+function switchIosModalDay(newDayIdx) {
+  iosWeatherModalState.dayIdx = newDayIdx;
+  if (newDayIdx === 0) {
+    iosWeatherModalState.selectedHour = new Date().getHours();
+  } else {
+    iosWeatherModalState.selectedHour = 12;
+  }
+  renderIosWeatherModalContent();
+}
+
+function switchIosModalTempMode(newMode) {
+  iosWeatherModalState.mode = newMode;
+  renderIosWeatherModalContent();
+}
+
+function renderIosWeatherModalContent() {
+  const container = document.getElementById('iosWeatherModalContent');
+  if (!container) return;
+
+  const days = studyWeatherState.data?.days || [];
+  const currentDayIdx = iosWeatherModalState.dayIdx;
+  const activeDay = days[currentDayIdx] || days[0];
+  if (!activeDay) return;
+
+  const selHour = iosWeatherModalState.selectedHour;
+  const isActual = iosWeatherModalState.mode === 'actual';
+
+  // Hours array for selected day
+  const hours = activeDay.hours || [];
+  const selHourData = hours.find(h => h.hour === selHour) || hours[selHour] || hours[0] || {
+    hour: selHour,
+    temp: activeDay.maxTemp,
+    code: activeDay.code,
+    wind: activeDay.wind,
+    rainProb: activeDay.rainProb,
+    rainSum: activeDay.rainSum
+  };
+
+  // Calculate feels like (approx formula based on wind & temp)
+  const getFeelsLike = (t, w, code) => {
+    let diff = 0;
+    if (t >= 28) diff = 2; // high humidity feels warmer
+    else if (t <= 20) diff = -2; // wind chill feels cooler
+    return t + diff;
+  };
+
+  const displayTemp = isActual ? selHourData.temp : getFeelsLike(selHourData.temp, selHourData.wind, selHourData.code);
+  const hourCond = getWmoCondition(selHourData.code, selHour, selHourData.temp, selHourData.wind);
+
+  // Parse active day full date
+  const dObj = new Date(activeDay.date + 'T00:00:00+07:00');
+  const dayNamesFull = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+  const fullDateStr = `${dayNamesFull[dObj.getDay()]}, ngày ${dObj.getDate()} tháng ${dObj.getMonth() + 1}, ${dObj.getFullYear()}`;
+
+  // 1. Build Date Pills Row
+  const datePillsHtml = days.map((d, idx) => {
+    const pDate = new Date(d.date + 'T00:00:00+07:00');
+    const dayShortNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+    const sName = dayShortNames[pDate.getDay()];
+    const dNum = pDate.getDate();
+    const isActive = idx === currentDayIdx;
+
+    return `
+      <div class="ios-date-pill ${isActive ? 'active' : ''}" onclick="switchIosModalDay(${idx})">
+        <div class="ios-date-pill-day">${sName}</div>
+        <div class="ios-date-pill-num">${dNum}</div>
+      </div>
+    `;
+  }).join('');
+
+  // 2. Build 24-Hour Temperature Chart SVG
+  const chartSvg = generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike);
+
+  // 3. Build Rain Probability Chart SVG
+  const rainChartSvg = generateIosRainChartSvg(hours);
+
+  // 4. Detailed Summary Text
+  const isToday = currentDayIdx === 0;
+  const currentNowHour = new Date().getHours();
+  let summaryDesc = '';
+  if (isToday) {
+    summaryDesc = `Bây giờ: ${selHourData.temp}° và ${hourCond.text.toLowerCase()}. Cảm giác ${getFeelsLike(selHourData.temp, selHourData.wind, selHourData.code) > selHourData.temp ? 'ấm hơn' : 'mát hơn'}, khoảng ${getFeelsLike(selHourData.temp, selHourData.wind, selHourData.code)}°. ${selHourData.rainProb > 20 ? `Khả năng có mưa rào rải rác (${selHourData.rainProb}%).` : 'Thời tiết nhìn chung khô ráo, thuận tiện học tập.'} Phạm vi nhiệt độ hôm nay là từ ${activeDay.minTemp}° đến ${activeDay.maxTemp}°.`;
+  } else {
+    summaryDesc = `Dự báo ${fullDateStr}: Nhiệt độ dao động từ ${activeDay.minTemp}° đến ${activeDay.maxTemp}°. ${activeDay.rainProb > 30 ? `Khả năng có mưa rải rác ${activeDay.rainProb}% (lượng mưa ước tính ${activeDay.rainSum}mm).` : 'Trời ráo mây, không mưa, rất thuận lợi.'} Gió nhẹ ${activeDay.wind} km/h.`;
+  }
+
+  // 5. Daily Comparison
+  const prevDay = days[Math.max(0, currentDayIdx - 1)] || activeDay;
+  const compDesc = activeDay.maxTemp === prevDay.maxTemp
+    ? 'Nhiệt độ cao nhất hôm nay tương tự như hôm qua.'
+    : (activeDay.maxTemp > prevDay.maxTemp
+        ? `Hôm nay ấm hơn hôm qua khoảng ${activeDay.maxTemp - prevDay.maxTemp}°C.`
+        : `Hôm nay mát mẻ hơn hôm qua khoảng ${prevDay.maxTemp - activeDay.maxTemp}°C.`);
+
+  container.innerHTML = `
+    <div class="ios-modal-inner">
+      <!-- Top Modal Bar -->
+      <div class="ios-modal-top-bar">
+        <div class="ios-modal-title">
+          <span>☁️</span> <span>Điều kiện thời tiết</span>
+        </div>
+        <button type="button" class="ios-modal-close-btn" onclick="closeWeatherDetailModal()" aria-label="Đóng">✕</button>
+      </div>
+
+      <!-- Date Pills Selector -->
+      <div class="ios-date-pills-row">
+        ${datePillsHtml}
+      </div>
+      <div class="ios-modal-selected-date-str">${fullDateStr}</div>
+
+      <!-- Real-time Inspector Hero -->
+      <div class="ios-inspector-hero">
+        <div class="ios-inspector-time" id="iosInspectorTimeText">
+          ${selHour < 10 ? '0' + selHour : selHour}:00
+        </div>
+        <div class="ios-inspector-temp-row">
+          <span id="iosInspectorIconBox">${getWeatherSvgIcon(hourCond.iconType, 36)}</span>
+          <b id="iosInspectorTempText">${displayTemp}°</b>
+        </div>
+        <div style="font-size:14px;color:#cbd5e1;font-weight:600" id="iosInspectorCondText">${hourCond.text}</div>
+      </div>
+
+      <!-- 24-Hour Temperature Curve Chart Container -->
+      <div class="ios-chart-container" id="iosTempChartContainer">
+        ${chartSvg}
+
+        <!-- Actual vs Feels-like Toggle -->
+        <div class="ios-temp-mode-switch">
+          <button type="button" class="ios-mode-btn ${isActual ? 'active' : ''}" onclick="switchIosModalTempMode('actual')">Thực tế</button>
+          <button type="button" class="ios-mode-btn ${!isActual ? 'active' : ''}" onclick="switchIosModalTempMode('feels_like')">Cảm nhận</button>
+        </div>
+        <div style="text-align:center;font-size:11.5px;color:#8e8e93;margin-top:2px">
+          ${isActual ? 'Nhiệt độ thực tế khí tượng.' : 'Nhiệt độ cơ thể cảm nhận theo độ ẩm & gió.'}
+        </div>
+      </div>
+
+      <!-- Rain Probability Chart Card -->
+      <div class="ios-detail-card">
+        <div class="ios-detail-card-title">Khả năng có mưa</div>
+        <div class="ios-detail-card-sub">Khả năng có mưa vào hôm nay: ${activeDay.rainProb}%</div>
+        ${rainChartSvg}
+        <div class="ios-rain-card-footer">
+          Khả năng có mưa hàng ngày có xu hướng cao hơn khả năng cho mỗi giờ.
+        </div>
+      </div>
+
+      <!-- Total Rain Metrics Card -->
+      <div class="ios-detail-card">
+        <div class="ios-detail-card-title" style="margin-bottom:10px">Tổng lượng mưa</div>
+        <div class="ios-rain-metric-row">
+          <span style="font-size:13px;color:#cbd5e1">24 GIỜ QUA</span>
+          <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${Math.max(0, activeDay.rainSum - 0.2).toFixed(1)} mm</span>
+        </div>
+        <div class="ios-rain-metric-row">
+          <span style="font-size:13px;color:#cbd5e1">24 GIỜ TỚI</span>
+          <span style="font-weight:750;color:#38bdf8">💧 Mưa: ${activeDay.rainSum > 0 ? activeDay.rainSum + ' mm' : '<1 mm'}</span>
+        </div>
+      </div>
+
+      <!-- Detailed Summary Card -->
+      <div class="ios-detail-card">
+        <div class="ios-detail-card-title" style="margin-bottom:8px">Dự báo chi tiết</div>
+        <div style="font-size:13px;color:#cbd5e1;line-height:1.55">
+          ${summaryDesc}
+        </div>
+      </div>
+
+      <!-- Daily Comparison Card -->
+      <div class="ios-detail-card">
+        <div class="ios-detail-card-title" style="margin-bottom:4px">So sánh hàng ngày</div>
+        <div style="font-size:12.5px;color:#98989f;margin-bottom:12px">${compDesc}</div>
+
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
+            <span style="font-weight:700;color:#fff;width:80px">Hôm nay</span>
+            <span style="color:#94a3b8;width:30px;text-align:right">${activeDay.minTemp}°</span>
+            <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
+              <div style="position:absolute;left:20%;width:60%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b,#ef4444);border-radius:4px"></div>
+            </div>
+            <span style="font-weight:750;color:#fff;width:30px">${activeDay.maxTemp}°</span>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px">
+            <span style="font-weight:700;color:#cbd5e1;width:80px">Hôm qua</span>
+            <span style="color:#94a3b8;width:30px;text-align:right">${prevDay.minTemp}°</span>
+            <div style="flex:1;margin:0 10px;height:5px;background:rgba(255,255,255,0.12);border-radius:4px;overflow:hidden;position:relative">
+              <div style="position:absolute;left:18%;width:58%;height:100%;background:linear-gradient(90deg,#38bdf8,#f59e0b);border-radius:4px"></div>
+            </div>
+            <span style="font-weight:750;color:#fff;width:30px">${prevDay.maxTemp}°</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feels Like Note -->
+      <div class="ios-detail-card" style="margin-bottom:0">
+        <div class="ios-detail-card-title" style="margin-bottom:6px">Giới thiệu về Nhiệt độ cảm nhận</div>
+        <div style="font-size:12.5px;color:#98989f;line-height:1.5">
+          Nhiệt độ cảm nhận biểu thị độ ấm hoặc độ lạnh mà bạn cảm thấy và có thể khác với nhiệt độ thực tế. Nhiệt độ cảm nhận bị ảnh hưởng bởi độ ẩm, ánh nắng và gió.
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Attach interactive drag/scrubber to SVG curve
+  attachChartScrubberListeners(hours, isActual, getFeelsLike);
+}
+
+// Generate SVG Temperature Curve with cubic bezier spline
+function generateIosTempChartSvg(hours, selHour, isActual, getFeelsLike) {
+  const W = 380;
+  const H = 160;
+  const padLeft = 14;
+  const padRight = 44;
+  const padTop = 32;
+  const padBottom = 26;
+  const plotW = W - padLeft - padRight;
+  const plotH = H - padTop - padBottom;
+
+  const minScale = 18;
+  const maxScale = 39;
+  const scaleRange = maxScale - minScale;
+
+  // Compute points
+  const points = [];
+  let maxPoint = { h: 0, val: -999, x: 0, y: 0 };
+  let minPoint = { h: 0, val: 999, x: 0, y: 0 };
+
+  for (let h = 0; h < 24; h++) {
+    const item = hours[h] || { temp: 26, code: 1, wind: 10 };
+    const val = isActual ? item.temp : getFeelsLike(item.temp, item.wind, item.code);
+    const x = padLeft + (h / 23) * plotW;
+    const y = padTop + plotH - ((val - minScale) / scaleRange) * plotH;
+    points.push({ h, val, x, y, code: item.code });
+
+    if (val > maxPoint.val) maxPoint = { h, val, x, y };
+    if (val < minPoint.val) minPoint = { h, val, x, y };
+  }
+
+  // Smooth spline path
+  let curveD = 'M ' + points[0].x.toFixed(1) + ' ' + points[0].y.toFixed(1);
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i === 0 ? 0 : i - 1];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[i + 2] || p2;
+
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+    curveD += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+  }
+
+  const bottomY = padTop + plotH;
+  const areaD = `${curveD} L ${points[points.length - 1].x.toFixed(1)} ${bottomY} L ${points[0].x.toFixed(1)} ${bottomY} Z`;
+
+  // Y-axis grid lines (every 3°: 39, 36, 33, 30, 27, 24, 21, 18)
+  const yGrids = [39, 36, 33, 30, 27, 24, 21, 18].map(t => {
+    const y = padTop + plotH - ((t - minScale) / scaleRange) * plotH;
+    return `
+      <line x1="${padLeft}" y1="${y.toFixed(1)}" x2="${W - padRight + 6}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.08)" stroke-dasharray="2,2"/>
+      <text x="${W - padRight + 10}" y="${(y + 3.5).toFixed(1)}" fill="#8e8e93" font-size="10.5" font-family="-apple-system,system-ui">${t}°</text>
+    `;
+  }).join('');
+
+  // Top weather icons (sample at 00, 03, 06, 09, 12, 15, 18, 21)
+  const topIcons = [0, 3, 6, 9, 12, 15, 18, 21].map(h => {
+    const pt = points[h];
+    const isNight = h >= 18 || h < 6;
+    const iconChar = isNight ? '🌙' : (pt.val >= 31 ? '☀️' : (pt.code >= 60 ? '🌧️' : '🌤️'));
+    return `<text x="${pt.x.toFixed(1)}" y="18" font-size="13" text-anchor="middle">${iconChar}</text>`;
+  }).join('');
+
+  // X-axis time labels: 00 giờ, 06 giờ, 12 giờ, 18 giờ
+  const xLabels = [
+    { h: 0, label: '00 giờ' },
+    { h: 6, label: '06 giờ' },
+    { h: 12, label: '12 giờ' },
+    { h: 18, label: '18 giờ' }
+  ].map(item => {
+    const pt = points[item.h];
+    return `<text x="${pt.x.toFixed(1)}" y="${(H - 6)}" fill="#8e8e93" font-size="11" text-anchor="middle" font-weight="600">${item.label}</text>`;
+  }).join('');
+
+  // Scrubber element for selected hour
+  const selPt = points[selHour] || points[12];
+
+  return `
+    <svg class="ios-chart-svg" id="iosInteractiveChartSvg" viewBox="0 0 ${W} ${H}">
+      <defs>
+        <linearGradient id="tempAreaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.6"/>
+          <stop offset="50%" stop-color="#d97706" stop-opacity="0.25"/>
+          <stop offset="100%" stop-color="#1c1917" stop-opacity="0.02"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Grid lines -->
+      ${yGrids}
+
+      <!-- Top weather icons -->
+      ${topIcons}
+
+      <!-- Gradient Area Fill -->
+      <path d="${areaD}" fill="url(#tempAreaGrad)"/>
+
+      <!-- Spline Stroke -->
+      <path d="${curveD}" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4,3"/>
+
+      <!-- Max / Min Points C and T -->
+      <circle cx="${maxPoint.x.toFixed(1)}" cy="${maxPoint.y.toFixed(1)}" r="3" fill="#ffffff"/>
+      <text x="${maxPoint.x.toFixed(1)}" y="${(maxPoint.y - 7).toFixed(1)}" fill="#f8fafc" font-size="10" font-weight="800" text-anchor="middle">C</text>
+
+      <circle cx="${minPoint.x.toFixed(1)}" cy="${minPoint.y.toFixed(1)}" r="3" fill="#ffffff"/>
+      <text x="${minPoint.x.toFixed(1)}" y="${(minPoint.y - 7).toFixed(1)}" fill="#f8fafc" font-size="10" font-weight="800" text-anchor="middle">T</text>
+
+      <!-- Interactive Scrubber Vertical Line & Glowing Dot -->
+      <line id="iosScrubberLine" x1="${selPt.x.toFixed(1)}" y1="24" x2="${selPt.x.toFixed(1)}" y2="${bottomY}" stroke="#ffffff" stroke-width="1.8"/>
+      <circle id="iosScrubberDot" cx="${selPt.x.toFixed(1)}" cy="${selPt.y.toFixed(1)}" r="5.5" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+
+      <!-- Bottom time labels -->
+      ${xLabels}
+    </svg>
+  `;
+}
+
+// Generate Rain Probability Chart
+function generateIosRainChartSvg(hours) {
+  const W = 380;
+  const H = 110;
+  const padLeft = 14;
+  const padRight = 44;
+  const padTop = 16;
+  const padBottom = 24;
+  const plotW = W - padLeft - padRight;
+  const plotH = H - padTop - padBottom;
+
+  // Y-axis grid lines: 100%, 80%, 60%, 40%, 20%, 0%
+  const yGrids = [100, 80, 60, 40, 20, 0].map(p => {
+    const y = padTop + plotH - (p / 100) * plotH;
+    return `
+      <line x1="${padLeft}" y1="${y.toFixed(1)}" x2="${W - padRight + 6}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="2,2"/>
+      <text x="${W - padRight + 10}" y="${(y + 3.5).toFixed(1)}" fill="#8e8e93" font-size="10" font-family="-apple-system,system-ui">${p}%</text>
+    `;
+  }).join('');
+
+  // Bars for each hour
+  const barW = Math.max(3, (plotW / 24) - 2.5);
+  const bars = hours.map((h, i) => {
+    const x = padLeft + (i / 24) * plotW;
+    const bHeight = Math.max(2, (h.rainProb / 100) * plotH);
+    const y = padTop + plotH - bHeight;
+    const isZero = h.rainProb === 0;
+    const col = h.rainProb >= 50 ? '#38bdf8' : '#0284c7';
+
+    return `
+      <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${bHeight.toFixed(1)}" fill="${isZero ? 'rgba(255,255,255,0.08)' : col}" rx="2"/>
+    `;
+  }).join('');
+
+  // X labels
+  const xLabels = [
+    { h: 0, label: '00 giờ' },
+    { h: 6, label: '06 giờ' },
+    { h: 12, label: '12 giờ' },
+    { h: 18, label: '18 giờ' }
+  ].map(item => {
+    const x = padLeft + (item.h / 24) * plotW;
+    return `<text x="${x.toFixed(1)}" y="${H - 6}" fill="#8e8e93" font-size="10.5" text-anchor="middle" font-weight="600">${item.label}</text>`;
+  }).join('');
+
+  return `
+    <svg class="ios-rain-chart-svg" viewBox="0 0 ${W} ${H}">
+      ${yGrids}
+      ${bars}
+      ${xLabels}
+    </svg>
+  `;
+}
+
+// Interactive Scrubber Touch/Mouse Handler
+function attachChartScrubberListeners(hours, isActual, getFeelsLike) {
+  const svg = document.getElementById('iosInteractiveChartSvg');
+  if (!svg) return;
+
+  const updateScrubber = (clientX) => {
+    const rect = svg.getBoundingClientRect();
+    const padLeft = 14;
+    const padRight = 44;
+    const plotW = 380 - padLeft - padRight;
+    const relX = ((clientX - rect.left) / rect.width) * 380;
+    const clampedX = Math.max(padLeft, Math.min(380 - padRight, relX));
+
+    const h = Math.max(0, Math.min(23, Math.round(((clampedX - padLeft) / plotW) * 23)));
+    iosWeatherModalState.selectedHour = h;
+
+    const item = hours[h] || { temp: 26, code: 1, wind: 10 };
+    const val = isActual ? item.temp : getFeelsLike(item.temp, item.wind, item.code);
+    const cond = getWmoCondition(item.code, h, item.temp, item.wind);
+
+    const x = padLeft + (h / 23) * plotW;
+    const y = 32 + (160 - 32 - 26) - ((val - 18) / (39 - 18)) * (160 - 32 - 26);
+
+    // Update scrubber DOM elements
+    const line = document.getElementById('iosScrubberLine');
+    const dot = document.getElementById('iosScrubberDot');
+    if (line) {
+      line.setAttribute('x1', x.toFixed(1));
+      line.setAttribute('x2', x.toFixed(1));
+    }
+    if (dot) {
+      dot.setAttribute('cx', x.toFixed(1));
+      dot.setAttribute('cy', y.toFixed(1));
+    }
+
+    // Update text elements above
+    const timeEl = document.getElementById('iosInspectorTimeText');
+    const tempEl = document.getElementById('iosInspectorTempText');
+    const condEl = document.getElementById('iosInspectorCondText');
+    const iconEl = document.getElementById('iosInspectorIconBox');
+
+    if (timeEl) timeEl.textContent = (h < 10 ? '0' + h : h) + ':00';
+    if (tempEl) tempEl.textContent = val + '°';
+    if (condEl) condEl.textContent = cond.text;
+    if (iconEl) iconEl.innerHTML = getWeatherSvgIcon(cond.iconType, 36);
+  };
+
+  let isDragging = false;
+  svg.addEventListener('pointerdown', e => {
+    isDragging = true;
+    updateScrubber(e.clientX);
+  });
+  window.addEventListener('pointermove', e => {
+    if (isDragging) updateScrubber(e.clientX);
+  });
+  window.addEventListener('pointerup', () => {
+    isDragging = false;
+  });
+}
+
 function buildWeatherWidgetHtml(isFullView = false) {
   const state = studyWeatherState;
   const currentCityId = db.weatherCity || 'hanoi';
@@ -2574,9 +3053,10 @@ function buildWeatherWidgetHtml(isFullView = false) {
         </div>
 
         <!-- iOS Weather Alert / Summary Pill -->
-        <div class="ios-notice-banner">
-          <div class="ios-notice-text">
-            ${iosNoticeText}
+        <div class="ios-notice-banner" onclick="openWeatherDetailModal(${selectedIdx})" style="cursor:pointer" title="Chạm để xem đồ thị chi tiết">
+          <div class="ios-notice-text" style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <span>${iosNoticeText}</span>
+            <span style="font-size:12px;color:#38bdf8;white-space:nowrap;font-weight:750">📈 Xem đồ thị ›</span>
           </div>
         </div>
       </div>
@@ -2584,7 +3064,10 @@ function buildWeatherWidgetHtml(isFullView = false) {
       <!-- ================= 24-HOUR HOURLY FORECAST (STARTING FROM BÂY GIỜ) ================= -->
       <div class="ios-hourly-card">
         <div class="ios-card-header">
-          <span style="font-size:14px">⏱️ DỰ BÁO THEO GIỜ (${isToday ? 'Bắt đầu từ Bây giờ' : activeDayLabel})</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+            <span style="font-size:14px">⏱️ DỰ BÁO THEO GIỜ (${isToday ? 'Bắt đầu từ Bây giờ' : activeDayLabel})</span>
+            <button type="button" class="ghost" onclick="openWeatherDetailModal(${selectedIdx})" style="font-size:11.5px;padding:3px 9px;color:#38bdf8;border-color:rgba(56,189,248,0.35);border-radius:12px">📈 Xem đồ thị</button>
+          </div>
         </div>
 
         <div class="ios-hourly-scroll-wrap">
@@ -2618,7 +3101,10 @@ function buildWeatherWidgetHtml(isFullView = false) {
       <!-- ================= 7-DAY FORECAST WITH APPLE GRADIENT BARS ================= -->
       <div class="ios-daily-card">
         <div class="ios-card-header">
-          <span style="font-size:14px">📅 DỰ BÁO 7 NGÀY TỚI</span>
+          <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+            <span style="font-size:14px">📅 DỰ BÁO 7 NGÀY TỚI</span>
+            <span style="font-size:11px;color:#94a3b8">Chạm vào ngày để mở đồ thị giờ</span>
+          </div>
         </div>
 
         <div class="ios-daily-list">
@@ -2634,7 +3120,7 @@ function buildWeatherWidgetHtml(isFullView = false) {
             const barWidth = Math.max(12, rightPct - leftPct);
 
             return `
-              <div class="ios-day-row ${isSelected ? 'active-day-row' : ''}" onclick="selectWeatherDay(${idx})">
+              <div class="ios-day-row ${isSelected ? 'active-day-row' : ''}" onclick="openWeatherDetailModal(${idx})" title="Chạm để xem đồ thị giờ chi tiết">
                 <div class="ios-day-name ${isDayToday ? 'is-today-label' : ''}">${dayLabel}</div>
                 <div class="ios-day-icon">
                   ${getWeatherSvgIcon(cond.iconType, 24)}
