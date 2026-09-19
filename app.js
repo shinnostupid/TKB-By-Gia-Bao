@@ -2387,7 +2387,50 @@ function selectWeatherDay(idx) {
   renderWeatherContainer();
 }
 
+
+function scrollHourlyTrack(offset) {
+  const el = document.getElementById('iosHourlyScrollTrack');
+  if (el) el.scrollBy({ left: offset, behavior: 'smooth' });
+}
+
+function initSmoothScrollListeners() {
+  const selectors = ['.ios-hourly-scroll', '.weather-days-scroll', '.weather-hourly-scroll-track', '.mobile-day-picker'];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      if (!el || el.dataset.smoothAttached) return;
+      el.dataset.smoothAttached = 'true';
+
+      // Mouse drag to scroll with momentum
+      let isDown = false;
+      let startX, scrollLeft;
+      el.addEventListener('mousedown', e => {
+        isDown = true;
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      window.addEventListener('mouseup', () => { isDown = false; });
+      el.addEventListener('mouseleave', () => { isDown = false; });
+      el.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeft - walk;
+      });
+
+      // Mouse wheel horizontal scroll
+      el.addEventListener('wheel', e => {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          el.scrollBy({ left: e.deltaY * 0.8, behavior: 'smooth' });
+        }
+      }, { passive: false });
+    });
+  });
+}
+
 function renderWeatherContainer() {
+  setTimeout(initSmoothScrollListeners, 50);
   const container = $('#dashboardWeatherMount');
   if (container) {
     container.innerHTML = buildWeatherWidgetHtml(false);
@@ -2544,7 +2587,9 @@ function buildWeatherWidgetHtml(isFullView = false) {
           <span style="font-size:14px">⏱️ DỰ BÁO THEO GIỜ (${isToday ? 'Bắt đầu từ Bây giờ' : activeDayLabel})</span>
         </div>
 
-        <div class="ios-hourly-scroll">
+        <div class="ios-hourly-scroll-wrap">
+          <button type="button" class="ios-scroll-nav-btn prev" onclick="scrollHourlyTrack(-180)" aria-label="Cuộn trái">‹</button>
+          <div class="ios-hourly-scroll" id="iosHourlyScrollTrack">
           ${hourlyList.map((h, hIdx) => {
             const isNow = isToday && hIdx === 0;
             const hourLabel = isNow ? 'Bây giờ' : `${h.hour < 10 ? '0' + h.hour : h.hour} giờ`;
@@ -2565,6 +2610,8 @@ function buildWeatherWidgetHtml(isFullView = false) {
               </div>
             `;
           }).join('')}
+          </div>
+          <button type="button" class="ios-scroll-nav-btn next" onclick="scrollHourlyTrack(180)" aria-label="Cuộn phải">›</button>
         </div>
       </div>
 

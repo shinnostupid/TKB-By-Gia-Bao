@@ -5068,3 +5068,99 @@ aside nav button.active .nav-svg,
   transform: translateX(-50%);
   box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
 }
+
+
+/* ================= ULTRA SMOOTH HORIZONTAL SCROLLING & GESTURES ================= */
+.ios-hourly-scroll,
+.weather-days-scroll,
+.weather-hourly-scroll-track,
+.mobile-day-picker,
+.tt-mode-bar {
+  scroll-snap-type: none !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-x: contain !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  touch-action: pan-x !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  cursor: grab;
+}
+
+.ios-hourly-scroll:active,
+.weather-days-scroll:active,
+.weather-hourly-scroll-track:active,
+.mobile-day-picker:active {
+  cursor: grabbing !important;
+}
+
+.ios-hourly-scroll::-webkit-scrollbar,
+.weather-days-scroll::-webkit-scrollbar,
+.weather-hourly-scroll-track::-webkit-scrollbar,
+.mobile-day-picker::-webkit-scrollbar,
+.tt-mode-bar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ios-hour-col,
+.weather-hour-col,
+.weather-day-card,
+.day-pill {
+  scroll-snap-align: none !important;
+}
+
+/* Wrapper with smooth navigation arrows for desktop */
+.ios-hourly-scroll-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ios-scroll-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  opacity: 0.85;
+}
+
+.ios-scroll-nav-btn:hover {
+  background: rgba(56, 189, 248, 0.3);
+  border-color: #38bdf8;
+  color: #fff;
+  opacity: 1;
+  transform: translateY(-50%) scale(1.12);
+}
+
+.ios-scroll-nav-btn.prev {
+  left: -8px;
+}
+
+.ios-scroll-nav-btn.next {
+  right: -8px;
+}
+
+@media (max-width: 640px) {
+  .ios-scroll-nav-btn {
+    display: none !important;
+  }
+}
