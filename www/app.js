@@ -4398,34 +4398,39 @@ function openTimetableManagerModal() {
 
     <!-- TAB 2: OCR / IMAGE SCANNER -->
     <div id="tab-ocr" class="tab-pane">
-      <!-- Universal iOS & Android File Upload Card (Direct Touch Overlay) -->
-      <div class="upload-zone" id="ocrDropZone" style="position:relative;overflow:hidden;cursor:pointer;border:2px dashed #38bdf8;border-radius:18px;padding:26px 16px;text-align:center;background:#0c1324;">
-        <!-- Real raw native input covering 100% of the surface so mobile taps trigger the native sheet: Chụp ảnh, Thư viện, Tệp -->
-        <input type="file" id="ocrDirectInput" accept="image/*" onchange="handleOcrFileSelect(event)" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.001;cursor:pointer;z-index:99;-webkit-appearance:none;font-size:0;">
-        
-        <div style="pointer-events:none;position:relative;z-index:1;">
-          <span class="upload-icon" style="font-size:40px;display:block;margin-bottom:8px">📷</span>
-          <div class="upload-title" style="font-size:16px;font-weight:800;color:#f8fafc;margin-bottom:6px">Chạm vào đây để Chọn ảnh hoặc Chụp ảnh TKB</div>
-          <div class="upload-sub" style="font-size:12.5px;color:#94a3b8;margin-bottom:14px;max-width:380px;margin-left:auto;margin-right:auto">
-            Hỗ trợ đầy đủ menu iPhone: <b>Chụp ảnh • Thư viện ảnh (Album) • Chọn tệp</b>
-          </div>
-          <div style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:linear-gradient(135deg,#38bdf8,#6366f1);color:#fff;border-radius:12px;font-weight:750;font-size:13.5px;box-shadow:0 4px 14px rgba(56,189,248,0.35);">
-            <span>🖼️ Chạm để Chọn ảnh / Chụp ảnh</span>
-          </div>
+      <!-- Universal Upload Zone with Dual Trigger (Click handler + Visible Native Picker) -->
+      <div class="upload-zone" id="ocrDropZone" onclick="triggerOcrPicker(event)" style="border:2px dashed #38bdf8;border-radius:18px;padding:26px 18px;text-align:center;background:#0c1324;cursor:pointer;transition:0.2s">
+        <span class="upload-icon" style="font-size:44px;display:block;margin-bottom:8px">📷</span>
+        <div class="upload-title" style="font-size:16px;font-weight:800;color:#f8fafc;margin-bottom:6px">Tải lên hoặc Chụp ảnh Thời khóa biểu</div>
+        <div class="upload-sub" style="font-size:12.5px;color:#94a3b8;margin-bottom:16px;max-width:380px;margin-left:auto;margin-right:auto">
+          Hỗ trợ đầy đủ menu iPhone: <b>Chụp ảnh • Thư viện ảnh (Album) • Chọn tệp</b>
+        </div>
+
+        <!-- Big Touch Button -->
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px">
+          <button type="button" class="primary" onclick="event.stopPropagation(); triggerOcrPicker(event)" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:12px;font-weight:750;font-size:14px;box-shadow:0 4px 16px rgba(56,189,248,0.35);cursor:pointer">
+            <span>🖼️ Chạm để Chọn ảnh / Chụp ảnh ngay</span>
+          </button>
+        </div>
+
+        <!-- Standalone Fallback Native Input for 100% device compatibility -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:6px" onclick="event.stopPropagation()">
+          <span style="font-size:11.5px;color:var(--muted)">Hoặc chọn tệp trực tiếp:</span>
+          <input type="file" id="realOcrFileInput" accept="image/*" onchange="handleOcrFileSelect(event)" style="font-size:12px;color:#cbd5e1;background:#1e293b;padding:6px 10px;border-radius:8px;border:1px solid #334155;max-width:240px;cursor:pointer">
         </div>
       </div>
 
       <!-- Image Preview and OCR Actions -->
-      <div id="ocrPreviewWrap" class="ocr-preview-wrap hidden" style="margin-top:14px">
+      <div id="ocrPreviewWrap" class="ocr-preview-wrap hidden" style="margin-top:16px">
         <img id="ocrPreviewImg" class="ocr-preview-img" alt="TKB Preview">
         <div style="flex:1;min-width:0">
           <b id="ocrFileName" style="color:#f8fafc;display:block;margin-bottom:2px">Ảnh TKB</b>
           <div class="meta" id="ocrFileSize" style="color:var(--muted);font-size:11.5px"></div>
-          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <button class="primary" type="button" id="btnStartOcr" onclick="startOcrProcess()" style="font-size:12.5px;padding:8px 16px">
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="primary" type="button" id="btnStartOcr" onclick="startOcrProcess()" style="font-size:13px;padding:9px 18px">
               <span>⚡ Quét & Phân tích bằng AI</span>
             </button>
-            <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="font-size:12.5px;padding:8px 14px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">
+            <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="font-size:13px;padding:9px 16px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">
               <span>👁️ Ghim ảnh xem cùng Bảng TKB</span>
             </button>
           </div>
@@ -4433,7 +4438,7 @@ function openTimetableManagerModal() {
       </div>
 
       <!-- OCR Progress Bar with Real-time Status -->
-      <div id="ocrProgressBox" class="ocr-progress-box hidden" style="margin-top:12px;padding:12px;background:#090f1e;border:1px solid #1e293b;border-radius:12px">
+      <div id="ocrProgressBox" class="ocr-progress-box hidden" style="margin-top:14px;padding:12px;background:#090f1e;border:1px solid #1e293b;border-radius:12px">
         <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
           <span id="ocrStatusText" style="color:#38bdf8;font-weight:600">Đang xử lý ảnh...</span>
           <b id="ocrPercent" style="color:#10b981">0%</b>
@@ -4441,18 +4446,19 @@ function openTimetableManagerModal() {
         <div class="ocr-bar"><i id="ocrBarFill"></i></div>
       </div>
 
-      <!-- Text Paste and Extracted Result Box -->
-      <div style="margin-top:14px;padding:14px;background:#090f1e;border:1px solid #1e293b;border-radius:14px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <label style="font-size:12.5px;font-weight:750;color:#38bdf8">📋 Nội dung văn bản TKB (tự quét từ ảnh hoặc dán từ Zalo/Messenger):</label>
+      <!-- Quick Text Paste option (Zalo / Messenger) -->
+      <div style="margin-top:16px;padding:14px;background:#090f1e;border:1px solid #1e293b;border-radius:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px">
+          <label style="font-size:12.5px;font-weight:750;color:#38bdf8">📋 Nhập nhanh bằng cách dán tin nhắn TKB (Zalo / Messenger / Nháp):</label>
+          <span style="font-size:11px;color:var(--muted)">Chuẩn 100% không lo ảnh mờ</span>
         </div>
-        <textarea id="ocrRawText" class="textarea" rows="4" placeholder="Kết quả AI quét ảnh sẽ xuất hiện tại đây. Bạn cũng có thể copy tin nhắn TKB từ Zalo dán vào đây... Ví dụ:&#10;T2: Chào cờ, Toán, Văn, Tiếng Anh&#10;T3: Toán, Toán, Hóa, Vật lý&#10;Hoặc bảng theo tiết:&#10;Tiết 1: Chào cờ, Toán, Hóa, Lý, Văn, Tin..."></textarea>
+        <textarea id="ocrRawText" class="textarea" rows="4" placeholder="Dán tin nhắn TKB cô giáo gửi trên nhóm lớp vào đây... Ví dụ:&#10;T2: Chào cờ, Toán, Văn, Tiếng Anh&#10;T3: Toán, Toán, Hóa, Vật lý&#10;Hoặc bảng theo tiết:&#10;Tiết 1: Chào cờ, Toán, Hóa, Lý, Văn, Tin..."></textarea>
         <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-          <button class="primary" type="button" onclick="applyOcrTextToMatrix()" style="padding:8px 16px;font-size:13px">
+          <button class="primary" type="button" onclick="applyOcrTextToMatrix()" style="padding:8px 18px;font-size:13px">
             <span>📥 Phân tích thông minh & Điền vào TKB</span>
           </button>
-          <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="padding:8px 14px;font-size:12.5px">
-            <span>👁️ Xem ảnh song song với Bảng TKB</span>
+          <button class="ghost" type="button" onclick="fillStandardSampleTimetable()" style="padding:8px 14px;font-size:12.5px;color:#fde047;border-color:rgba(253,224,71,0.4)">
+            <span>📋 Điền TKB mẫu THPT chuẩn</span>
           </button>
         </div>
       </div>
@@ -4635,6 +4641,24 @@ function setupOcrPasteListener() {
       }
     }
   }, { once: true });
+}
+
+function triggerOcrPicker(event) {
+  if (event) event.stopPropagation();
+  const inp = document.getElementById('realOcrFileInput');
+  if (inp) inp.click();
+}
+
+function fillStandardSampleTimetable() {
+  const sampleText = `T2: Chào cờ, Toán, Ngữ văn, Tiếng Anh, Tin học
+T3: Toán, Toán, Hóa học, Vật lý, Sinh học
+T4: Ngữ văn, Ngữ văn, Lịch sử, Địa lý, GD Quốc phòng
+T5: Vật lý, Hóa học, Tiếng Anh, GD Kinh tế & Pháp luật, Thể dục
+T6: Toán, Toán, Ngữ văn, Tiếng Anh, HĐTN
+T7: Tin học, Tiếng Anh, GD Địa phương, Sinh hoạt lớp`;
+  $('#ocrRawText').value = sampleText;
+  applyOcrTextToMatrix();
+  toast('Đã nạp thành công Thời khóa biểu mẫu THPT!');
 }
 
 function handleOcrFileSelect(event) {
