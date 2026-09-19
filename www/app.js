@@ -3623,7 +3623,7 @@ function timetable() {
         <p>Quản lý TKB chính khóa trên trường và lịch học thêm buổi tối / cuối tuần.</p>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${timetableMode === 'school' ? '<button class="primary" onclick="openTimetableManagerModal()">⚙ Thay đổi TKB trường</button>' : ''}
+        ${timetableMode === 'school' ? '<button class="primary" onclick="openTimetableManagerModal()">⚙ Thay đổi TKB trường</button><button class="ghost" style="border-color:#38bdf8;color:#38bdf8;font-weight:700" onclick="openPeriodConfigModal()">➕ Thêm tiết / Chỉnh số tiết</button>' : ''}
         ${timetableMode === 'extra' ? '<button class="ghost" style="border-color:#f59e0b;color:#fde68a" onclick="openAddMakeupModal()">🔄 ＋ Học bù tuần này</button><button class="primary" onclick="extraClassModal()">＋ Thêm ca học thêm</button>' : ''}
         ${timetableMode === 'combined' ? '<button class="ghost" style="border-color:#f59e0b;color:#fde68a" onclick="openAddMakeupModal()">🔄 ＋ Học bù tuần này</button><button class="ghost" onclick="extraClassModal()">＋ Thêm học thêm</button><button class="primary" onclick="openTimetableManagerModal()">⚙ Chỉnh TKB</button>' : ''}
       </div>
@@ -3734,7 +3734,7 @@ function renderSchoolTable() {
       <!-- Buổi Sáng -->
       <div class="mobile-timeline-section">
         <div class="mobile-section-title" style="color:#38bdf8">
-          <span>☀️ Buổi Sáng (4 tiết)</span>
+          <span>☀️ Buổi Sáng (${conf.morning.slots.length} tiết)</span>
           <span style="font-size:11.5px;color:var(--muted);font-weight:600">07:30 – 11:05</span>
         </div>
         <div class="truy-bai-timeline-card">
@@ -3755,7 +3755,7 @@ function renderSchoolTable() {
       <!-- Buổi Chiều -->
       <div class="mobile-timeline-section">
         <div class="mobile-section-title" style="color:#fb923c">
-          <span>🌤️ Buổi Chiều (3 tiết)</span>
+          <span>🌤️ Buổi Chiều (${conf.afternoon.slots.length} tiết)</span>
           <span style="font-size:11.5px;color:var(--muted);font-weight:600">13:30 – 16:15</span>
         </div>
         <div class="truy-bai-timeline-card">
@@ -3891,17 +3891,18 @@ function renderSchoolTable() {
     <div class="school-banner">
       <div>
         <strong>TRƯỜNG THCS VÀ THPT TẠ QUANG BỬU</strong>
-        <span>Lớp 10A4 • Khung 7 tiết/ngày (Sáng 4 tiết, Chiều 3 tiết)</span>
+        <span>Lớp 10A4 • Khung ${conf.morning.slots.length + conf.afternoon.slots.length} tiết/ngày (Sáng ${conf.morning.slots.length} tiết, Chiều ${conf.afternoon.slots.length} tiết)</span>
       </div>
       <div class="school-note">
-        Học sinh có mặt đúng giờ • Sáng trước 07:30 • Chiều trước 13:30
+        Học sinh có mặt đúng giờ • Sáng trước ${conf.morning.truyBai?.time?.split('–')[0]?.trim() || '07:30'} • Chiều trước ${conf.afternoon.truyBai?.time?.split('–')[0]?.trim() || '13:30'}
       </div>
     </div>
 
     <!-- View Mode Switcher -->
     <div class="school-view-bar">
       ${viewToggleHtml}
-      <div>
+      <div style="display:flex;gap:6px">
+        <button class="ghost" style="padding:6px 12px;font-size:12px;border-color:#38bdf8;color:#38bdf8;font-weight:700" onclick="openPeriodConfigModal()">➕ Thêm tiết</button>
         <button class="ghost" style="padding:6px 12px;font-size:12px" onclick="openTimetableManagerModal()">⚙ Sửa TKB</button>
       </div>
     </div>
@@ -4324,6 +4325,284 @@ function deleteSchoolPeriod(session, slot, d) {
   }
 }
 
+// Helper functions for dynamic timetable slots
+function saveCurrentMatrixFromDom() {
+  const conf = getSessionsConfig();
+  const newTT = [];
+  for (let d = 0; d < 6; d++) {
+    (conf.morning.slots || []).forEach(sl => {
+      const slot = sl.slot;
+      const sEl = $('#mat_m_' + d + '_' + slot + '_s');
+      const tEl = $('#mat_m_' + d + '_' + slot + '_t');
+      const s = sEl ? sEl.value.trim() : '';
+      const teacher = tEl ? tEl.value.trim() : '';
+      const oldCell = (db.schoolTT || []).find(x => x.session === 'morning' && x.d === d && x.slot === slot);
+      if (s) newTT.push({ session: 'morning', d, slot, s, teacher, note: oldCell?.s === s ? (oldCell?.note || '') : '' });
+    });
+    (conf.afternoon.slots || []).forEach(sl => {
+      const slot = sl.slot;
+      const sEl = $('#mat_a_' + d + '_' + slot + '_s');
+      const tEl = $('#mat_a_' + d + '_' + slot + '_t');
+      const s = sEl ? sEl.value.trim() : '';
+      const teacher = tEl ? tEl.value.trim() : '';
+      const oldCell = (db.schoolTT || []).find(x => x.session === 'afternoon' && x.d === d && x.slot === slot);
+      if (s) newTT.push({ session: 'afternoon', d, slot, s, teacher, note: oldCell?.s === s ? (oldCell?.note || '') : '' });
+    });
+  }
+  db.schoolTT = newTT;
+  db.schoolTTSeeded = true;
+  save();
+}
+
+function addSchoolPeriod(session, reOpenManager = false) {
+  const conf = JSON.parse(JSON.stringify(getSessionsConfig()));
+  const list = conf[session].slots;
+  const nextNum = list.length + 1;
+  if (nextNum > 8) return toast('Đã đạt số tiết tối đa cho buổi này!');
+
+  const defaultMorningTimes = [
+    '07:45 – 08:30',
+    '08:35 – 09:20',
+    '09:30 – 10:15',
+    '10:20 – 11:05',
+    '11:10 – 11:55',
+    '12:00 – 12:45',
+    '12:50 – 13:35'
+  ];
+  const defaultAfternoonTimes = [
+    '13:45 – 14:30',
+    '14:35 – 15:20',
+    '15:30 – 16:15',
+    '16:20 – 17:05',
+    '17:10 – 17:55',
+    '18:00 – 18:45'
+  ];
+
+  const defaultTime = session === 'morning'
+    ? (defaultMorningTimes[nextNum - 1] || '11:10 – 11:55')
+    : (defaultAfternoonTimes[nextNum - 1] || '16:20 – 17:05');
+
+  list.push({
+    slot: nextNum,
+    label: 'Tiết ' + nextNum,
+    time: defaultTime
+  });
+
+  conf[session].title = session === 'morning'
+    ? '☀️ BUỔI SÁNG (' + list.length + ' tiết)'
+    : '🌤️ BUỔI CHIỀU (' + list.length + ' tiết)';
+
+  db.sessionsConfig = conf;
+  save();
+  toast('✅ Đã thêm Tiết ' + nextNum + ' cho ' + (session === 'morning' ? 'Buổi Sáng' : 'Buổi Chiều') + ' (' + defaultTime + ')!');
+
+  if (reOpenManager) {
+    openTimetableManagerModal();
+  } else {
+    timetable();
+  }
+}
+
+function removeSchoolPeriod(session, reOpenManager = false) {
+  const conf = JSON.parse(JSON.stringify(getSessionsConfig()));
+  const list = conf[session].slots;
+  if (list.length <= 1) {
+    return toast('⚠️ Mỗi buổi phải có ít nhất 1 tiết học!');
+  }
+  const removed = list.pop();
+
+  db.schoolTT = (db.schoolTT || []).filter(x => !(x.session === session && x.slot === removed.slot));
+
+  conf[session].title = session === 'morning'
+    ? '☀️ BUỔI SÁNG (' + list.length + ' tiết)'
+    : '🌤️ BUỔI CHIỀU (' + list.length + ' tiết)';
+
+  db.sessionsConfig = conf;
+  save();
+  toast('🗑️ Đã xóa ' + removed.label + ' của ' + (session === 'morning' ? 'Buổi Sáng' : 'Buổi Chiều'));
+
+  if (reOpenManager) {
+    openTimetableManagerModal();
+  } else {
+    timetable();
+  }
+}
+
+function addPeriodFromManager(session) {
+  saveCurrentMatrixFromDom();
+  addSchoolPeriod(session, true);
+}
+
+function removePeriodFromManager(session) {
+  saveCurrentMatrixFromDom();
+  removeSchoolPeriod(session, true);
+}
+
+function setSchoolPeriodCounts(mCount, aCount, reOpenManager = false) {
+  const conf = JSON.parse(JSON.stringify(getSessionsConfig()));
+
+  const defaultMorningTimes = [
+    '07:45 – 08:30',
+    '08:35 – 09:20',
+    '09:30 – 10:15',
+    '10:20 – 11:05',
+    '11:10 – 11:55',
+    '12:00 – 12:45'
+  ];
+
+  const defaultAfternoonTimes = [
+    '13:45 – 14:30',
+    '14:35 – 15:20',
+    '15:30 – 16:15',
+    '16:20 – 17:05',
+    '17:10 – 17:55'
+  ];
+
+  // Adjust morning
+  const newMSlots = [];
+  for (let i = 1; i <= mCount; i++) {
+    const existing = conf.morning.slots.find(s => s.slot === i);
+    newMSlots.push(existing || {
+      slot: i,
+      label: 'Tiết ' + i,
+      time: defaultMorningTimes[i - 1] || '11:10 – 11:55'
+    });
+  }
+  conf.morning.slots = newMSlots;
+  conf.morning.title = '☀️ BUỔI SÁNG (' + mCount + ' tiết)';
+
+  // Adjust afternoon
+  const newASlots = [];
+  for (let i = 1; i <= aCount; i++) {
+    const existing = conf.afternoon.slots.find(s => s.slot === i);
+    newASlots.push(existing || {
+      slot: i,
+      label: 'Tiết ' + i,
+      time: defaultAfternoonTimes[i - 1] || '16:20 – 17:05'
+    });
+  }
+  conf.afternoon.slots = newASlots;
+  conf.afternoon.title = '🌤️ BUỔI CHIỀU (' + aCount + ' tiết)';
+
+  // Filter out any entries beyond new limits
+  db.schoolTT = (db.schoolTT || []).filter(x => {
+    if (x.session === 'morning' && x.slot > mCount) return false;
+    if (x.session === 'afternoon' && x.slot > aCount) return false;
+    return true;
+  });
+
+  db.sessionsConfig = conf;
+  save();
+  closeModal();
+  toast('🎉 Đã cập nhật TKB: Sáng ' + mCount + ' tiết, Chiều ' + aCount + ' tiết!');
+  if (reOpenManager) {
+    openTimetableManagerModal();
+  } else {
+    timetable();
+  }
+}
+
+function applyCustomPeriodCounts() {
+  const m = parseInt($('#selMorningCount')?.value || '4');
+  const a = parseInt($('#selAfternoonCount')?.value || '3');
+  setSchoolPeriodCounts(m, a);
+}
+
+function openPeriodConfigModal() {
+  const conf = getSessionsConfig();
+  const mCount = conf.morning.slots.length;
+  const aCount = conf.afternoon.slots.length;
+
+  const body = `
+    <div style="font-size:13.5px;color:var(--text);line-height:1.6">
+      <div style="background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);border-radius:14px;padding:14px;margin-bottom:16px">
+        <div style="font-weight:750;color:#38bdf8;font-size:14px;margin-bottom:4px">💡 Tùy chỉnh số tiết học theo lịch trường của bạn:</div>
+        <div style="color:var(--muted);font-size:12.5px">
+          Hiện tại: <b>Buổi Sáng có ${mCount} tiết</b> • <b>Buổi Chiều có ${aCount} tiết</b> (Tổng: ${mCount + aCount} tiết/ngày).
+        </div>
+      </div>
+
+      <!-- Quick Add 1 Period -->
+      <div style="font-weight:750;color:#f8fafc;margin-bottom:10px;font-size:13px">➕ THÊM 1 TIẾT HỌC NGAY:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+        <button type="button" class="primary" onclick="addSchoolPeriod('morning'); closeModal();" style="padding:14px 10px;flex-direction:column;gap:5px;text-align:center;align-items:center;background:linear-gradient(135deg,#0284c7,#0369a1);border-radius:14px;cursor:pointer">
+          <span style="font-size:22px">☀️</span>
+          <span style="font-weight:750;font-size:14px">Thêm 1 tiết Sáng</span>
+          <span style="font-size:11.5px;opacity:0.9">Tăng thành Tiết ${mCount + 1}</span>
+        </button>
+
+        <button type="button" class="primary" onclick="addSchoolPeriod('afternoon'); closeModal();" style="padding:14px 10px;flex-direction:column;gap:5px;text-align:center;align-items:center;background:linear-gradient(135deg,#d97706,#b45309);border-radius:14px;cursor:pointer">
+          <span style="font-size:22px">🌤️</span>
+          <span style="font-weight:750;font-size:14px">Thêm 1 tiết Chiều</span>
+          <span style="font-size:11.5px;opacity:0.9">Tăng thành Tiết ${aCount + 1}</span>
+        </button>
+      </div>
+
+      <!-- Quick Presets for Popular Schools -->
+      <div style="font-weight:750;color:#f8fafc;margin-bottom:10px;font-size:13px">🏫 CHỌN NHANH KHUNG GIỜ PHỔ BIẾN:</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px">
+        <button type="button" class="ghost" onclick="setSchoolPeriodCounts(5, 4)" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-color:rgba(56,189,248,0.4);text-align:left;cursor:pointer;border-radius:12px">
+          <div>
+            <b style="color:#38bdf8">Khung Sáng 5 tiết - Chiều 4 tiết</b>
+            <div style="font-size:11.5px;color:var(--muted)">Chuẩn THPT phổ biến nhất hiện nay (Sáng 1-5, Chiều 1-4)</div>
+          </div>
+          <span class="badge" style="background:#0284c7;color:#fff">9 tiết/ngày</span>
+        </button>
+
+        <button type="button" class="ghost" onclick="setSchoolPeriodCounts(5, 3)" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-color:rgba(56,189,248,0.4);text-align:left;cursor:pointer;border-radius:12px">
+          <div>
+            <b style="color:#38bdf8">Khung Sáng 5 tiết - Chiều 3 tiết</b>
+            <div style="font-size:11.5px;color:var(--muted)">Sáng 5 tiết chính khóa, Chiều 3 tiết phụ đạo/tự chọn</div>
+          </div>
+          <span class="badge" style="background:#0284c7;color:#fff">8 tiết/ngày</span>
+        </button>
+
+        <button type="button" class="ghost" onclick="setSchoolPeriodCounts(4, 3)" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-color:rgba(56,189,248,0.4);text-align:left;cursor:pointer;border-radius:12px">
+          <div>
+            <b style="color:#cbd5e1">Khung Sáng 4 tiết - Chiều 3 tiết</b>
+            <div style="font-size:11.5px;color:var(--muted)">Mặc định ban đầu trường Tạ Quang Bửu (10A4)</div>
+          </div>
+          <span class="badge" style="background:#334155;color:#fff">7 tiết/ngày</span>
+        </button>
+      </div>
+
+      <!-- Custom Adjustments -->
+      <div style="background:#090f1d;border:1px solid #1e293b;border-radius:14px;padding:14px">
+        <div style="font-weight:750;color:#facc15;font-size:13px;margin-bottom:8px">⚙️ Tự điều chỉnh chính xác số tiết:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div>
+            <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:4px">Số tiết Buổi Sáng:</label>
+            <select id="selMorningCount" class="input" style="width:100%">
+              ${[1, 2, 3, 4, 5, 6].map(n => `<option value="${n}" ${n === mCount ? 'selected' : ''}>${n} tiết (Sáng)</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:#94a3b8;display:block;margin-bottom:4px">Số tiết Buổi Chiều:</label>
+            <select id="selAfternoonCount" class="input" style="width:100%">
+              ${[0, 1, 2, 3, 4, 5].map(n => `<option value="${n}" ${n === aCount ? 'selected' : ''}>${n} tiết (Chiều)</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <button type="button" class="primary" onclick="applyCustomPeriodCounts()" style="width:100%;justify-content:center">
+          <span>💾 Áp dụng số tiết đã chọn</span>
+        </button>
+      </div>
+
+      <!-- Delete last slot button if needed -->
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #1e293b;padding-top:12px">
+        <span style="font-size:12px;color:var(--muted)">Bớt tiết nếu thêm nhầm?</span>
+        <div style="display:flex;gap:6px">
+          <button type="button" class="ghost" onclick="removeSchoolPeriod('morning'); closeModal();" style="font-size:11px;padding:4px 10px;color:#f87171;border-color:rgba(239,68,68,0.3)">➖ Bớt 1 tiết Sáng</button>
+          <button type="button" class="ghost" onclick="removeSchoolPeriod('afternoon'); closeModal();" style="font-size:11px;padding:4px 10px;color:#f87171;border-color:rgba(239,68,68,0.3)">➖ Bớt 1 tiết Chiều</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  modal('⚙️ Cài đặt số tiết Thời khóa biểu', body, null, true);
+}
+
+
 // ----------------- TIMETABLE MANAGER -----------------
 let ocrTempImage = null;
 
@@ -4357,31 +4636,51 @@ function openTimetableManagerModal() {
             </tr>
           </thead>
           <tbody>
-            <tr><td colspan="7" class="matrix-sec-title">☀️ BUỔI SÁNG</td></tr>
-            ${[1, 2, 3, 4].map(slot => `
+            <tr>
+              <td colspan="7" class="matrix-sec-title">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px">
+                  <span>☀️ BUỔI SÁNG (${conf.morning.slots.length} tiết)</span>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="ghost" onclick="addPeriodFromManager('morning')" style="font-size:11px;padding:2px 8px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">＋ Thêm tiết Sáng</button>
+                    ${conf.morning.slots.length > 1 ? `<button type="button" class="ghost" onclick="removePeriodFromManager('morning')" style="font-size:11px;padding:2px 8px;color:#f87171;border-color:rgba(239,68,68,0.3)">➖ Bớt tiết</button>` : ''}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            ${conf.morning.slots.map(sl => `
               <tr>
-                <th>Tiết ${slot}</th>
+                <th>${sl.label}</th>
                 ${SCHOOL_DAYS.map((_, d) => {
-    const it = matrix.morning[d]?.[slot] || { s: '', teacher: '' };
+    const it = matrix.morning[d]?.[sl.slot] || { s: '', teacher: '' };
     return `
                     <td>
-                      <input id="mat_m_${d}_${slot}_s" value="${esc(it.s)}" placeholder="Môn" style="margin-bottom:3px">
-                      <input id="mat_m_${d}_${slot}_t" value="${esc(it.teacher)}" placeholder="GV" style="font-size:10px;opacity:0.8">
+                      <input id="mat_m_${d}_${sl.slot}_s" value="${esc(it.s)}" placeholder="Môn" style="margin-bottom:3px">
+                      <input id="mat_m_${d}_${sl.slot}_t" value="${esc(it.teacher)}" placeholder="GV" style="font-size:10px;opacity:0.8">
                     </td>
                   `;
   }).join('')}
               </tr>
             `).join('')}
-            <tr><td colspan="7" class="matrix-sec-title">🌤️ BUỔI CHIỀU</td></tr>
-            ${[1, 2, 3].map(slot => `
+            <tr>
+              <td colspan="7" class="matrix-sec-title">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0 4px">
+                  <span>🌤️ BUỔI CHIỀU (${conf.afternoon.slots.length} tiết)</span>
+                  <div style="display:flex;gap:6px">
+                    <button type="button" class="ghost" onclick="addPeriodFromManager('afternoon')" style="font-size:11px;padding:2px 8px;color:#fb923c;border-color:rgba(251,146,60,0.4)">＋ Thêm tiết Chiều</button>
+                    ${conf.afternoon.slots.length > 1 ? `<button type="button" class="ghost" onclick="removePeriodFromManager('afternoon')" style="font-size:11px;padding:2px 8px;color:#f87171;border-color:rgba(239,68,68,0.3)">➖ Bớt tiết</button>` : ''}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            ${conf.afternoon.slots.map(sl => `
               <tr>
-                <th>Tiết ${slot}</th>
+                <th>${sl.label}</th>
                 ${SCHOOL_DAYS.map((_, d) => {
-    const it = matrix.afternoon[d]?.[slot] || { s: '', teacher: '' };
+    const it = matrix.afternoon[d]?.[sl.slot] || { s: '', teacher: '' };
     return `
                     <td>
-                      <input id="mat_a_${d}_${slot}_s" value="${esc(it.s)}" placeholder="Môn" style="margin-bottom:3px">
-                      <input id="mat_a_${d}_${slot}_t" value="${esc(it.teacher)}" placeholder="GV" style="font-size:10px;opacity:0.8">
+                      <input id="mat_a_${d}_${sl.slot}_s" value="${esc(it.s)}" placeholder="Môn" style="margin-bottom:3px">
+                      <input id="mat_a_${d}_${sl.slot}_t" value="${esc(it.teacher)}" placeholder="GV" style="font-size:10px;opacity:0.8">
                     </td>
                   `;
   }).join('')}
@@ -4483,7 +4782,10 @@ function openTimetableManagerModal() {
     <div id="tab-time" class="tab-pane">
       <p class="meta">Tùy chỉnh thời gian bắt đầu & kết thúc của từng tiết học (Áp dụng cho mùa đông/hè hoặc trường khác).</p>
       
-      <h3 style="font-size:13px;color:var(--a2);margin:14px 0 8px">☀️ BUỔI SÁNG</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px">
+        <h3 style="font-size:13px;color:var(--a2);margin:0">☀️ BUỔI SÁNG (${conf.morning.slots.length} tiết)</h3>
+        <button type="button" class="ghost" onclick="addPeriodFromManager('morning')" style="font-size:11px;padding:2px 8px;color:#38bdf8;border-color:rgba(56,189,248,0.3)">＋ Thêm tiết Sáng</button>
+      </div>
       <div class="time-config-list">
         <div class="time-config-row">
           <b>Giờ truy bài</b>
@@ -4498,7 +4800,10 @@ function openTimetableManagerModal() {
         `).join('')}
       </div>
 
-      <h3 style="font-size:13px;color:var(--a2);margin:18px 0 8px">🌤️ BUỔI CHIỀU</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin:18px 0 8px">
+        <h3 style="font-size:13px;color:var(--a2);margin:0">🌤️ BUỔI CHIỀU (${conf.afternoon.slots.length} tiết)</h3>
+        <button type="button" class="ghost" onclick="addPeriodFromManager('afternoon')" style="font-size:11px;padding:2px 8px;color:#fb923c;border-color:rgba(251,146,60,0.3)">＋ Thêm tiết Chiều</button>
+      </div>
       <div class="time-config-list">
         <div class="time-config-row">
           <b>Giờ truy bài</b>
@@ -4518,22 +4823,24 @@ function openTimetableManagerModal() {
   modal('⚙ Thay đổi Thời khóa biểu & Tiết học', body, () => {
     const newTT = [];
     for (let d = 0; d < 6; d++) {
-      for (let slot = 1; slot <= 4; slot++) {
+      (conf.morning.slots || []).forEach(sl => {
+        const slot = sl.slot;
         const sEl = $(`#mat_m_${d}_${slot}_s`);
         const tEl = $(`#mat_m_${d}_${slot}_t`);
         const s = sEl ? sEl.value.trim() : '';
         const teacher = tEl ? tEl.value.trim() : '';
         const oldCell = (db.schoolTT || []).find(x => x.session === 'morning' && x.d === d && x.slot === slot);
         if (s) newTT.push({ session: 'morning', d, slot, s, teacher, note: oldCell?.s === s ? (oldCell?.note || '') : '' });
-      }
-      for (let slot = 1; slot <= 3; slot++) {
+      });
+      (conf.afternoon.slots || []).forEach(sl => {
+        const slot = sl.slot;
         const sEl = $(`#mat_a_${d}_${slot}_s`);
         const tEl = $(`#mat_a_${d}_${slot}_t`);
         const s = sEl ? sEl.value.trim() : '';
         const teacher = tEl ? tEl.value.trim() : '';
         const oldCell = (db.schoolTT || []).find(x => x.session === 'afternoon' && x.d === d && x.slot === slot);
         if (s) newTT.push({ session: 'afternoon', d, slot, s, teacher, note: oldCell?.s === s ? (oldCell?.note || '') : '' });
-      }
+      });
     }
     db.schoolTT = newTT;
 
@@ -4953,9 +5260,26 @@ function applyOcrTextToMatrix() {
   const parsed = parseTimetableFromText(raw);
   let fillCount = 0;
 
+  // Check if OCR detected more slots than currently configured, auto-expand if needed!
+  const curConf = getSessionsConfig();
+  let maxMSlot = 0;
+  let maxASlot = 0;
+  for (let d = 0; d < 6; d++) {
+    for (let slot = 1; slot <= 7; slot++) {
+      if (parsed.morning[d]?.[slot]) maxMSlot = Math.max(maxMSlot, slot);
+      if (parsed.afternoon[d]?.[slot]) maxASlot = Math.max(maxASlot, slot);
+    }
+  }
+
+  if (maxMSlot > curConf.morning.slots.length || maxASlot > curConf.afternoon.slots.length) {
+    const targetM = Math.max(curConf.morning.slots.length, maxMSlot);
+    const targetA = Math.max(curConf.afternoon.slots.length, maxASlot);
+    setSchoolPeriodCounts(targetM, targetA, true);
+  }
+
   // Fill into matrix inputs on tab-manual
   for (let d = 0; d < 6; d++) {
-    for (let slot = 1; slot <= 5; slot++) {
+    for (let slot = 1; slot <= 8; slot++) {
       const sub = parsed.morning[d]?.[slot];
       if (sub) {
         const el = $(`#mat_m_${d}_${slot}_s`);
@@ -4964,13 +5288,11 @@ function applyOcrTextToMatrix() {
           fillCount++;
         }
       }
-    }
-    for (let slot = 1; slot <= 3; slot++) {
-      const sub = parsed.afternoon[d]?.[slot];
-      if (sub) {
-        const el = $(`#mat_a_${d}_${slot}_s`);
-        if (el) {
-          el.value = sub;
+      const subA = parsed.afternoon[d]?.[slot];
+      if (subA) {
+        const elA = $(`#mat_a_${d}_${slot}_s`);
+        if (elA) {
+          elA.value = subA;
           fillCount++;
         }
       }
