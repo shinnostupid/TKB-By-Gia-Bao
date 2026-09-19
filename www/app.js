@@ -4803,31 +4803,339 @@ function notes() {
   `;
 }
 
-// ----------------- MODULE: PROGRESS -----------------
+// ----------------- MODULE: PROGRESS (BIỂU ĐỒ BTVN 7 NGÀY & PHÂN TÍCH TUẦN) -----------------
+let selectedChartDayIdx = null;
+
 function progress() {
-  let n = db.tasks.length,
-    d = db.tasks.filter(x => x.done).length,
-    p = n ? Math.round(d / n * 100) : 0;
+  const now = new Date();
+  const dayOfWeek = (now.getDay() + 6) % 7; // 0 = Thứ 2, ..., 6 = Chủ Nhật
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - dayOfWeek);
+  monday.setHours(0, 0, 0, 0);
+
+  const dayLabels = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật'];
+  const dayShort = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+  const weekDays = [];
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    const dateStr = d.toISOString().slice(0, 10);
+    const isToday = dateStr === today();
+
+    // Tasks due on this day OR completed on this day
+    const tasksDue = (db.tasks || []).filter(t => t.due === dateStr);
+    const tasksDone = (db.tasks || []).filter(t => {
+      const comp = t.completedAt || (t.done ? t.due : null);
+      return comp === dateStr;
+    });
+    const tasksPending = tasksDue.filter(t => !t.done);
+
+    weekDays.push({
+      idx: i,
+      dateStr,
+      displayDate: `${d.getDate()}/${d.getMonth() + 1}`,
+      dayName: dayLabels[i],
+      dayShort: dayShort[i],
+      isToday,
+      dueCount: tasksDue.length,
+      doneCount: tasksDone.length,
+      pendingCount: tasksPending.length,
+      tasksDue,
+      tasksDone
+    });
+  }
+
+  // Week metrics
+  const totalTasksWeek = weekDays.reduce((acc, d) => acc + d.dueCount, 0);
+  const totalDoneWeek = weekDays.reduce((acc, d) => acc + d.doneCount, 0);
+  const totalPendingWeek = weekDays.reduce((acc, d) => acc + d.pendingCount, 0);
+  const weekRate = totalTasksWeek > 0 ? Math.round((totalDoneWeek / totalTasksWeek) * 100) : (totalDoneWeek > 0 ? 100 : 0);
+
+  // Peak productivity day
+  let peakDay = weekDays.reduce((max, d) => (d.doneCount > (max?.doneCount || 0)) ? d : max, null);
+  if (!peakDay || peakDay.doneCount === 0) peakDay = null;
+
+  // Max count for chart scaling (min 4 for visual aesthetics)
+  const maxBarValue = Math.max(4, ...weekDays.map(d => Math.max(d.dueCount, d.doneCount)));
+
+  // All-time metrics
+  const totalAll = (db.tasks || []).length;
+  const doneAll = (db.tasks || []).filter(x => x.done).length;
+  const rateAll = totalAll > 0 ? Math.round((doneAll / totalAll) * 100) : 0;
+
+  // Subject breakdown
+  const subjectMap = {};
+  (db.tasks || []).forEach(t => {
+    const s = t.subject || 'Khác';
+    if (!subjectMap[s]) subjectMap[s] = { total: 0, done: 0 };
+    subjectMap[s].total++;
+    if (t.done) subjectMap[s].done++;
+  });
+  const subjectList = Object.entries(subjectMap)
+    .map(([sub, data]) => ({ sub, ...data, rate: Math.round((data.done / data.total) * 100) }))
+    .sort((a, b) => b.total - a.total);
+
+  // Dynamic AI Study Insight
+  let insightText = '';
+  let insightBadge = 'Nhận xét tuần';
+  let insightIcon = '💡';
+  let insightBorder = 'rgba(56, 189, 248, 0.3)';
+  let insightBg = 'rgba(14, 165, 233, 0.08)';
+
+  if (totalTasksWeek === 0 && totalAll === 0) {
+    insightIcon = '📝';
+    insightBadge = 'Bắt đầu tuần mới';
+    insightText = 'Tuần này bạn chưa nhập bài tập nào. Hãy nhấn "+ Thêm BTVN" ở góc trên để theo dõi biểu đồ tiến độ sinh động nhé!';
+  } else if (weekRate >= 80) {
+    insightIcon = '🔥';
+    insightBadge = 'Phong độ xuất sắc';
+    insightBorder = 'rgba(16, 185, 129, 0.35)';
+    insightBg = 'rgba(16, 185, 129, 0.08)';
+    insightText = `Tuyệt vời! Bạn đã hoàn thành ${totalDoneWeek} bài tập tuần này (tỷ lệ ${weekRate}%). Phong độ học tập rất chủ động và đều đặn!`;
+  } else if (weekRate >= 50) {
+    insightIcon = '⚡';
+    insightBadge = 'Tiến độ ổn định';
+    insightBorder = 'rgba(245, 158, 11, 0.35)';
+    insightBg = 'rgba(245, 158, 11, 0.08)';
+    insightText = `Đã hoàn thành ${totalDoneWeek}/${totalTasksWeek} bài tập (${weekRate}%). Còn ${totalPendingWeek} bài đang chờ giải quyết, hãy dành 30 phút tối nay để về đích sớm nhé!`;
+  } else {
+    insightIcon = '⚠️';
+    insightBadge = 'Cần tăng tốc';
+    insightBorder = 'rgba(239, 68, 68, 0.35)';
+    insightBg = 'rgba(239, 68, 68, 0.08)';
+    insightText = `Có ${totalPendingWeek} bài tập cần hoàn thành trong tuần này. Hãy ưu tiên bài tập có hạn nộp gần nhất để không bị dồn việc trước giờ truy bài!`;
+  }
+
+  // Active selected day inspector
+  const activeDay = selectedChartDayIdx !== null ? weekDays[selectedChartDayIdx] : (weekDays.find(d => d.isToday) || weekDays[0]);
+
   $('#content').innerHTML = `
     <div class="hero">
       <div>
-        <div class="eyebrow">PROGRESS</div>
-        <h1>Tiến độ học tập</h1>
-        <p>Theo dõi tiến độ hoàn thành các bài tập và nhiệm vụ.</p>
+        <div class="eyebrow" style="display:flex;align-items:center;gap:6px">
+          <span style="color:#38bdf8;font-weight:700">STUDY PERFORMANCE ANALYTICS</span>
+          <span style="opacity:0.4">•</span>
+          <span>14/09 — 20/09</span>
+        </div>
+        <h1>📊 Tiến độ học tập & Biểu đồ BTVN</h1>
+        <p>Thống kê số lượng bài tập về nhà theo từng ngày trong tuần qua, theo dõi tỷ lệ hoàn thành và năng suất học tập.</p>
+      </div>
+      <div class="hero-actions" style="display:flex;gap:8px">
+        <button class="primary" onclick="taskModal()">➕ Thêm BTVN mới</button>
       </div>
     </div>
-    <div class="grid stats">
-      <div class="card"><div class="stat-label">Tổng bài</div><div class="stat-value">${n}</div></div>
-      <div class="card"><div class="stat-label">Hoàn thành</div><div class="stat-value">${d}</div></div>
-      <div class="card"><div class="stat-label">Tiến độ</div><div class="stat-value">${p}%</div></div>
-      <div class="card"><div class="stat-label">Ca học thêm</div><div class="stat-value">${(db.extraClasses || []).length}</div></div>
+
+    <!-- AI Study Insight Banner -->
+    <div class="card" style="border-color:${insightBorder};background:${insightBg};margin-bottom:18px;display:flex;align-items:center;gap:14px;padding:16px 20px">
+      <div style="font-size:32px">${insightIcon}</div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span class="badge" style="background:#0284c7;color:#fff;font-weight:700">${insightBadge}</span>
+          <span style="font-size:12px;color:var(--muted)">Phân tích theo tuần học hiện tại</span>
+        </div>
+        <div style="font-size:13.5px;color:#e2e8f0;line-height:1.5">${insightText}</div>
+      </div>
     </div>
-    <div class="card">
-      <div class="titlebar"><b>Hoàn thành bài tập</b><b>${p}%</b></div>
-      <div class="progress"><i style="width:${p}%"></i></div>
+
+    <!-- 4 KPI Cards for the Week -->
+    <div class="grid stats" style="margin-bottom:20px">
+      <div class="card">
+        <div class="stat-label">Tổng BTVN tuần này</div>
+        <div class="stat-value" style="color:#38bdf8">${totalTasksWeek}</div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Bài cần nộp trong tuần</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Đã hoàn thành</div>
+        <div class="stat-value" style="color:#10b981">${totalDoneWeek}</div>
+        <div style="font-size:11.5px;color:#a7f3d0;margin-top:4px">Tỷ lệ ${weekRate}%</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Đang tồn đọng</div>
+        <div class="stat-value" style="color:${totalPendingWeek > 0 ? '#f87171' : '#cbd5e1'}">${totalPendingWeek}</div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Cần hoàn thành sớm</div>
+      </div>
+      <div class="card">
+        <div class="stat-label">Ngày chăm nhất</div>
+        <div class="stat-value" style="font-size:22px;color:#fde047">
+          ${peakDay ? `${peakDay.dayName} (${peakDay.doneCount})` : 'Chưa ghi nhận'}
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:4px">Hoàn thành nhiều bài nhất</div>
+      </div>
+    </div>
+
+    <!-- MAIN SECTION: BIỂU ĐỒ CỘT 7 NGÀY -->
+    <div class="card" style="padding:22px;margin-bottom:20px">
+      <div class="titlebar" style="margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div>
+          <h2 style="display:flex;align-items:center;gap:8px">
+            <span>📈 Biểu đồ số lượng BTVN 7 ngày qua</span>
+          </h2>
+          <div style="font-size:12.5px;color:var(--muted);margin-top:2px">
+            Biểu đồ thể hiện số bài tập hoàn thành (xanh ngọc) và bài cần nộp/chưa xong (cam) mỗi ngày
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;font-size:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="width:12px;height:12px;border-radius:3px;background:linear-gradient(180deg,#38bdf8,#10b981);display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">Đã hoàn thành</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="width:12px;height:12px;border-radius:3px;background:linear-gradient(180deg,#fbbf24,#ef4444);display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">Chưa xong / Cần nộp</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- THE BAR CHART CANVAS -->
+      <div class="study-chart-wrap">
+        <div class="study-chart-grid-bg">
+          <div class="chart-grid-line"><span>${maxBarValue} bài</span></div>
+          <div class="chart-grid-line"><span>${Math.round(maxBarValue * 0.75)}</span></div>
+          <div class="chart-grid-line"><span>${Math.round(maxBarValue * 0.5)}</span></div>
+          <div class="chart-grid-line"><span>${Math.round(maxBarValue * 0.25)}</span></div>
+          <div class="chart-grid-line"><span>0</span></div>
+        </div>
+
+        <div class="study-chart-columns">
+          ${weekDays.map(d => {
+            const isSelected = activeDay.idx === d.idx;
+            const doneHeightPct = Math.min(100, Math.round((d.doneCount / maxBarValue) * 100));
+            const pendingHeightPct = Math.min(100, Math.round((d.pendingCount / maxBarValue) * 100));
+            const totalDay = d.doneCount + d.pendingCount;
+
+            return `
+              <div class="chart-day-col ${isSelected ? 'selected' : ''} ${d.isToday ? 'today' : ''}" 
+                   onclick="selectChartDay(${d.idx})" 
+                   title="${d.dayName} (${d.displayDate}): ${d.doneCount} bài xong, ${d.pendingCount} bài chưa xong">
+                
+                <!-- Number label on top of bar -->
+                <div class="chart-col-value-badge ${totalDay > 0 ? 'active' : ''}">
+                  ${totalDay > 0 ? totalDay : '0'}
+                </div>
+
+                <!-- Vertical Bar Container -->
+                <div class="chart-col-bar-slot">
+                  <div class="chart-bar-pillar">
+                    ${d.pendingCount > 0 ? `
+                      <div class="chart-bar-part pending" style="height:${pendingHeightPct}%;animation:growBar 0.5s ease-out" title="Chưa xong: ${d.pendingCount}">
+                        ${d.pendingCount > 0 && pendingHeightPct > 20 ? `<span>${d.pendingCount}</span>` : ''}
+                      </div>
+                    ` : ''}
+                    ${d.doneCount > 0 ? `
+                      <div class="chart-bar-part done" style="height:${doneHeightPct}%;animation:growBar 0.5s ease-out" title="Đã xong: ${d.doneCount}">
+                        ${d.doneCount > 0 && doneHeightPct > 20 ? `<span>${d.doneCount}</span>` : ''}
+                      </div>
+                    ` : ''}
+                    ${totalDay === 0 ? `<div class="chart-bar-part empty" style="height:6px"></div>` : ''}
+                  </div>
+                </div>
+
+                <!-- Bottom Day Label -->
+                <div class="chart-col-labels">
+                  <span class="chart-day-name">${d.dayShort}</span>
+                  <span class="chart-day-date">${d.displayDate}</span>
+                  ${d.isToday ? `<span class="chart-today-pill">Hôm nay</span>` : ''}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- DAY DETAILS INSPECTOR -->
+      <div class="chart-day-inspector" style="margin-top:20px;padding:16px;background:#090f1e;border:1px solid #1e293b;border-radius:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+          <div style="font-size:14px;font-weight:750;color:#f8fafc;display:flex;align-items:center;gap:8px">
+            <span>📅 Chi tiết bài tập: ${activeDay.dayName} (${activeDay.displayDate})</span>
+            ${activeDay.isToday ? '<span class="badge" style="background:#0284c7;color:#fff">Hôm nay</span>' : ''}
+          </div>
+          <div style="font-size:12.5px;color:var(--muted)">
+            ✅ ${activeDay.doneCount} bài xong • ⏳ ${activeDay.pendingCount} bài chưa xong
+          </div>
+        </div>
+
+        ${activeDay.tasksDue.length === 0 && activeDay.tasksDone.length === 0 ? `
+          <div style="font-size:12.5px;color:var(--muted);padding:8px 0">
+            Không có bài tập nào cần nộp hoặc hoàn thành trong ngày ${activeDay.dayName}.
+          </div>
+        ` : `
+          <div style="display:grid;gap:6px">
+            ${activeDay.tasksDue.map(t => `
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#131d33;border:1px solid #1e2c47;padding:8px 12px;border-radius:10px;font-size:12.5px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span>${t.done ? '✅' : '⏳'}</span>
+                  <b style="color:#38bdf8">${esc(t.subject || 'BTVN')}:</b>
+                  <span style="color:#e2e8f0;${t.done ? 'text-decoration:line-through;opacity:0.75' : ''}">${esc(t.title)}</span>
+                </div>
+                <span class="badge ${t.done ? 'success' : 'danger'}">${t.done ? 'Đã xong' : 'Chưa xong'}</span>
+              </div>
+            `).join('')}
+          </div>
+        `}
+      </div>
+    </div>
+
+    <!-- SUBJECT BREAKDOWN & OVERALL STATS -->
+    <div class="grid two">
+      <!-- Subject Progress List -->
+      <div class="card">
+        <div class="titlebar">
+          <h2>📚 Phân bổ BTVN theo môn học</h2>
+          <button class="ghost" onclick="go('tasks')">Mở BTVN</button>
+        </div>
+        ${subjectList.length === 0 ? `
+          <div style="text-align:center;color:var(--muted);padding:24px 0;font-size:13px">
+            Chưa có môn học nào được ghi nhận bài tập.
+          </div>
+        ` : `
+          <div style="display:grid;gap:12px">
+            ${subjectList.map(s => `
+              <div>
+                <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:5px">
+                  <span style="font-weight:700;color:#f8fafc">${esc(s.sub)}</span>
+                  <span style="font-size:12px;color:var(--muted)">${s.done}/${s.total} bài (${s.rate}%)</span>
+                </div>
+                <div class="subject-bar-track">
+                  <div class="subject-bar-fill" style="width:${s.rate}%"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `}
+      </div>
+
+      <!-- All-Time Lifetime Performance Card -->
+      <div class="card">
+        <div class="titlebar">
+          <h2>🏆 Tổng kết tiến độ toàn thời gian</h2>
+          <span class="badge" style="background:#3b82f6;color:#fff">${rateAll}% Hoàn thành</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div style="background:#090f1e;padding:14px;border-radius:12px;border:1px solid #1e2c47;text-align:center">
+            <div style="font-size:12px;color:var(--muted)">Tổng bài tập đã tạo</div>
+            <div style="font-size:26px;font-weight:850;color:#38bdf8;margin-top:4px">${totalAll}</div>
+          </div>
+          <div style="background:#090f1e;padding:14px;border-radius:12px;border:1px solid #1e2c47;text-align:center">
+            <div style="font-size:12px;color:var(--muted)">Đã giải quyết xong</div>
+            <div style="font-size:26px;font-weight:850;color:#10b981;margin-top:4px">${doneAll}</div>
+          </div>
+        </div>
+
+        <div style="font-size:13px;color:#cbd5e1;line-height:1.5;background:rgba(30,41,59,0.5);padding:12px;border-radius:12px">
+          💡 <b>Mẹo quản lý thời gian:</b> Hãy chia nhỏ các bài tập lớn thành các bài tập con [Bài 1..N] trong mục BTVN. Mỗi lần đánh dấu hoàn thành 1 câu, tiến độ sẽ tự động tăng dần!
+        </div>
+      </div>
     </div>
   `;
 }
+
+function selectChartDay(dayIdx) {
+  selectedChartDayIdx = dayIdx;
+  progress();
+}
+
 
 // ----------------- MODULE: SETTINGS -----------------
 // ----------------- MODULE: SETTINGS -----------------
