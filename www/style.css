@@ -2461,6 +2461,777 @@ aside nav button.active .nav-svg,
 /* ==========================================================================
    WEATHER FORECAST & STUDENT OUTFIT / BALO ASSISTANT STYLES
    ========================================================================== */
+/* ================= WEATHER SERVICE & STUDENT BACKPACK ASSISTANT ================= */
+.weather-forecast-widget {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.95));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 20px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.weather-forecast-widget.hot {
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 14px 36px rgba(245, 158, 11, 0.12), 0 0 20px rgba(245, 158, 11, 0.05);
+}
+
+.weather-forecast-widget.rain {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 14px 36px rgba(37, 99, 235, 0.15), 0 0 20px rgba(56, 189, 248, 0.08);
+}
+
+.weather-forecast-widget.heavy-rain {
+  border-color: rgba(192, 132, 252, 0.45);
+  box-shadow: 0 14px 36px rgba(168, 85, 247, 0.16), 0 0 20px rgba(192, 132, 252, 0.1);
+}
+
+.weather-hero-icon-pulsing {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.weather-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.weather-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.weather-title-wrap h3 {
+  font-size: 16px;
+  font-weight: 850;
+  color: #f8fafc;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.weather-controls-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weather-city-select {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  color: #38bdf8;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.weather-city-select:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+}
+
+.weather-refresh-btn {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #7dd3fc;
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.weather-refresh-btn:hover {
+  background: rgba(56, 189, 248, 0.24);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.weather-days-carousel-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.weather-days-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.weather-days-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.weather-days-scroll::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 10px;
+}
+
+.weather-day-card {
+  flex: 0 0 126px;
+  min-width: 126px;
+  scroll-snap-align: start;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  user-select: none;
+}
+
+.weather-day-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-3px);
+  background: rgba(30, 41, 59, 0.82);
+}
+
+.weather-day-card.active {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.24), rgba(15, 23, 42, 0.94));
+  border: 1.8px solid #38bdf8;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.38);
+  transform: translateY(-3px);
+}
+
+.weather-day-label {
+  font-size: 13px;
+  font-weight: 850;
+  color: #f1f5f9;
+}
+
+.weather-day-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.weather-icon-svg-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0;
+}
+
+.weather-day-temp {
+  font-size: 14px;
+  font-weight: 850;
+  color: #ffffff;
+}
+
+.weather-day-min-temp {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-left: 2px;
+}
+
+.weather-rain-prob-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 750;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  width: 100%;
+  justify-content: center;
+}
+
+.weather-rain-prob-pill.severe {
+  background: rgba(239, 68, 68, 0.22);
+  color: #f87171;
+}
+
+.weather-rain-prob-pill.high {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fbbf24;
+}
+
+/* Student Outfit & Backpack Assistant Hero Box */
+.student-weather-advice-card {
+  margin-top: 18px;
+  border-radius: 18px;
+  padding: 20px 22px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.student-weather-advice-card.rain {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), rgba(15, 23, 42, 0.96));
+  border: 1.5px solid rgba(96, 165, 250, 0.5);
+}
+
+.student-weather-advice-card.heavy-rain {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.22), rgba(15, 23, 42, 0.96));
+  border: 1.5px solid rgba(192, 132, 252, 0.58);
+}
+
+.student-weather-advice-card.hot {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18), rgba(15, 23, 42, 0.96));
+  border: 1.5px solid rgba(251, 191, 36, 0.5);
+}
+
+.student-weather-advice-card.cold {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0.96));
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+}
+
+.student-weather-advice-card.pleasant {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.96));
+  border: 1.5px solid rgba(52, 211, 153, 0.45);
+}
+
+.advice-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.advice-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.advice-hero-day-tag {
+  font-weight: 850;
+  font-size: 14px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.advice-condition-tag {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.advice-badge-outfit {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+}
+
+.advice-main-title {
+  font-size: 17px;
+  font-weight: 900;
+  color: #f8fafc;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.advice-main-desc {
+  font-size: 13px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+/* 4 Metrics Row */
+.advice-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.advice-metric-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.advice-metric-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+.advice-metric-val {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.advice-metric-sub {
+  font-size: 10.8px;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* 3 Pillars Grid */
+.advice-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.advice-pillar-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.advice-pillar-card.highlight-casio {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.75), rgba(56, 189, 248, 0.08));
+}
+
+.pillar-card-title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pillar-card-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12.2px;
+  color: #cbd5e1;
+  line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.advice-safety-bar {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #fca5a5;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* Interactive Backpack Checklist */
+.advice-checklist-box {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1.5px dashed rgba(56, 189, 248, 0.35);
+  border-radius: 15px;
+  padding: 16px 18px;
+}
+
+.advice-checklist-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.advice-checklist-title {
+  font-size: 13.5px;
+  font-weight: 850;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.advice-checklist-prog-label {
+  font-size: 12px;
+  font-weight: 750;
+  color: #38bdf8;
+}
+
+.weather-checklist-track {
+  height: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.weather-checklist-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #10b981);
+  border-radius: 99px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.advice-checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.advice-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.advice-check-row:hover {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.advice-checkbox-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  color: #38bdf8;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.advice-check-row.checked .advice-checkbox-box {
+  background: #38bdf8;
+  color: #0f172a;
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.advice-check-text {
+  font-size: 12.8px;
+  color: #e2e8f0;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.advice-check-row.checked .advice-check-text {
+  color: #94a3b8;
+  text-decoration: line-through;
+  opacity: 0.85;
+}
+
+/* Dedicated weather view */
+.weather-full-view-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-table-comparison tr:hover {
+  background: rgba(56, 189, 248, 0.06) !important;
+}
+
+
+/* ================= ALARM CLOCK OVERLAY & VIBRATION ANIMATION ================= */
+#alarmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.96);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+  display: grid;
+  place-items: center;
+  padding: calc(20px + var(--sat)) 16px calc(20px + var(--sab)) 16px;
+  z-index: 99999;
+}
+.alarm-card {
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(165deg, #131d33, #080d19);
+  border: 1.5px solid rgba(244, 63, 94, 0.35);
+  border-radius: 28px;
+  padding: 30px 20px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 40px rgba(244, 63, 94, 0.2);
+}
+.alarm-pulse-ring {
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: rgba(244, 63, 94, 0.18);
+  border: 2px solid rgba(244, 63, 94, 0.45);
+  display: grid;
+  place-items: center;
+  animation: alarmPulseGlow 1.2s infinite ease-in-out;
+}
+@keyframes alarmPulseGlow {
+  0% { transform: scale(0.94); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); }
+  65% { transform: scale(1.08); box-shadow: 0 0 0 24px rgba(244, 63, 94, 0); }
+  100% { transform: scale(0.94); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+}
+.alarm-ring-svg {
+  animation: alarmBellShake 0.4s infinite ease-in-out;
+  display: block;
+  filter: drop-shadow(0 0 8px #f43f5e);
+}
+@keyframes alarmBellShake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-16deg) scale(1.1); }
+  75% { transform: rotate(16deg) scale(1.1); }
+  100% { transform: rotate(0deg); }
+}
+.alarm-time-now {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  color: #fff;
+  font-family: var(--font-display);
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+}
+.alarm-card h2 {
+  margin: 10px 0 6px;
+  font-size: 20px;
+  color: #fde047;
+  font-weight: 850;
+  line-height: 1.35;
+}
+.alarm-card p {
+  color: #cbd5e1;
+  font-size: 13.5px;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+.alarm-subjects-box {
+  background: #080d19;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  text-align: left;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.alarm-subjects-box b {
+  color: #38bdf8;
+  display: block;
+  margin-bottom: 5px;
+}
+.alarm-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.alarm-dismiss-btn {
+  flex: 2;
+  min-width: 170px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.5) !important;
+  padding: 14px 24px !important;
+  font-size: 15px !important;
+  font-weight: 850 !important;
+  border-radius: 14px !important;
+  cursor: pointer;
+  transition: transform 0.14s ease, filter 0.14s ease;
+  letter-spacing: 0.3px;
+}
+.alarm-dismiss-btn:active {
+  transform: scale(0.96);
+  filter: brightness(1.2);
+}
+.alarm-snooze-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 18px !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  border-radius: 14px !important;
+  color: #cbd5e1 !important;
+  background: #111c30 !important;
+  border: 1px solid #233454 !important;
+  cursor: pointer;
+}
+
+/* ================= CHECK-IN & TEMPORARY WEEKLY SCHEDULE OVERRIDES ================= */
+.checkin-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease;
+  gap: 12px;
+}
+.checkin-row-item.pending {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+.checkin-row-item.checked {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(6, 182, 212, 0.08));
+  border: 1.5px solid rgba(16, 185, 129, 0.45);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.12);
+}
+.checkin-row-item.canceled {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px dashed rgba(100, 116, 139, 0.35);
+  opacity: 0.75;
+}
+.checkin-badge-done {
+  background: linear-gradient(135deg, #059669, #10b981) !important;
+  color: #fff !important;
+  font-weight: 850 !important;
+  font-size: 11px !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.checkin-badge-pending {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  font-weight: 800 !important;
+  font-size: 11px !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+}
+.checkin-action-btn {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+  padding: 7px 14px !important;
+  border-radius: 9px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+  transition: transform 0.12s ease;
+}
+.checkin-action-btn:active {
+  transform: scale(0.96);
+}
+.checkin-undo-btn {
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  font-size: 11px !important;
+  padding: 5px 10px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.checkin-undo-btn:hover {
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+.temp-schedule-alert-banner {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(217, 119, 6, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.makeup-class-card {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.4) !important;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  position: relative;
+}
+.makeup-class-badge {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  font-size: 10.5px;
+  font-weight: 850;
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-right: 6px;
+}
+.cancel-toggle-btn {
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  border-radius: 7px !important;
+  cursor: pointer;
+}
+
+
+/* ==========================================================================
+   WEATHER FORECAST & STUDENT OUTFIT / BALO ASSISTANT STYLES
+   ========================================================================== */
 .weather-forecast-widget {
   background: linear-gradient(135deg, rgba(30, 41, 59, 0.75), rgba(15, 23, 42, 0.94));
   backdrop-filter: blur(16px);

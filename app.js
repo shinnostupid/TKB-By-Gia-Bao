@@ -1772,7 +1772,13 @@ const WEATHER_CITIES = [
   { id: 'haiphong', name: 'Hải Phòng', lat: 20.8449, lon: 106.6881 },
   { id: 'cantho', name: 'Cần Thơ', lat: 10.0452, lon: 105.7469 },
   { id: 'nhatrang', name: 'Nha Trang', lat: 12.2388, lon: 109.1967 },
-  { id: 'dalat', name: 'Đà Lạt', lat: 11.9404, lon: 108.4583 }
+  { id: 'dalat', name: 'Đà Lạt', lat: 11.9404, lon: 108.4583 },
+  { id: 'hue', name: 'Thừa Thiên Huế', lat: 16.4637, lon: 107.5909 },
+  { id: 'quangninh', name: 'Quảng Ninh (Hạ Long)', lat: 20.9505, lon: 107.0734 },
+  { id: 'namdinh', name: 'Nam Định', lat: 20.4200, lon: 106.1683 },
+  { id: 'thanhhoa', name: 'Thanh Hóa', lat: 19.8067, lon: 105.7852 },
+  { id: 'nghean', name: 'Nghệ An (Vinh)', lat: 18.6734, lon: 105.6813 },
+  { id: 'vungtau', name: 'Bà Rịa - Vũng Tàu', lat: 10.3460, lon: 107.0843 }
 ];
 
 let studyWeatherState = {
@@ -1788,7 +1794,7 @@ let studyWeatherState = {
 function getWeatherSvgIcon(type, size = 38) {
   if (type === 'sun') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="4"/>
+      <circle cx="12" cy="12" r="4" fill="rgba(245,158,11,0.25)"/>
       <path d="M12 2v2"/><path d="M12 20v2"/>
       <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
       <path d="M2 12h2"/><path d="M20 12h2"/>
@@ -1798,7 +1804,7 @@ function getWeatherSvgIcon(type, size = 38) {
   if (type === 'sun-cloud') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/>
-      <circle cx="12" cy="10" r="3" stroke="#f59e0b" fill="rgba(245,158,11,0.2)"/>
+      <circle cx="12" cy="10" r="3" stroke="#f59e0b" fill="rgba(245,158,11,0.25)"/>
       <path d="M17.5 19H9a5 5 0 0 1-1-9.9 5.5 5.5 0 0 1 10.5 2.9A4.5 4.5 0 0 1 17.5 19z" fill="rgba(56,189,248,0.18)" stroke="#38bdf8"/>
     </svg>`;
   }
@@ -1810,18 +1816,18 @@ function getWeatherSvgIcon(type, size = 38) {
   if (type === 'drizzle') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(56,189,248,0.15)"/>
-      <path d="M8 19v2"/><path d="M12 18v2"/><path d="M16 19v2"/>
+      <path d="M8 19v2" stroke-width="2" stroke="#38bdf8"/><path d="M12 18v2" stroke-width="2" stroke="#38bdf8"/><path d="M16 19v2" stroke-width="2" stroke="#38bdf8"/>
     </svg>`;
   }
   if (type === 'rain') {
     return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(96,165,250,0.2)"/>
-      <path d="M8 19v3" stroke-width="2.5"/><path d="M12 18v3" stroke-width="2.5"/><path d="M16 19v3" stroke-width="2.5"/>
+      <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" fill="rgba(96,165,250,0.22)"/>
+      <path d="M8 18v4" stroke-width="2.5" stroke="#60a5fa"/><path d="M12 17v4" stroke-width="2.5" stroke="#60a5fa"/><path d="M16 18v4" stroke-width="2.5" stroke="#60a5fa"/>
     </svg>`;
   }
   if (type === 'thunder' || type === 'heavy-rain') {
-    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9" fill="rgba(168,85,247,0.25)"/>
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9" fill="rgba(192,132,252,0.25)"/>
       <polyline points="13 11 9 17 15 17 11 23" stroke="#fbbf24" stroke-width="2.5" fill="#fde047"/>
     </svg>`;
   }
@@ -1831,33 +1837,110 @@ function getWeatherSvgIcon(type, size = 38) {
       <path d="M20 10a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4"/>
     </svg>`;
   }
-  // Fallback pleasant
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M2 12h2"/><path d="M20 12h2"/>
   </svg>`;
 }
 
 function getWmoCondition(code) {
-  if (code === 0) return { text: 'Nắng rực rỡ', iconType: 'sun', mood: 'hot' };
-  if (code === 1 || code === 2) return { text: 'Nắng ráo • Mây nhẹ', iconType: 'sun-cloud', mood: 'pleasant' };
+  if (code === 0) return { text: 'Nắng rực rỡ (Trời quang)', iconType: 'sun', mood: 'hot' };
+  if (code === 1 || code === 2) return { text: 'Nắng ráo • Ít mây', iconType: 'sun-cloud', mood: 'pleasant' };
   if (code === 3) return { text: 'Mây râm mát', iconType: 'cloud', mood: 'pleasant' };
-  if (code === 45 || code === 48) return { text: 'Sương mù nhẹ', iconType: 'fog', mood: 'cold' };
+  if (code === 45 || code === 48) return { text: 'Sương mù ẩm ướt', iconType: 'fog', mood: 'cold' };
   if (code >= 51 && code <= 57) return { text: 'Mưa phùn / Bay hạt', iconType: 'drizzle', mood: 'rain' };
-  if (code >= 61 && code <= 67) return { text: 'Mưa rào rải rác', iconType: 'rain', mood: 'rain' };
-  if (code >= 71 && code <= 77) return { text: 'Trời rét lạnh', iconType: 'fog', mood: 'cold' };
+  if (code >= 61 && code <= 67) return { text: 'Mưa rào từng đợt', iconType: 'rain', mood: 'rain' };
+  if (code >= 71 && code <= 77) return { text: 'Trời rất lạnh', iconType: 'fog', mood: 'cold' };
   if (code >= 80 && code <= 82) return { text: 'Mưa rào dồn dập', iconType: 'rain', mood: 'heavy-rain' };
   if (code >= 95 && code <= 99) return { text: 'Dông bão • Sấm sét', iconType: 'thunder', mood: 'heavy-rain' };
   return { text: 'Nắng dịu nhẹ', iconType: 'sun-cloud', mood: 'pleasant' };
 }
 
-function getUvDescription(uv) {
-  if (uv >= 10.5) return { text: 'Cực kỳ nguy hại', level: 'danger', color: '#ef4444' };
-  if (uv >= 7.5) return { text: 'Rất cao', level: 'very-high', color: '#f97316' };
-  if (uv >= 5.5) return { text: 'Cao', level: 'high', color: '#f59e0b' };
-  if (uv >= 2.5) return { text: 'Trung bình', level: 'moderate', color: '#eab308' };
-  return { text: 'Thấp (An toàn)', level: 'low', color: '#10b981' };
+function getUvAnalysis(uv) {
+  if (uv >= 10.5) return { text: 'Cực đại (Nguy hại)', level: 'danger', color: '#ef4444', advice: 'Bắt buộc áo chống nắng & kính râm mát' };
+  if (uv >= 7.5) return { text: 'Rất cao', level: 'very-high', color: '#f97316', advice: 'Thoa kem chống nắng SPF50+ & che kín' };
+  if (uv >= 5.5) return { text: 'Cao', level: 'high', color: '#f59e0b', advice: 'Cần áo khoác chống nắng khi ra đường' };
+  if (uv >= 2.5) return { text: 'Trung bình', level: 'moderate', color: '#eab308', advice: 'Đội mũ khi đi ngoài sân trường' };
+  return { text: 'Thấp (An toàn)', level: 'low', color: '#10b981', advice: 'Ánh nắng dịu mát, không lo sạm da' };
 }
 
+function getRainAnalysis(rainProb, rainSum) {
+  let label = 'Khô ráo';
+  let level = 'dry';
+  let color = '#10b981';
+  let desc = 'Khả năng mưa rất thấp, đường sá khô ráo thuận tiện di chuyển.';
+
+  if (rainProb >= 75 || rainSum >= 12) {
+    label = 'Mưa to xối xả & Ngập úng';
+    level = 'severe';
+    color = '#ef4444';
+    desc = 'Khả năng mưa rào dồn dập, nguy cơ ngập úng các tuyến đường tan trường.';
+  } else if (rainProb >= 50 || rainSum >= 4.5) {
+    label = 'Mưa rào vừa';
+    level = 'high';
+    color = '#f59e0b';
+    desc = 'Có mưa rào rõ rệt trong ngày, đường ướt trơn trượt.';
+  } else if (rainProb >= 25 || rainSum >= 0.5) {
+    label = 'Mưa phùn / Mưa nhẹ';
+    level = 'moderate';
+    color = '#38bdf8';
+    desc = 'Có thể có mưa lất phất ngắt quãng, trời âm u mát.';
+  }
+
+  return { label, level, color, desc, prob: rainProb, sum: rainSum };
+}
+
+function getWindAnalysis(wind) {
+  if (wind >= 45) {
+    return { level: 'Cấp 6-7 (Gió bão)', desc: 'Gió giật mạnh, nguy hiểm khi đi xe máy/xe đạp, dễ gãy cành cây', color: '#ef4444' };
+  }
+  if (wind >= 28) {
+    return { level: 'Cấp 4-5 (Gió mạnh)', desc: 'Gió tạt mạnh, bay mũ nón, khó cầm ô đi bộ', color: '#f97316' };
+  }
+  if (wind >= 14) {
+    return { level: 'Cấp 3 (Gió vừa)', desc: 'Gió thổi nhẹ mát, lá cây rung rinh, dễ chịu', color: '#38bdf8' };
+  }
+  return { level: 'Cấp 1-2 (Gió nhẹ)', desc: 'Gió hiu hiu, không khí yên ả êm dịu', color: '#10b981' };
+}
+
+// Student Checklist Helper in localStorage
+function getCheckedItemsForDate(dateStr) {
+  try {
+    const raw = localStorage.getItem('studyOS.weatherChecklist_' + dateStr);
+    return raw ? JSON.parse(raw) : [];
+  } catch(e) {
+    return [];
+  }
+}
+
+function toggleWeatherCheckItem(dateStr, idx) {
+  const current = getCheckedItemsForDate(dateStr);
+  const pos = current.indexOf(idx);
+  if (pos !== -1) {
+    current.splice(pos, 1);
+  } else {
+    current.push(idx);
+  }
+  localStorage.setItem('studyOS.weatherChecklist_' + dateStr, JSON.stringify(current));
+  
+  // Update UI checklist directly
+  const itemEl = document.getElementById('checkItem_' + dateStr + '_' + idx);
+  if (itemEl) {
+    if (current.includes(idx)) itemEl.classList.add('checked');
+    else itemEl.classList.remove('checked');
+  }
+  const progEl = document.getElementById('checkProg_' + dateStr);
+  const totalItems = document.querySelectorAll('[id^="checkItem_' + dateStr + '_"]').length;
+  if (progEl && totalItems > 0) {
+    const percent = Math.round((current.length / totalItems) * 100);
+    progEl.style.width = percent + '%';
+    const textEl = document.getElementById('checkProgText_' + dateStr);
+    if (textEl) {
+      textEl.innerText = 'Đã chuẩn bị ' + current.length + '/' + totalItems + ' món (' + percent + '%)';
+    }
+  }
+}
+
+// SMART STUDENT OUTFIT & BACKPACK ADVICE ENGINE
 function analyzeWeatherForStudent(day) {
   const { maxTemp, minTemp, rainProb, rainSum, wind, uv, code } = day;
   const isHeavyRain = rainProb >= 65 || rainSum >= 7 || [65, 81, 82, 95, 96, 99].includes(code);
@@ -1865,73 +1948,189 @@ function analyzeWeatherForStudent(day) {
   const isHot = maxTemp >= 32.5;
   const isHighUV = uv >= 6.8;
   const isCold = minTemp <= 19 || maxTemp <= 22;
-  const isBreezy = wind >= 18;
 
   let mood = 'pleasant';
-  let adviceTitle = '';
-  let adviceDesc = '';
-  let outfitBadge = '';
-  let bagItems = [];
+  let badge = '';
+  let headline = '';
+  let briefing = '';
+
+  let outfit = [];
+  let skincare = [];
+  let casioProtection = [];
+  let safetyAlert = '';
+  let checklist = [];
 
   if (isHeavyRain) {
     mood = 'heavy-rain';
-    adviceTitle = '⛈️ Cảnh báo Mưa dông lớn & Nguy cơ ngập úng cục bộ';
-    adviceDesc = 'Khả năng có mưa to kéo dài kèm dông sét vào giờ tan trường hoặc ca học thêm tối. Bắt buộc phải bọc chống nước cho đồ dùng học tập trước khi ra khỏi nhà!';
-    outfitBadge = '☔ Áo mưa bộ / Ô lớn & Dép chống trơn trượt';
-    bagItems = [
-      '📦 Bọc túi zip / túi nilon chống thấm nước cho Máy tính Casio & Tập vở BTVN tránh bị ướt nhòe mực.',
-      '🧥 Bỏ sẵn áo mưa bộ cánh dơi hoặc ô gấp loại lớn ở ngăn ngoài dễ rút của balo.',
-      '👟 Đi dép có quai chống trơn hoặc bọc giày đi mưa; mang theo 1 đôi tất khô dự phòng.',
-      '⚠️ Khi tan trường đi chậm, tuyệt đối không đứng trú dưới gốc cây to hoặc gần cột điện/nắp cống.'
+    badge = '⛈️ Bão dông & Mưa lớn cục bộ';
+    headline = 'Cảnh Báo Mưa Dông To • Bắt Buộc Bọc Chống Nước Máy Tính & Balo!';
+    briefing = 'Dự báo khả năng cao xuất hiện mưa to dồn dập, gió giật mạnh và sấm chớp vào các khung giờ tan học. Nước mưa tạt mạnh có thể làm ướt sũng balo nếu không có biện pháp phòng hộ trước khi rời nhà!';
+    
+    outfit = [
+      'Áo mưa bộ 2 mảnh (an toàn hơn khi đi xe đạp/xe máy điện) hoặc áo mưa cánh dơi trùm kín xe.',
+      'Dép quai hậu có rãnh chống trơn trượt hoặc ủng bọc giày silicon chống ngập ướt giày đi học.',
+      'Chuẩn bị 1 đôi tất khô dự phòng và 1 áo thun mỏng cuộn gọn trong túi nilon để thay nếu bị ướt.'
+    ];
+
+    skincare = [
+      'Mang theo khăn bông nhỏ lau khô tóc, tai và vùng gáy ngay khi bước vào lớp để tránh trúng gió cảm lạnh.',
+      'Mang bình giữ nhiệt chứa nước ấm (pha lát gừng hoặc mật ong) để làm ấm cơ thể sau khi đi qua mưa.',
+      'Tuyệt đối không để bàn chân ngâm nước mưa lâu trong giày ẩm dễ gây cảm lạnh và viêm da.'
+    ];
+
+    casioProtection = [
+      '🚨 BỎ VÀO TÚI ZIP: Máy tính bỏ túi Casio (fx-580VNX / 880BTG) bắt buộc phải bọc kín trong túi zip chống nước trước khi cho vào balo, tránh ẩm mạch LCD.',
+      'Sách giáo khoa & Vở ghi BTVN: Bọc túi nilon hoặc để trong cặp tài liệu chống nước ở ngăn giữa balo.',
+      'Kéo khóa balo thật khít và phủ bạt trùm chống thấm hoặc mặc áo mưa trùm kín toàn bộ balo sau lưng.'
+    ];
+
+    safetyAlert = 'Khi gặp dông bão sấm sét lúc tan trường: Đi chậm, tuyệt đối không trú mưa dưới gốc cây cổ thụ, không đứng gần cột điện hay nắp cống ngập.';
+
+    checklist = [
+      'Áo mưa bộ / Ô gập lớn loại dày',
+      'Túi zip chống nước bọc kín Máy tính Casio',
+      'Túi nilon bọc sách giáo khoa & tập vở BTVN',
+      'Dép quai chống trơn / Bọc giày đi mưa',
+      'Bình giữ nhiệt nước ấm & khăn khô'
     ];
   } else if (isRainy) {
     mood = 'rain';
-    adviceTitle = '🌦️ Có thể có mưa rào rải rác bất chợt';
-    adviceDesc = 'Thời tiết chuyển mây ẩm và có mưa rào rải rác trong ngày. Gia Bảo nhớ để sẵn chiếc ô gấp gọn trong balo để không bị động khi tan học nhé!';
-    outfitBadge = '🌂 Bỏ sẵn Ô gấp gọn & Áo khoác chống thấm';
-    bagItems = [
-      '🌂 Xếp sẵn 1 chiếc ô gấp gọn hoặc áo mưa bọc mini vào ngăn hông của balo.',
-      '🔒 Kiểm tra khóa kéo balo thật kín để nước mưa không tạt ngấm vào các góc sách.',
-      '👟 Hạn chế mang giày vải trắng dễ dính bùn đất bẩn khi đường ướt.',
-      '💧 Nhớ uống đủ nước ấm sau khi đi qua quãng đường mưa để tránh cảm lạnh.'
+    badge = '🌦️ Mưa rào rải rác';
+    headline = 'Thời Tiết Chuyển Mưa • Nhớ Để Sẵn Ô Gấp Gọn & Giữ Khô Balo';
+    briefing = 'Trời nhiều mây, độ ẩm cao và có mưa rào rải rác bất chợt trong ngày. Đừng để bị động lúc tan trường buổi trưa hoặc giờ đi học thêm buổi tối nhé!';
+
+    outfit = [
+      'Bỏ sẵn 1 chiếc ô gấp gọn hoặc áo mưa bọc mini ở ngăn hông dễ rút của balo.',
+      'Nên đi giày tối màu hoặc mang dép quai có ma sát tốt, tránh đi giày vải trắng dễ dính bùn bắn.',
+      'Mặc áo khoác gió mỏng chống thấm nước nhẹ để cản gió và sương lạnh.'
+    ];
+
+    skincare = [
+      'Giữ cơ thể khô ráo, lau khô tay trước khi cầm bút viết bài tránh làm nhăn giấy tập.',
+      'Uống đủ nước ấm trong các tiết học để duy trì sự tỉnh táo và ấm cổ họng.',
+      'Nếu dính mưa phùn, rửa mặt bằng nước sạch ngay khi về nhà để loại bỏ bụi bẩn trong nước mưa.'
+    ];
+
+    casioProtection = [
+      'Kiểm tra ngăn chứa máy tính Casio trong balo, đảm bảo không để cạnh chai nước có thể bị rò rỉ.',
+      'Tập vở BTVN và đề cương nên cho vào bìa sơ mi nhựa nút bấm để chống ẩm mép giấy.'
+    ];
+
+    safetyAlert = 'Đường sau mưa thường có vũng nước trơn, chú ý giữ khoảng cách an toàn khi điều khiển xe đạp hoặc xe điện.';
+
+    checklist = [
+      'Ô gấp gọn hoặc áo mưa nhẹ bỏ ngăn hông',
+      'Bìa nhựa sơ mi bọc đề cương & vở BTVN',
+      'Kiểm tra nắp bình nước đóng chặt tránh đổ vào máy Casio',
+      'Khăn giấy lau khô tay và tập vở'
     ];
   } else if (isHot || isHighUV) {
     mood = 'hot';
-    const uvInfo = getUvDescription(uv);
-    adviceTitle = `☀️ Trời nắng gắt oi bức & Bức xạ UV ${uvInfo.text} (${uv})`;
-    adviceDesc = 'Nhiệt độ đỉnh điểm vào giờ trưa (11h00 - 13h30). Tia UV và nhiệt lượng cao dễ gây rát da, say nắng và mệt mỏi sau giờ học.';
-    outfitBadge = '🧢 Áo khoác chống nắng UV & Kem chống nắng SPF50+';
-    bagItems = [
-      '🧥 Mặc áo khoác chống nắng có mũ trùm, đeo khẩu trang kháng bụi và kính râm mát.',
-      '🧴 Thoa kem chống nắng SPF 50+ lên mặt và cổ trước khi rời nhà đi học 15 phút.',
-      '🥤 Mang bình nước giữ nhiệt 800ml - 1L bổ sung nước và điện giải liên tục giữa các tiết học.',
-      '🧢 Đội nón/mũ rộng vành khi tập thể dục ngoài sân trường hoặc đợi xe đưa đón.'
+    const uvInfo = getUvAnalysis(uv);
+    badge = `☀️ Nắng gắt oi bức • UV ${uvInfo.text}`;
+    headline = `Nhiệt Độ Cao & Bức Xạ UV ${uvInfo.text} • Cần Chống Nắng Toàn Diện!`;
+    briefing = 'Nhiệt độ ngoài trời tăng cao và chỉ số tia cực tím đạt đỉnh vào khung giờ 10h30 - 14h00. Nếu không bảo vệ kĩ, ánh nắng gắt sẽ gây bỏng rát da, mất nước và uể oải sau các tiết học.';
+
+    outfit = [
+      'Áo khoác chống nắng chuyên dụng có mũ trùm đầu và tay áo xỏ ngón che kín mu bàn tay.',
+      'Khẩu trang y tế hoặc khẩu trang chống tia UV 4 lớp che kín mũi và hai gò má.',
+      'Kính râm chống chói lóa và bụi bẩn khi di chuyển giữa các cung đường học thêm.',
+      'Đội nón/mũ rộng vành khi tham gia hoạt động ngoài trời, chào cờ hoặc tiết thể dục.'
+    ];
+
+    skincare = [
+      '🧴 THOA KEM CHỐNG NẮNG: Thoa đều kem chống nắng SPF 50+ PA++++ lên mặt, cổ và cánh tay trước khi ra khỏi nhà 15-20 phút.',
+      '🥤 BÙ NƯỚC LIÊN TỤC: Mang theo bình giữ nhiệt 800ml - 1L đựng nước mát hoặc điện giải chanh muối để uống từng ngụm nhỏ giữa giờ ra chơi.',
+      'Rửa sạch mặt bằng nước mát sau giờ học thể dục để làm dịu da và hạ nhiệt cơ thể.'
+    ];
+
+    casioProtection = [
+      'Tuyệt đối KHÔNG bỏ balo chứa máy tính Casio vào cốp xe máy nóng rực hoặc phơi dưới nắng trưa, nhiệt độ cao trong cốp xe dễ làm đen hỏng tinh thể lỏng màn hình LCD!',
+      'Giữ bút bi và máy tính trong bóng râm, tránh để trên bàn gần cửa sổ có nắng chiếu trực tiếp.'
+    ];
+
+    safetyAlert = 'Buổi trưa nắng gắt dễ gây hoa mắt say nắng, đi xe nên đội mũ bảo hiểm có kính chắn gió và uống đủ nước.';
+
+    checklist = [
+      'Thoa kem chống nắng SPF50+ trước khi đi 15 phút',
+      'Áo khoác chống nắng UV có mũ & găng tay che mu tay',
+      'Khẩu trang chống UV & Kính râm',
+      'Bình giữ nhiệt 800ml - 1L nước mát bù điện giải',
+      'Mũ nón cho giờ thể dục sân trường'
     ];
   } else if (isCold) {
     mood = 'cold';
-    adviceTitle = '🌬️ Trời chuyển lạnh & Gió mùa đông bắc';
-    adviceDesc = 'Nhiệt độ hạ thấp về sáng sớm lúc truy bài và tối muộn ca học thêm. Hãy giữ ấm cơ thể để đảm bảo thể lực ôn thi thật tốt!';
-    outfitBadge = '🧣 Áo ấm nhiều lớp & Khăn giữ ấm cổ';
-    bagItems = [
-      '🧣 Đeo khăn quàng cổ nhẹ hoặc mặc áo cổ lọ để bảo vệ thanh quản và đường hô hấp.',
-      '🧥 Mặc áo khoác gió hoặc áo len nhiều lớp để linh hoạt cởi bớt khi vào phòng học có điều hòa.',
-      '☕ Mang bình giữ nhiệt chứa nước ấm pha chút mật ong/gừng để giữ ấm suốt buổi học.',
-      '🧤 Đeo găng tay khi đi xe máy/xe đạp điện sáng sớm để giữ ấm khớp tay viết bài.'
+    badge = '🌬️ Gió lạnh mùa đông';
+    headline = 'Trời Chuyển Lạnh • Giữ Ấm Cổ Họng & Bàn Tay Để Học Tập Tốt Nhất!';
+    briefing = 'Nhiệt độ xuống thấp vào sáng sớm lúc truy bài và tối muộn lúc tan ca học thêm. Hãy giữ ấm đúng cách để bảo vệ hệ hô hấp và không bị gián đoạn tiến độ ôn thi!';
+
+    outfit = [
+      'Mặc áo khoác gió nhiều lớp ấm áp hoặc áo len mềm, giữ ấm lồng ngực.',
+      'Quàng khăn len nhẹ hoặc khăn quàng mỏng giữ ấm cổ họng và thanh quản.',
+      'Đeo găng tay khi đi xe đạp/xe máy điện vào sáng sớm để các ngón tay không bị cóng buốt khi viết bài.'
+    ];
+
+    skincare = [
+      'Thoa son dưỡng môi hoặc kem dưỡng ẩm tránh khô nẻ da mặt trong phòng học điều hòa.',
+      'Mang theo bình nước giữ nhiệt nước ấm pha chút mật ong để làm ấm họng suốt buổi học.',
+      'Tập vài động tác vươn vai giữa giờ ra chơi để khí huyết lưu thông, xua tan cảm giác buồn ngủ vì lạnh.'
+    ];
+
+    casioProtection = [
+      'Tránh để máy tính Casio ở nơi ẩm ướt sáng sớm, bảo quản trong hộp hoặc ngăn khóa giữa balo.'
+    ];
+
+    safetyAlert = 'Sáng sớm trời còn tối và sương lạnh mờ mắt kính, đi xe bật đèn và quan sát cẩn thận.';
+
+    checklist = [
+      'Áo khoác gió ấm nhiều lớp',
+      'Khăn quàng cổ giữ ấm thanh quản',
+      'Găng tay đi xe sáng sớm',
+      'Bình giữ nhiệt nước ấm mật ong',
+      'Son dưỡng ẩm tránh nẻ môi'
     ];
   } else {
     mood = 'pleasant';
-    adviceTitle = '🌤️ Thời tiết mát mẻ lý tưởng cho ngày học tập';
-    adviceDesc = 'Trời tạnh ráo, thoáng mát, nhiệt độ và chỉ số UV đều rất dễ chịu. Một ngày tuyệt vời để tập trung hoàn thành các bài tập và ghi nhớ công thức!';
-    outfitBadge = '👕 Đồng phục học sinh thoáng mát & Giày thể thao';
-    bagItems = [
-      '👕 Đồng phục học sinh sạch sẽ, thoáng mát, thấm hút mồ hôi tốt.',
-      '💧 Mang theo bình nước cá nhân để uống đủ nước trong các tiết học.',
-      '👟 Giày thể thao êm chân sẵn sàng cho giờ thể dục và hoạt động ngoài trời.',
-      '📖 Chuẩn bị đầy đủ sách vở, máy tính Casio và bút viết theo thời khóa biểu hôm nay.'
+    badge = '🌤️ Thời tiết lý tưởng';
+    headline = 'Thời Tiết Dễ Chịu • Điều Kiện Tuyệt Vời Cho Một Ngày Bứt Phá Điểm Số!';
+    briefing = 'Không khí thoáng đãng, nhiệt độ điều hòa tự nhiên, không mưa không nắng gắt. Hãy tận dụng năng lượng tích cực này để hoàn thành xuất sắc các bài tập hôm nay!';
+
+    outfit = [
+      'Đồng phục học sinh gọn gàng, sơ mi trắng thẳng thớm, thoáng mát.',
+      'Giày thể thao êm chân sẵn sàng cho giờ học tập và vận động thể thao.',
+      'Mang áo khoác nhẹ đồng phục để khoác khi phòng học bật điều hòa mát.'
+    ];
+
+    skincare = [
+      'Uống đủ nước đều đặn trong ngày để não bộ luôn minh mẫn, tiếp thu bài nhanh.',
+      'Duy trì tinh thần sảng khoái, hít thở không khí trong lành giữa các tiết học.'
+    ];
+
+    casioProtection = [
+      'Chuẩn bị đầy đủ máy tính Casio, compa, thước kẻ và bút viết theo thời khóa biểu hôm nay.'
+    ];
+
+    safetyAlert = 'Thời tiết đẹp thích hợp đi học sớm để truy bài và ôn lại công thức trước giờ vào lớp.';
+
+    checklist = [
+      'Đồng phục học sinh sạch sẽ & Giày thể thao',
+      'Bình nước uống cá nhân',
+      'Máy tính Casio & Dụng cụ học tập',
+      'Vở ghi chép & Đề cương BTVN'
     ];
   }
 
-  return { mood, adviceTitle, adviceDesc, outfitBadge, bagItems };
+  return {
+    mood,
+    badge,
+    headline,
+    briefing,
+    outfit,
+    skincare,
+    casioProtection,
+    safetyAlert,
+    checklist
+  };
 }
 
 // Fetch 7-day weather forecast from Open-Meteo
@@ -1945,8 +2144,8 @@ async function loadWeatherData(forceRefresh = false) {
       const cached = localStorage.getItem('studyOS.weatherCache_' + cityId);
       if (cached) {
         const parsed = JSON.parse(cached);
-        // Cache valid for 90 minutes
-        if (Date.now() - parsed.timestamp < 90 * 60 * 1000) {
+        // Cache valid for 60 minutes
+        if (Date.now() - parsed.timestamp < 60 * 60 * 1000) {
           studyWeatherState.data = parsed.data;
           studyWeatherState.lastUpdated = parsed.timestamp;
           renderWeatherContainer();
@@ -1965,7 +2164,7 @@ async function loadWeatherData(forceRefresh = false) {
 
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error('Không thể tải dữ liệu thời tiết');
+    if (!res.ok) throw new Error('Không thể kết nối máy chủ khí tượng Open-Meteo');
     const json = await res.json();
 
     const days = [];
@@ -2000,7 +2199,6 @@ async function loadWeatherData(forceRefresh = false) {
     console.warn('Weather fetch error:', err);
     studyWeatherState.loading = false;
     studyWeatherState.error = err.message;
-    // Fallback offline mock if never loaded
     if (!studyWeatherState.data) {
       studyWeatherState.data = getOfflineFallbackWeather(city);
     }
@@ -2016,13 +2214,13 @@ function getOfflineFallbackWeather(city) {
     isOffline: true,
     days: dates.map((d, idx) => ({
       date: d,
-      code: idx % 2 === 0 ? 1 : 61,
-      maxTemp: 31 - (idx % 3),
+      code: idx % 3 === 0 ? 1 : (idx % 3 === 1 ? 61 : 0),
+      maxTemp: 32 - (idx % 4),
       minTemp: 24,
-      rainProb: idx % 2 === 0 ? 20 : 65,
-      rainSum: idx % 2 === 0 ? 0.0 : 5.5,
-      wind: 12,
-      uv: 6.5
+      rainProb: idx % 3 === 1 ? 65 : 20,
+      rainSum: idx % 3 === 1 ? 8.5 : 0.0,
+      wind: 14 + (idx * 2),
+      uv: 7.2
     }))
   };
 }
@@ -2043,7 +2241,7 @@ function selectWeatherDay(idx) {
 function renderWeatherContainer() {
   const container = $('#dashboardWeatherMount');
   if (container) {
-    container.innerHTML = buildWeatherWidgetHtml();
+    container.innerHTML = buildWeatherWidgetHtml(false);
   }
   const fullContainer = $('#fullWeatherMount');
   if (fullContainer) {
@@ -2053,7 +2251,7 @@ function renderWeatherContainer() {
 
 function formatWeatherDayName(dateStr, idx) {
   const d = new Date(dateStr + 'T00:00:00+07:00');
-  const dayOfWeek = d.getDay(); // 0 is Sunday, 1 is Monday
+  const dayOfWeek = d.getDay();
   const dayNames = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
   const name = dayNames[dayOfWeek];
 
@@ -2073,15 +2271,17 @@ function formatDayMonth(dateStr) {
   return `${parts[2]}/${parts[1]}`;
 }
 
-function buildWeatherWidgetHtml() {
+// MAIN WEATHER WIDGET BUILDER
+function buildWeatherWidgetHtml(isFullView = false) {
   const state = studyWeatherState;
   const currentCityId = db.weatherCity || 'hanoi';
 
   if (state.loading && !state.data) {
     return `
-      <div class="weather-forecast-widget" style="text-align:center;padding:30px">
-        <div style="font-size:26px;animation:spin 1s linear infinite;display:inline-block">🌤️</div>
-        <div style="font-weight:700;color:#38bdf8;margin-top:8px">Đang cập nhật dự báo thời tiết 7 ngày...</div>
+      <div class="weather-forecast-widget" style="text-align:center;padding:36px 20px">
+        <div style="font-size:32px;animation:spin 1s linear infinite;display:inline-block">🌤️</div>
+        <div style="font-weight:800;color:#38bdf8;margin-top:10px;font-size:15px">Đang cập nhật dự báo thời tiết 7 ngày & phân tích balo học đường...</div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px">Đang lấy dữ liệu khí tượng Open-Meteo</div>
       </div>
     `;
   }
@@ -2102,116 +2302,202 @@ function buildWeatherWidgetHtml() {
   const advice = analyzeWeatherForStudent(activeDay);
   const activeCondition = getWmoCondition(activeDay.code);
   const activeDayLabel = formatWeatherDayName(activeDay.date, selectedIdx);
+  const uvAnalysis = getUvAnalysis(activeDay.uv);
+  const rainAnalysis = getRainAnalysis(activeDay.rainProb, activeDay.rainSum);
+  const windAnalysis = getWindAnalysis(activeDay.wind);
+
+  // Checked items
+  const checkedItems = getCheckedItemsForDate(activeDay.date);
+  const totalChecklist = advice.checklist.length;
+  const progressPercent = totalChecklist > 0 ? Math.round((checkedItems.length / totalChecklist) * 100) : 0;
 
   return `
-    <div class="weather-forecast-widget">
-      <!-- Header -->
+    <div class="weather-forecast-widget ${advice.mood}">
+      <!-- Header Row -->
       <div class="weather-header-row">
         <div class="weather-title-wrap">
-          <div style="font-size:24px">🌦️</div>
+          <div class="weather-hero-icon-pulsing">${getWeatherSvgIcon(activeCondition.iconType, 30)}</div>
           <div>
-            <h3>Dự báo Thời tiết 7 Ngày & Balo Học Đường</h3>
-            <div style="font-size:11.5px;color:#94a3b8">
-              Trợ lý phân tích nắng mưa & tư vấn trang phục, đồ dùng đi học
+            <h3>Trạm Dự Báo Thời Tiết 7 Ngày & Balo Học Đường</h3>
+            <div style="font-size:11.8px;color:#94a3b8;margin-top:2px">
+              Phân tích tỉ mỉ lượng mưa, gió bão, tia UV & tư vấn đồ dùng học tập
             </div>
           </div>
         </div>
 
-        <div style="display:flex;align-items:center;gap:8px">
-          <select class="weather-city-select" onchange="changeWeatherCity(this.value)">
-            ${WEATHER_CITIES.map(c => `<option value="${c.id}" ${c.id === currentCityId ? 'selected' : ''}>${c.name}</option>`).join('')}
+        <div class="weather-controls-wrap">
+          <select class="weather-city-select" onchange="changeWeatherCity(this.value)" aria-label="Chọn tỉnh thành">
+            ${WEATHER_CITIES.map(c => `<option value="${c.id}" ${c.id === currentCityId ? 'selected' : ''}>📍 ${c.name}</option>`).join('')}
           </select>
           <button class="weather-refresh-btn" onclick="loadWeatherData(true)" title="Làm mới dự báo">
-            ${state.loading ? '⏳...' : '🔄 Làm mới'}
+            ${state.loading ? '⏳ Đang tải...' : '🔄 Làm mới'}
           </button>
         </div>
       </div>
 
       <!-- 7-Day Carousel -->
+      <div class="weather-days-carousel-label">
+        <span>📅 Dự báo cả tuần (Bấm vào ngày để xem phân tích chi tiết):</span>
+      </div>
       <div class="weather-days-scroll">
         ${days.map((d, idx) => {
           const cond = getWmoCondition(d.code);
           const dayLabel = formatWeatherDayName(d.date, idx);
           const dateVi = formatDayMonth(d.date);
           const isSelected = idx === selectedIdx;
-          const rainClass = d.rainProb >= 60 ? 'high' : (d.rainProb >= 35 ? 'mid' : '');
+          const rainAn = getRainAnalysis(d.rainProb, d.rainSum);
 
           return `
             <div class="weather-day-card ${isSelected ? 'active' : ''}" onclick="selectWeatherDay(${idx})">
               <span class="weather-day-label" style="${idx === 0 ? 'color:#38bdf8' : ''}">${dayLabel}</span>
               <span class="weather-day-date">${dateVi}</span>
               <div class="weather-icon-svg-box">
-                ${getWeatherSvgIcon(cond.iconType, 36)}
+                ${getWeatherSvgIcon(cond.iconType, 34)}
               </div>
               <div class="weather-day-temp">
                 ${d.maxTemp}° <span class="weather-day-min-temp">/ ${d.minTemp}°</span>
               </div>
-              <div class="weather-rain-prob-pill ${rainClass}">
-                💧 ${d.rainProb}%
+              <!-- Mini Rain Bar & Prob -->
+              <div class="weather-rain-prob-pill ${rainAn.level}">
+                <span>💧 ${d.rainProb}%</span>
+                ${d.rainSum > 0 ? `<span style="opacity:0.85;font-size:9.5px">(${d.rainSum}mm)</span>` : ''}
               </div>
             </div>
           `;
         }).join('')}
       </div>
 
-      <!-- Selected Day Outfit & Backpack Assistant Box -->
+      <!-- Active Day Comprehensive Weather & Student Advice Card -->
       <div class="student-weather-advice-card ${advice.mood}">
+        <!-- Top banner with Badge -->
         <div class="advice-card-header">
-          <div style="font-weight:850;font-size:13.5px;color:#cbd5e1;display:flex;align-items:center;gap:6px">
-            <span>🎒 Gợi ý Outfit & Balo Học Đường</span>
-            <span style="color:#38bdf8">• ${activeDayLabel} (${formatDayMonth(activeDay.date)})</span>
+          <div class="advice-header-left">
+            <span class="advice-hero-day-tag">${activeDayLabel} (${formatDayMonth(activeDay.date)})</span>
+            <span class="advice-condition-tag">${activeCondition.text}</span>
           </div>
-          <span class="advice-badge-outfit">${advice.outfitBadge}</span>
+          <span class="advice-badge-outfit">${advice.badge}</span>
         </div>
 
         <div class="advice-main-title">
-          ${advice.adviceTitle}
+          ${advice.headline}
         </div>
         <div class="advice-main-desc">
-          ${advice.adviceDesc}
+          ${advice.briefing}
         </div>
 
-        <!-- 4 Key Meteorological Metrics -->
+        <!-- 4 Key Meteorological Metrics Gauges -->
         <div class="advice-metrics-row">
+          <!-- Metric 1: Temp -->
           <div class="advice-metric-box">
             <div class="advice-metric-label">🌡️ Nhiệt độ</div>
             <div class="advice-metric-val" style="color:#38bdf8">${activeDay.minTemp}° – ${activeDay.maxTemp}°C</div>
+            <div class="advice-metric-sub">Biên độ nhiệt ${activeDay.maxTemp - activeDay.minTemp}°C</div>
           </div>
+
+          <!-- Metric 2: Rain Prob & Volume -->
           <div class="advice-metric-box">
             <div class="advice-metric-label">💧 Tỉ lệ & Lượng mưa</div>
-            <div class="advice-metric-val" style="color:#60a5fa">${activeDay.rainProb}% • ${activeDay.rainSum} mm</div>
+            <div class="advice-metric-val" style="color:${rainAnalysis.color}">${activeDay.rainProb}% • ${activeDay.rainSum} mm</div>
+            <div class="advice-metric-sub">${rainAnalysis.label}</div>
           </div>
+
+          <!-- Metric 3: Wind & Storm -->
           <div class="advice-metric-box">
-            <div class="advice-metric-label">🌬️ Sức gió</div>
-            <div class="advice-metric-val" style="color:#a78bfa">${activeDay.wind} km/h</div>
+            <div class="advice-metric-label">🌬️ Sức gió & Cấp độ</div>
+            <div class="advice-metric-val" style="color:${windAnalysis.color}">${activeDay.wind} km/h</div>
+            <div class="advice-metric-sub">${windAnalysis.level}</div>
           </div>
+
+          <!-- Metric 4: UV Index -->
           <div class="advice-metric-box">
-            <div class="advice-metric-label">☀️ Chỉ số UV</div>
-            <div class="advice-metric-val" style="color:${getUvDescription(activeDay.uv).color}">${activeDay.uv} (${getUvDescription(activeDay.uv).text})</div>
+            <div class="advice-metric-label">☀️ Chỉ số bức xạ UV</div>
+            <div class="advice-metric-val" style="color:${uvAnalysis.color}">UVI ${activeDay.uv}</div>
+            <div class="advice-metric-sub">${uvAnalysis.text}</div>
           </div>
         </div>
 
-        <!-- Detailed Checklist of Items -->
-        <div class="advice-checklist-container">
-          <div class="advice-checklist-title">
-            <span>📋 Danh sách đồ dùng & trang phục nên chuẩn bị:</span>
-          </div>
-          ${advice.bagItems.map(item => `
-            <div class="advice-checklist-item">
-              <span class="advice-check-dot"></span>
-              <span>${item}</span>
+        <!-- 3 Deep Student Preparation Columns -->
+        <div class="advice-pillars-grid">
+          <!-- Pillar 1: Outfit -->
+          <div class="advice-pillar-card">
+            <div class="pillar-card-title">
+              <span>🧥</span>
+              <span>Trang Phục Khi Ra Đường</span>
             </div>
-          `).join('')}
+            <ul class="pillar-card-list">
+              ${advice.outfit.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- Pillar 2: Skincare & Hydration -->
+          <div class="advice-pillar-card">
+            <div class="pillar-card-title">
+              <span>🧴</span>
+              <span>Chăm Sóc Da & Sức Khỏe</span>
+            </div>
+            <ul class="pillar-card-list">
+              ${advice.skincare.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- Pillar 3: Casio & Notebook Protection -->
+          <div class="advice-pillar-card highlight-casio">
+            <div class="pillar-card-title">
+              <span>💻</span>
+              <span>Bảo Vệ Máy Tính Casio & Sách Vở</span>
+            </div>
+            <ul class="pillar-card-list">
+              ${advice.casioProtection.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Safety Road Reminder -->
+        ${advice.safetyAlert ? `
+          <div class="advice-safety-bar">
+            <span style="font-size:18px">⚠️</span>
+            <span><strong>Lưu ý giao thông:</strong> ${advice.safetyAlert}</span>
+          </div>
+        ` : ''}
+
+        <!-- Interactive Backpack Checklist (1-Click) -->
+        <div class="advice-checklist-box">
+          <div class="advice-checklist-top">
+            <div class="advice-checklist-title">
+              <span>🎒</span>
+              <span>Checklist Balo Đi Học (${activeDayLabel}):</span>
+            </div>
+            <div class="advice-checklist-prog-label" id="checkProgText_${activeDay.date}">
+              Đã chuẩn bị ${checkedItems.length}/${totalChecklist} món (${progressPercent}%)
+            </div>
+          </div>
+
+          <div class="weather-checklist-track">
+            <div class="weather-checklist-bar" id="checkProg_${activeDay.date}" style="width:${progressPercent}%"></div>
+          </div>
+
+          <div class="advice-checklist-items">
+            ${advice.checklist.map((item, cIdx) => {
+              const isChecked = checkedItems.includes(cIdx);
+              return `
+                <div class="advice-check-row ${isChecked ? 'checked' : ''}" id="checkItem_${activeDay.date}_${cIdx}" onclick="toggleWeatherCheckItem('${activeDay.date}', ${cIdx})">
+                  <div class="advice-checkbox-box">
+                    ${isChecked ? '✓' : ''}
+                  </div>
+                  <span class="advice-check-text">${item}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
         </div>
       </div>
     </div>
   `;
 }
 
-// Dedicated Weather View function
-
+// FULL DEDICATED WEATHER VIEW
 function buildWeatherFullViewHtml() {
-  const baseWidget = buildWeatherWidgetHtml();
+  const baseWidget = buildWeatherWidgetHtml(true);
   const state = studyWeatherState;
   const days = state.data?.days || [];
 
@@ -2219,28 +2505,30 @@ function buildWeatherFullViewHtml() {
     ${baseWidget}
 
     <!-- Deep Meteorological Comparison Table -->
-    <div class="card" style="margin-top:16px">
+    <div class="card" style="margin-top:20px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
         <div>
-          <h3 style="margin:0;font-size:15px;font-weight:850;color:#f8fafc;display:flex;align-items:center;gap:7px">
-            <span>📊</span> Bảng So Sánh Chỉ Số Khí Tượng Chi Tiết 7 Ngày
+          <h3 style="margin:0;font-size:16px;font-weight:850;color:#f8fafc;display:flex;align-items:center;gap:8px">
+            <span>📊</span> Bảng So Sánh Chỉ Số Khí Tượng 7 Ngày Chi Tiết
           </h3>
-          <div style="font-size:12px;color:#94a3b8;margin-top:2px">Đối chiếu xác suất mưa, lượng mưa mm, sức gió và bức xạ UV để chủ động lịch học & ôn thi</div>
+          <div style="font-size:12px;color:#94a3b8;margin-top:3px">
+            Đối chiếu lượng mưa mm, xác suất mưa %, sức gió giật và chỉ số UV để chủ động lịch học & ôn thi
+          </div>
         </div>
       </div>
 
       <div style="overflow-x:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:12.5px;text-align:left">
+        <table class="weather-table-comparison" style="width:100%;border-collapse:collapse;font-size:12.5px;text-align:left">
           <thead>
             <tr style="border-bottom:1.5px solid rgba(255,255,255,0.12);color:#94a3b8">
-              <th style="padding:10px 8px">Ngày</th>
-              <th style="padding:10px 8px">Hiện trạng</th>
-              <th style="padding:10px 8px">Nhiệt độ</th>
-              <th style="padding:10px 8px">Tỉ lệ mưa</th>
-              <th style="padding:10px 8px">Lượng mưa</th>
-              <th style="padding:10px 8px">Sức gió</th>
-              <th style="padding:10px 8px">Chỉ số UV</th>
-              <th style="padding:10px 8px">Đánh giá học đường</th>
+              <th style="padding:11px 10px">Ngày</th>
+              <th style="padding:11px 10px">Hình thái</th>
+              <th style="padding:11px 10px">Nhiệt độ</th>
+              <th style="padding:11px 10px">Tỉ lệ mưa</th>
+              <th style="padding:11px 10px">Lượng mưa</th>
+              <th style="padding:11px 10px">Sức gió</th>
+              <th style="padding:11px 10px">Chỉ số UV</th>
+              <th style="padding:11px 10px">Lời khuyên học đường</th>
             </tr>
           </thead>
           <tbody>
@@ -2248,41 +2536,42 @@ function buildWeatherFullViewHtml() {
               const cond = getWmoCondition(d.code);
               const dayLabel = formatWeatherDayName(d.date, idx);
               const dateVi = formatDayMonth(d.date);
-              const uvInfo = getUvDescription(d.uv);
-              const rainSumStr = d.rainSum > 0 ? `${d.rainSum} mm` : '0 mm';
-              const rainProbColor = d.rainProb >= 60 ? '#f87171' : (d.rainProb >= 35 ? '#fbbf24' : '#38bdf8');
-              
+              const uvInfo = getUvAnalysis(d.uv);
+              const rainAn = getRainAnalysis(d.rainProb, d.rainSum);
+              const windAn = getWindAnalysis(d.wind);
+
               let studentNote = 'Thuận lợi đi học';
-              if (d.rainProb >= 60 || d.rainSum >= 7) studentNote = '⚠️ Mang áo mưa & bọc tài liệu';
-              else if (d.rainProb >= 35) studentNote = '🌂 Để sẵn ô gấp';
-              else if (d.maxTemp >= 33 || d.uv >= 7) studentNote = '☀️ Chống nắng & mang bình nước';
+              if (d.rainProb >= 65 || d.rainSum >= 7) studentNote = '⚠️ Mang áo mưa & bọc chống nước máy Casio';
+              else if (d.rainProb >= 35) studentNote = '🌂 Để sẵn ô gấp gọn';
+              else if (d.maxTemp >= 33 || d.uv >= 7.5) studentNote = '☀️ Áo chống nắng, thoa kem SPF50+ & mang nước';
+              else if (d.minTemp <= 19) studentNote = '🧣 Mặc áo ấm & khăn quàng cổ';
 
               return `
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:${idx % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent'}">
-                  <td style="padding:10px 8px;font-weight:750;color:#f1f5f9">
+                  <td style="padding:11px 10px;font-weight:750;color:#f1f5f9;white-space:nowrap">
                     ${dayLabel} <span style="font-size:11px;color:#94a3b8;font-weight:400">(${dateVi})</span>
                   </td>
-                  <td style="padding:10px 8px">
+                  <td style="padding:11px 10px;white-space:nowrap">
                     <span style="display:inline-flex;align-items:center;gap:6px">
-                      ${cond.text}
+                      ${getWeatherSvgIcon(cond.iconType, 18)} ${cond.text}
                     </span>
                   </td>
-                  <td style="padding:10px 8px;font-weight:700;color:#38bdf8">
+                  <td style="padding:11px 10px;font-weight:750;color:#38bdf8;white-space:nowrap">
                     ${d.maxTemp}° / ${d.minTemp}°C
                   </td>
-                  <td style="padding:10px 8px;font-weight:750;color:${rainProbColor}">
+                  <td style="padding:11px 10px;font-weight:750;color:${rainAn.color};white-space:nowrap">
                     💧 ${d.rainProb}%
                   </td>
-                  <td style="padding:10px 8px;color:#cbd5e1">
-                    ${rainSumStr}
+                  <td style="padding:11px 10px;color:#cbd5e1;white-space:nowrap">
+                    ${d.rainSum > 0 ? `<strong>${d.rainSum} mm</strong>` : '0 mm'}
                   </td>
-                  <td style="padding:10px 8px;color:#a78bfa">
-                    ${d.wind} km/h
+                  <td style="padding:11px 10px;color:${windAn.color};white-space:nowrap">
+                    ${d.wind} km/h <span style="font-size:10.5px;color:#94a3b8">(${windAn.level.split(' ')[0]})</span>
                   </td>
-                  <td style="padding:10px 8px;font-weight:750;color:${uvInfo.color}">
-                    ${d.uv} (${uvInfo.text})
+                  <td style="padding:11px 10px;font-weight:750;color:${uvInfo.color};white-space:nowrap">
+                    ${d.uv} (${uvInfo.text.split(' ')[0]})
                   </td>
-                  <td style="padding:10px 8px;font-size:11.5px;color:#e2e8f0">
+                  <td style="padding:11px 10px;font-size:12px;color:#e2e8f0">
                     ${studentNote}
                   </td>
                 </tr>
@@ -2294,15 +2583,43 @@ function buildWeatherFullViewHtml() {
     </div>
 
     <!-- Student School Safety Guide -->
-    <div class="card" style="margin-top:16px;background:linear-gradient(135deg,rgba(15,23,42,0.85),rgba(30,41,59,0.75));border:1px solid rgba(56,189,248,0.25)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="font-size:24px">💡</div>
-        <h3 style="margin:0;font-size:14.5px;font-weight:800;color:#f8fafc">Quy Tắc Bảo Quản Balo & Sức Khỏe Học Đường Khi Thời Tiết Biến Đổi</h3>
+    <div class="card" style="margin-top:20px;background:linear-gradient(135deg,rgba(15,23,42,0.92),rgba(30,41,59,0.85));border:1px solid rgba(56,189,248,0.25)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="font-size:26px">💡</div>
+        <div>
+          <h3 style="margin:0;font-size:15px;font-weight:800;color:#f8fafc">Cẩm Nang Bảo Quản Sách Vở & Sức Khỏe Học Đường</h3>
+          <div style="font-size:12px;color:#94a3b8">4 quy tắc bảo vệ vật dụng học tập không thể thiếu cho học sinh</div>
+        </div>
       </div>
-      <div style="font-size:12.5px;color:#cbd5e1;line-height:1.6;display:flex;flex-direction:column;gap:8px">
-        <div>• <b>Bảo vệ Máy tính Casio & Sách bài tập:</b> Khi độ ẩm cao hoặc mưa rào dông bão, luôn bọc máy tính cầm tay Casio FX trong túi zip chống ẩm hoặc bao silicone. Đặt tập tài liệu có ghi bài quan trọng ở ngăn giữa balo, tránh mép ngoài.</div>
-        <div>• <b>Tiết Thể Dục Ngoài Sân Trường:</b> Nếu chỉ số UV trên 7.0 hoặc nhiệt độ trên 33°C, nên thoa kem chống nắng trước khi vào tiết, chuẩn bị bình nước điện giải và đội mũ rộng vành ngay sau khi tập xong.</div>
-        <div>• <b>Ca Học Thêm Buổi Tối:</b> Sau 18h30 thường có mưa rào cục bộ hoặc hạ nhiệt độ đột ngột, luôn mang theo áo gió mỏng và cài chắc dây đai balo khi đi xe.</div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;font-size:12.5px;color:#cbd5e1;line-height:1.55">
+        <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+          <div style="font-weight:800;color:#38bdf8;margin-bottom:5px;display:flex;align-items:center;gap:6px">
+            <span>💻</span> Bảo Vệ Máy Tính Casio
+          </div>
+          <div>Luôn bỏ máy tính Casio fx-580 / 880 vào túi zip hoặc túi đựng chống sốc có khóa kín. Tuyệt đối không phơi máy tính dưới ánh nắng gắt hoặc để trong cốp xe máy nóng.</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+          <div style="font-weight:800;color:#60a5fa;margin-bottom:5px;display:flex;align-items:center;gap:6px">
+            <span>☔</span> Kỹ Năng Đi Mưa An Toàn
+          </div>
+          <div>Ưu tiên mặc áo mưa bộ 2 mảnh khi đi xe để cản gió và không bị vướng bánh xe. Nếu dùng ô gấp, kiểm tra gió giật trước khi mở để tránh lật gãy nan ô.</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+          <div style="font-weight:800;color:#f59e0b;margin-bottom:5px;display:flex;align-items:center;gap:6px">
+            <span>🧴</span> Quy Tắc Thoa Kem & Uống Nước
+          </div>
+          <div>Thoa kem chống nắng SPF50+ trước khi rời nhà 15-20 phút. Luôn mang bình giữ nhiệt 800ml - 1L nước mát để chống say nắng và khô họng trong phòng học.</div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)">
+          <div style="font-weight:800;color:#a855f7;margin-bottom:5px;display:flex;align-items:center;gap:6px">
+            <span>⚡</span> Cảnh Báo Sấm Sét Học Đường
+          </div>
+          <div>Khi trời nổi dông sét lúc tan trường, ở lại hành lang trường chờ ngớt mưa. Tuyệt đối không trú mưa dưới gốc cây bàng, xà cừ cổ thụ hoặc gần trạm biến áp.</div>
+        </div>
       </div>
     </div>
   `;
@@ -2317,14 +2634,14 @@ function weather() {
           <span>•</span>
           <span>CHUYÊN SÂU 7 NGÀY</span>
         </div>
-        <h1>Dự Báo Thời Tiết & Học Đường 🌤️</h1>
+        <h1>Dự Báo Thời Tiết & Balo Học Đường 🌤️</h1>
         <p>Phân tích tỉ mỉ lượng mưa, xác suất mưa, gió bão, chỉ số UV và gợi ý outfit bảo vệ máy tính Casio & sách vở.</p>
       </div>
       <button class="primary" onclick="loadWeatherData(true)">🔄 Cập nhật ngay</button>
     </div>
 
     <div id="fullWeatherMount" class="weather-full-view-container">
-      ${buildWeatherWidgetHtml()}
+      ${buildWeatherFullViewHtml()}
     </div>
   `;
 }
