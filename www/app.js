@@ -4762,6 +4762,73 @@ function testing() {
   go('dashboard');
 }
 
+
+// ----------------- MODULE: NOTES -----------------
+function notes() {
+  $('#content').innerHTML = `
+    <div class="hero">
+      <div>
+        <div class="eyebrow">NOTES</div>
+        <h1>Ghi chú</h1>
+        <p>Lưu kiến thức, công thức và lời dặn nhanh ngay trên thiết bị.</p>
+      </div>
+      <div class="hero-actions" style="display:flex;gap:8px;width:100%">
+        <button class="primary" onclick="noteModal()" style="flex:1;min-width:140px">➕ Ghi chú mới</button>
+      </div>
+    </div>
+    <div class="grid notegrid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+      ${(db.notes || []).map(n => `
+        <div class="card note" style="cursor:pointer;transition:.18s" onclick="noteModal('${n.id}')" title="Bấm để xem và sửa ghi chú">
+          <div class="titlebar">
+            <h3 style="display:flex;align-items:center;gap:6px"><span>📝</span> <span>${esc(n.t)}</span></h3>
+            <button class="ghost" onclick="event.stopPropagation();delNote('${n.id}')" title="Xóa ghi chú">🗑️</button>
+          </div>
+          <p style="white-space:pre-wrap;margin:8px 0 12px;color:#cbd5e1;line-height:1.5">${esc(n.b)}</p>
+          <div class="meta" style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:11.5px;color:var(--muted)">🕒 ${new Date(n.u).toLocaleString('vi-VN')}</span>
+            <span style="color:var(--a2);font-weight:700;font-size:12px">✏️ Sửa</span>
+          </div>
+        </div>
+      `).join('') || `
+        <div class="empty" style="grid-column:1/-1;padding:36px 16px;text-align:center;background:rgba(17,24,39,0.5);border:1px dashed rgba(139,92,246,0.35);border-radius:18px">
+          <div style="font-size:42px;margin-bottom:8px">📝</div>
+          <div style="font-size:16px;font-weight:800;color:#f8fafc;margin-bottom:6px">Chưa có ghi chú nào</div>
+          <div style="color:var(--muted);font-size:13px;margin-bottom:18px;max-width:340px;margin-left:auto;margin-right:auto">Lưu lại các công thức toán, ý văn hay, từ vựng hoặc bài tập thầy cô giao.</div>
+          <button class="primary" onclick="noteModal()" style="display:inline-flex;align-items:center;gap:6px;padding:10px 22px;font-size:14px;border-radius:12px;margin:0 auto">
+            <span>➕ Tạo ghi chú mới</span>
+          </button>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+// ----------------- MODULE: PROGRESS -----------------
+function progress() {
+  let n = db.tasks.length,
+    d = db.tasks.filter(x => x.done).length,
+    p = n ? Math.round(d / n * 100) : 0;
+  $('#content').innerHTML = `
+    <div class="hero">
+      <div>
+        <div class="eyebrow">PROGRESS</div>
+        <h1>Tiến độ học tập</h1>
+        <p>Theo dõi tiến độ hoàn thành các bài tập và nhiệm vụ.</p>
+      </div>
+    </div>
+    <div class="grid stats">
+      <div class="card"><div class="stat-label">Tổng bài</div><div class="stat-value">${n}</div></div>
+      <div class="card"><div class="stat-label">Hoàn thành</div><div class="stat-value">${d}</div></div>
+      <div class="card"><div class="stat-label">Tiến độ</div><div class="stat-value">${p}%</div></div>
+      <div class="card"><div class="stat-label">Ca học thêm</div><div class="stat-value">${(db.extraClasses || []).length}</div></div>
+    </div>
+    <div class="card">
+      <div class="titlebar"><b>Hoàn thành bài tập</b><b>${p}%</b></div>
+      <div class="progress"><i style="width:${p}%"></i></div>
+    </div>
+  `;
+}
+
 // ----------------- MODULE: SETTINGS -----------------
 // ----------------- MODULE: SETTINGS -----------------
 let deferredPrompt = null;
