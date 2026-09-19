@@ -4398,57 +4398,82 @@ function openTimetableManagerModal() {
 
     <!-- TAB 2: OCR / IMAGE SCANNER -->
     <div id="tab-ocr" class="tab-pane">
-      <!-- Hidden standalone file inputs for Camera and Gallery -->
-      <input type="file" id="ocrCameraInput" accept="image/*" capture="environment" style="display:none" onchange="handleOcrFileSelect(event)">
-      <input type="file" id="ocrGalleryInput" accept="image/*" style="display:none" onchange="handleOcrFileSelect(event)">
-
-      <div class="upload-zone" id="ocrDropZone" onclick="document.getElementById('ocrGalleryInput').click()">
+      <!-- Universal Mobile & Desktop Upload Zone with native touch overlay -->
+      <label for="ocrDropzoneInput" class="upload-zone" id="ocrDropZone" style="position:relative;cursor:pointer;display:block;overflow:hidden">
+        <input type="file" id="ocrDropzoneInput" accept="image/*" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:10;" onchange="handleOcrFileSelect(event)">
         <span class="upload-icon">📷</span>
         <div class="upload-title">Tải lên hoặc Chụp ảnh Thời khóa biểu</div>
-        <div class="upload-sub">Hỗ trợ ảnh chụp điện thoại, ảnh thư viện hoặc dán trực tiếp</div>
-      </div>
+        <div class="upload-sub">Chạm vào đây để chọn ảnh từ điện thoại, thư viện hoặc dán trực tiếp</div>
+      </label>
 
-      <!-- Action buttons that trigger native pickers without label interference -->
-      <div class="ocr-action-buttons">
-        <button type="button" class="primary" onclick="event.stopPropagation(); document.getElementById('ocrCameraInput').click()">
+      <!-- Action buttons with native label overlay for 100% mobile compatibility -->
+      <div class="ocr-action-buttons" style="display:flex;gap:10px;margin-top:12px">
+        <label for="ocrCameraInput" class="primary ocr-picker-btn" style="position:relative;cursor:pointer;flex:1;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 14px;border-radius:12px;font-weight:750;font-size:13px">
+          <input type="file" id="ocrCameraInput" accept="image/*" capture="environment" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:5;" onchange="handleOcrFileSelect(event)">
           <span>📸 Chụp ảnh Camera</span>
-        </button>
-        <button type="button" class="ghost" onclick="event.stopPropagation(); document.getElementById('ocrGalleryInput').click()">
+        </label>
+        <label for="ocrGalleryInput" class="ghost ocr-picker-btn" style="position:relative;cursor:pointer;flex:1;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 14px;border-radius:12px;font-weight:750;font-size:13px">
+          <input type="file" id="ocrGalleryInput" accept="image/*" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:5;" onchange="handleOcrFileSelect(event)">
           <span>🖼️ Chọn từ Thư viện</span>
-        </button>
+        </label>
       </div>
 
+      <!-- Image Preview and Actions -->
       <div id="ocrPreviewWrap" class="ocr-preview-wrap hidden" style="margin-top:14px">
         <img id="ocrPreviewImg" class="ocr-preview-img" alt="TKB Preview">
         <div style="flex:1;min-width:0">
           <b id="ocrFileName">Ảnh TKB</b>
           <div class="meta" id="ocrFileSize"></div>
           <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
-            <button class="primary" type="button" id="btnStartOcr" onclick="startOcrProcess()" style="font-size:12px;padding:6px 12px">
-              <span>⚡ Quét chữ bằng AI</span>
+            <button class="primary" type="button" id="btnStartOcr" onclick="startOcrProcess()" style="font-size:12.5px;padding:7px 14px">
+              <span>⚡ Quét chữ bằng AI (OCR)</span>
             </button>
-            <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="font-size:12px;padding:6px 12px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">
-              <span>👁️ Ghim ảnh để điền nhanh</span>
+            <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="font-size:12.5px;padding:7px 14px;color:#38bdf8;border-color:rgba(56,189,248,0.4)">
+              <span>👁️ Ghim ảnh xem cùng Bảng TKB</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div id="ocrProgressBox" class="ocr-progress-box hidden">
-        <div style="display:flex;justify-content:space-between;font-size:12px">
+      <!-- OCR Progress Bar -->
+      <div id="ocrProgressBox" class="ocr-progress-box hidden" style="margin-top:12px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
           <span id="ocrStatusText">Đang xử lý ảnh...</span>
           <b id="ocrPercent">0%</b>
         </div>
         <div class="ocr-bar"><i id="ocrBarFill"></i></div>
       </div>
 
-      <div id="ocrResultBox" style="margin-top:12px;" class="hidden">
-        <label style="font-size:12px;font-weight:700;display:block;margin-bottom:6px">Kết quả văn bản trích xuất:</label>
-        <textarea id="ocrRawText" class="textarea" rows="4" style="font-family:monospace;font-size:11px"></textarea>
-        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-          <button class="primary" type="button" onclick="applyOcrTextToMatrix()">📥 Áp dụng kết quả vào Bảng TKB</button>
-          <button class="ghost" type="button" onclick="pinOcrImageToManualTab()">👁️ Xem ảnh song song với Bảng</button>
+      <!-- Text Paste / Extracted Result Box -->
+      <div style="margin-top:14px;padding:14px;background:#090f1e;border:1px solid #1e293b;border-radius:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <label style="font-size:12.5px;font-weight:750;color:#38bdf8">📋 Nội dung văn bản TKB (từ ảnh quét hoặc dán từ Zalo/Messenger):</label>
+          <span style="font-size:11px;color:var(--muted)">Tự động nhận diện môn</span>
         </div>
+        <textarea id="ocrRawText" class="textarea" rows="4" placeholder="Kết quả quét ảnh sẽ hiện ở đây, hoặc bạn có thể dán tin nhắn TKB từ Zalo vào đây... Ví dụ:&#10;T2: Chào cờ, Toán, Văn, Tiếng Anh&#10;T3: Toán, Toán, Hóa, Vật lý&#10;Hoặc bảng theo tiết:&#10;Tiết 1: Chào cờ, Toán, Hóa, Lý, Văn, Tin..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <button class="primary" type="button" onclick="applyOcrTextToMatrix()" style="padding:8px 16px;font-size:13px">
+            <span>📥 Phân tích thông minh & Điền vào TKB</span>
+          </button>
+          <button class="ghost" type="button" onclick="pinOcrImageToManualTab()" style="padding:8px 14px;font-size:12.5px">
+            <span>👁️ Xem ảnh song song với Bảng TKB</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Recognized Summary Badge Box -->
+      <div id="ocrDetectedPreviewBox" class="hidden" style="margin-top:14px;padding:14px;background:#0d1527;border:1px solid #0284c7;border-radius:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <b style="color:#38bdf8;font-size:13px">✨ Môn học AI đã nhận diện thành công:</b>
+          <span id="ocrDetectedCount" class="badge" style="background:#10b981;color:#fff">0 tiết</span>
+        </div>
+        <div id="ocrDetectedChips" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px"></div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px">
+          💡 Hệ thống đã tự động điền các môn vào đúng thứ và tiết học. Bạn có thể chuyển sang tab <b>"✏️ Tự thay đổi TKB"</b> để xem và chỉnh sửa thêm nếu muốn.
+        </div>
+        <button class="primary" type="button" onclick="switchTTTab('manual')" style="width:100%;justify-content:center">
+          <span>➡️ Chuyển sang Bảng TKB để kiểm tra & Lưu</span>
+        </button>
       </div>
     </div>
 
@@ -4631,8 +4656,10 @@ function loadOcrImage(file, name = 'Ảnh TKB') {
     $('#ocrFileName').textContent = name;
     $('#ocrFileSize').textContent = `${(file.size / 1024).toFixed(1)} KB`;
     $('#ocrPreviewWrap').classList.remove('hidden');
-    $('#ocrResultBox').classList.add('hidden');
     $('#ocrProgressBox').classList.add('hidden');
+    // Also update sticky manual viewer
+    const stickyImg = $('#stickyOcrManualImg');
+    if (stickyImg) stickyImg.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
@@ -4648,6 +4675,52 @@ async function loadTesseract() {
   });
 }
 
+// Pre-process image with grayscale & contrast enhancement for maximum OCR accuracy
+function preprocessImageForOcr(blob, maxDim = 1400) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let w = img.width;
+      let h = img.height;
+      if (w > maxDim || h > maxDim) {
+        if (w > h) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+
+      // Contrast and sharpen enhancement
+      try {
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const d = imgData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const v = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+          const contrast = (v - 128) * 1.35 + 128;
+          const clamped = Math.max(0, Math.min(255, contrast));
+          d[i] = clamped;
+          d[i + 1] = clamped;
+          d[i + 2] = clamped;
+        }
+        ctx.putImageData(imgData, 0, 0);
+      } catch (e) {}
+
+      canvas.toBlob((b) => resolve(b || blob), 'image/jpeg', 0.9);
+    };
+    img.onerror = () => resolve(blob);
+    img.src = url;
+  });
+}
+
 async function startOcrProcess() {
   if (!ocrTempImage) return toast('Vui lòng chụp hoặc chọn ảnh trước');
 
@@ -4659,19 +4732,18 @@ async function startOcrProcess() {
 
   btn.disabled = true;
   progressBox.classList.remove('hidden');
-  statusText.textContent = '1/3 Đang tối ưu hóa ảnh cho điện thoại...';
+  statusText.textContent = '1/3 Đang tối ưu hóa ảnh & tăng độ nét chữ...';
   barFill.style.width = '15%';
   percentText.textContent = '15%';
 
   try {
-    // Downscale image to prevent mobile memory crash
-    const processedImage = await window.downscaleImageForMobile(ocrTempImage, 1200);
-    statusText.textContent = '2/3 Đang nạp mô hình OCR nhận diện...';
-    barFill.style.width = '30%';
-    percentText.textContent = '30%';
+    const processedImage = await preprocessImageForOcr(ocrTempImage, 1400);
+    statusText.textContent = '2/3 Đang nạp mô hình AI nhận diện tiếng Việt...';
+    barFill.style.width = '35%';
+    percentText.textContent = '35%';
 
     const Tesseract = await loadTesseract();
-    statusText.textContent = '3/3 Đang đọc chữ tiếng Việt từ ảnh...';
+    statusText.textContent = '3/3 Đang quét từng dòng chữ từ ảnh Thời khóa biểu...';
 
     const result = await Tesseract.recognize(processedImage, 'vie+eng', {
       logger: m => {
@@ -4679,75 +4751,242 @@ async function startOcrProcess() {
           const pct = Math.round(m.progress * 100);
           barFill.style.width = `${pct}%`;
           percentText.textContent = `${pct}%`;
-          statusText.textContent = `Đang phân tích text: ${pct}%`;
+          statusText.textContent = `Đang quét chữ: ${pct}%`;
         }
       }
     });
 
     const text = result.data.text || '';
     $('#ocrRawText').value = text;
-    $('#ocrResultBox').classList.remove('hidden');
-    statusText.textContent = '✅ Đã trích xuất xong văn bản!';
-    toast('Đã phân tích ảnh thành công!');
+    statusText.textContent = '✅ Đã trích xuất xong văn bản từ ảnh!';
+    toast('Quét chữ thành công! Đang tự động phân tích môn học...');
+    applyOcrTextToMatrix();
   } catch (err) {
     console.error(err);
     statusText.textContent = '❌ Lỗi nhận diện ảnh: ' + err.message;
-    toast('Lỗi khi phân tích ảnh. Bạn có thể tự nhập ở tab Chỉnh sửa.');
+    toast('Lỗi khi quét ảnh. Bạn có thể tự nhập hoặc dán TKB vào ô bên dưới.');
   } finally {
     btn.disabled = false;
   }
 }
 
-const COMMON_SUBJECTS = [
-  'Toán', 'Văn', 'Ngữ văn', 'Anh', 'Tiếng Anh', 'Lý', 'Vật lý', 'Hóa', 'Hóa học',
-  'Sinh', 'Sinh học', 'Sử', 'Lịch sử', 'Địa', 'Địa lý', 'GDCD', 'GDKTPL', 'Tin',
-  'Tin học', 'Thể dục', 'GDTC', 'STEM', 'HĐTN', 'HĐTN1', 'HĐTN2', 'GDĐP', 'Công nghệ', 'GDQP'
+function removeVietnameseTones(str) {
+  return (str || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+const VI_SUBJECT_DICT = [
+  { s: 'Chào cờ', aliases: ['chao co', 'cc', 'shdc', 'duoi co'] },
+  { s: 'Sinh hoạt lớp', aliases: ['sinh hoat lop', 'sinh hoat', 'shcn', 'shl', 'sh'] },
+  { s: 'Toán', aliases: ['toan', 'dai so', 'hinh hoc', 'giai tich', 'ds', 'hh'] },
+  { s: 'Ngữ văn', aliases: ['ngu van', 'van', 'nv'] },
+  { s: 'Tiếng Anh', aliases: ['tieng anh', 'anh', 'english', 'eng', 't anh'] },
+  { s: 'Vật lý', aliases: ['vat ly', 'vat li', 'ly', 'vl'] },
+  { s: 'Hóa học', aliases: ['hoa hoc', 'hoa', 'hh'] },
+  { s: 'Sinh học', aliases: ['sinh hoc', 'sinh', 'sh'] },
+  { s: 'Lịch sử', aliases: ['lich su', 'su', 'ls'] },
+  { s: 'Địa lý', aliases: ['dia ly', 'dia li', 'dia', 'dl'] },
+  { s: 'Tin học', aliases: ['tin hoc', 'tin', 'th'] },
+  { s: 'Thể dục', aliases: ['the duc', 'gdtc', 'the chat', 'td'] },
+  { s: 'GD Kinh tế & Pháp luật', aliases: ['kinh te phap luat', 'gdktpl', 'ktpl', 'gdcd', 'phap luat'] },
+  { s: 'Công nghệ', aliases: ['cong nghe', 'cn'] },
+  { s: 'GD Quốc phòng', aliases: ['quoc phong', 'gdqp an', 'gdqp', 'qp'] },
+  { s: 'HĐTN', aliases: ['hdtn', 'trai nghiem', 'hdtn1', 'hdtn2'] },
+  { s: 'GD Địa phương', aliases: ['gd dia phuong', 'gddp', 'dia phuong'] },
+  { s: 'STEM', aliases: ['stem'] }
 ];
 
-function applyOcrTextToMatrix() {
-  const raw = $('#ocrRawText').value;
-  if (!raw.trim()) return toast('Chưa có nội dung văn bản để áp dụng');
+function matchSingleSubject(token) {
+  const norm = removeVietnameseTones(token);
+  if (!norm || norm.length < 1) return null;
 
-  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
-  const detectedSubjects = [];
+  for (const item of VI_SUBJECT_DICT) {
+    for (const alias of item.aliases) {
+      if (norm === alias) return item.s;
+    }
+  }
+  for (const item of VI_SUBJECT_DICT) {
+    for (const alias of item.aliases) {
+      if (alias.length >= 3 && (new RegExp(`\\b${alias}\\b`).test(norm) || norm.startsWith(alias) || norm.endsWith(alias))) {
+        return item.s;
+      }
+    }
+  }
+  return null;
+}
 
+function parseTimetableFromText(rawText) {
+  const result = {
+    morning: { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {} },
+    afternoon: { 0: {}, 1: {}, 2: {}, 3: {}, 4: {}, 5: {} },
+    allFound: []
+  };
+
+  const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+  const dayNames = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+
+  function detectDay(str) {
+    const n = removeVietnameseTones(str);
+    if (/thu 2\b|t2\b|hai\b|mo\b/.test(n)) return 0;
+    if (/thu 3\b|t3\b|ba\b|tu\b/.test(n)) return 1;
+    if (/thu 4\b|t4\b|tu\b|we\b/.test(n)) return 2;
+    if (/thu 5\b|t5\b|nam\b|th\b/.test(n)) return 3;
+    if (/thu 6\b|t6\b|sau\b|fr\b/.test(n)) return 4;
+    if (/thu 7\b|t7\b|bay\b|sa\b/.test(n)) return 5;
+    return -1;
+  }
+
+  // Strategy 1: Check if text has explicit day lines like "T2: ...", "Thứ 2: ..."
+  let hasDayLines = false;
   lines.forEach(line => {
-    COMMON_SUBJECTS.forEach(sub => {
-      const reg = new RegExp(`\\b${sub}\\b`, 'i');
-      if (reg.test(line)) {
-        detectedSubjects.push(sub);
+    if (/^(thu\s*[2-7]|t[2-7])\s*[:.-]/i.test(line)) hasDayLines = true;
+  });
+
+  if (hasDayLines) {
+    lines.forEach(line => {
+      const match = line.match(/^(thu\s*[2-7]|t[2-7])\s*[:.-]\s*(.*)$/i);
+      if (match) {
+        const d = detectDay(match[1]);
+        if (d !== -1) {
+          const content = match[2];
+          const tokens = content.split(/[,;|/\t-]+/).map(t => t.trim()).filter(Boolean);
+          let slot = 1;
+          tokens.forEach(tok => {
+            const sub = matchSingleSubject(tok);
+            if (sub && slot <= 5) {
+              result.morning[d][slot] = sub;
+              result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
+              slot++;
+            }
+          });
+        }
+      }
+    });
+    if (result.allFound.length > 0) return result;
+  }
+
+  // Strategy 2: Check if text has period lines like "Tiết 1: ...", "Tiết 2: ..."
+  let hasSlotLines = false;
+  lines.forEach(line => {
+    if (/^(tiet|t)\s*[1-5]\s*[:.-]/i.test(line)) hasSlotLines = true;
+  });
+
+  if (hasSlotLines) {
+    lines.forEach(line => {
+      const match = line.match(/^(?:tiet|t)\s*([1-5])\s*[:.-]?\s*(.*)$/i);
+      if (match) {
+        const slot = parseInt(match[1]);
+        const content = match[2];
+        const tokens = content.split(/[,;|/\t-]+/).map(t => t.trim()).filter(Boolean);
+        let d = 0;
+        tokens.forEach(tok => {
+          const sub = matchSingleSubject(tok);
+          if (sub && d < 6) {
+            result.morning[d][slot] = sub;
+            result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
+            d++;
+          }
+        });
+      }
+    });
+    if (result.allFound.length > 0) return result;
+  }
+
+  // Strategy 3: General Token Stream Fallback
+  const allTokens = [];
+  lines.forEach(line => {
+    const parts = line.split(/[,;|/\t-]+/).map(t => t.trim()).filter(Boolean);
+    parts.forEach(p => {
+      const sub = matchSingleSubject(p);
+      if (sub) allTokens.push(sub);
+      else {
+        p.split(/\s+/).forEach(w => {
+          const s2 = matchSingleSubject(w);
+          if (s2) allTokens.push(s2);
+        });
       }
     });
   });
 
-  if (detectedSubjects.length === 0) {
-    lines.forEach(l => {
-      const parts = l.split(/[\s,;|]+/);
-      parts.forEach(p => {
-        if (p.length >= 2 && p.length <= 15) detectedSubjects.push(p);
-      });
-    });
+  let tIdx = 0;
+  for (let d = 0; d < 6 && tIdx < allTokens.length; d++) {
+    for (let slot = 1; slot <= 4 && tIdx < allTokens.length; slot++) {
+      const sub = allTokens[tIdx++];
+      result.morning[d][slot] = sub;
+      result.allFound.push({ d, dayName: dayNames[d], slot, sub, session: 'm' });
+    }
   }
 
-  let idx = 0;
+  return result;
+}
+
+function applyOcrTextToMatrix() {
+  const raw = $('#ocrRawText')?.value || '';
+  if (!raw.trim()) return toast('Chưa có nội dung văn bản để phân tích');
+
+  const parsed = parseTimetableFromText(raw);
+  let fillCount = 0;
+
+  // Fill into matrix inputs on tab-manual
   for (let d = 0; d < 6; d++) {
-    for (let slot = 1; slot <= 4; slot++) {
-      if (idx < detectedSubjects.length) {
+    for (let slot = 1; slot <= 5; slot++) {
+      const sub = parsed.morning[d]?.[slot];
+      if (sub) {
         const el = $(`#mat_m_${d}_${slot}_s`);
-        if (el) el.value = detectedSubjects[idx++];
+        if (el) {
+          el.value = sub;
+          fillCount++;
+        }
       }
     }
     for (let slot = 1; slot <= 3; slot++) {
-      if (idx < detectedSubjects.length) {
+      const sub = parsed.afternoon[d]?.[slot];
+      if (sub) {
         const el = $(`#mat_a_${d}_${slot}_s`);
-        if (el) el.value = detectedSubjects[idx++];
+        if (el) {
+          el.value = sub;
+          fillCount++;
+        }
       }
     }
   }
 
-  switchTTTab('manual');
-  toast(`Đã điền ${Math.min(idx, detectedSubjects.length)} môn vào bảng. Vui lòng kiểm tra lại!`);
+  // Update preview summary box
+  const previewBox = $('#ocrDetectedPreviewBox');
+  const chipsContainer = $('#ocrDetectedChips');
+  const countBadge = $('#ocrDetectedCount');
+
+  if (previewBox && chipsContainer) {
+    previewBox.classList.remove('hidden');
+    countBadge.textContent = `${fillCount} tiết học đã điền`;
+    chipsContainer.innerHTML = parsed.allFound.slice(0, 30).map(s => `
+      <span class="badge" style="background:#1e293b;color:#38bdf8;padding:4px 8px;font-size:12px">
+        ${esc(s.dayName)} Tiết ${s.slot}: <b>${esc(s.sub)}</b>
+      </span>
+    `).join('') || '<span style="color:var(--muted);font-size:12px">Không tìm thấy môn hợp lệ</span>';
+  }
+
+  toast(`🎉 Đã nhận diện và điền thành công ${fillCount} tiết học vào TKB!`);
 }
+
+function pinOcrImageToManualTab() {
+  if (!ocrTempImage) return toast('Vui lòng chụp hoặc tải ảnh lên trước');
+  const stickyWrap = $('#stickyOcrManualViewer');
+  const stickyImg = $('#stickyOcrManualImg');
+  if (stickyWrap && stickyImg) {
+    stickyImg.src = $('#ocrPreviewImg').src;
+    stickyWrap.classList.remove('hidden');
+    switchTTTab('manual');
+    toast('Đã ghim ảnh lên trên Bảng TKB để dễ đối chiếu!');
+  }
+}
+
 
 // ----------------- MODULE: ALARMS (REMOVED) -----------------
 function alarms() {
