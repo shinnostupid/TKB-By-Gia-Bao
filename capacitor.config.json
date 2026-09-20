@@ -8,6 +8,10 @@
     "cleartext": true
   },
   "ios": {
-    "contentInset": "automatic"
-  }
+    "contentInset": "never",
+    "backgroundColor": "#080c18",
+    "allowsLinkPreview": false,
+    "scrollEnabled": false
+  },
+  "backgroundColor": "#080c18"
 }

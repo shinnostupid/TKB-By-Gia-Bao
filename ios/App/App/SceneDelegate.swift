@@ -8,7 +8,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = CAPBridgeViewController()
+        let bridgeVC = CAPBridgeViewController()
+        bridgeVC.view.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
+        window?.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
+        window?.rootViewController = bridgeVC
         window?.makeKeyAndVisible()
 
         SceneDelegateProxy.shared.scene(scene, willConnectTo: session, options: connectionOptions)
