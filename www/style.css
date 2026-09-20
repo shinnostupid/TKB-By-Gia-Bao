@@ -31,18 +31,37 @@
   display: none !important;
 }
 
-html, body {
+html {
   margin: 0;
   padding: 0;
+  background-color: #080c18 !important;
+  background: #080c18 !important;
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  min-height: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #080c18 !important;
   background: radial-gradient(circle at 85% -5%, #1e204c, transparent 40%),
               radial-gradient(circle at 10% 20%, #0e1e38, transparent 35%),
-              var(--bg);
+              #080c18 !important;
   background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-main);
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: -0.01em;
+  min-height: 100%;
   min-height: 100vh;
   min-height: -webkit-fill-available;
   -webkit-font-smoothing: antialiased;
@@ -194,15 +213,19 @@ main {
 }
 
 header {
-  height: calc(64px + var(--sat));
-  padding: var(--sat) 24px 0 24px;
+  height: calc(58px + var(--sat));
+  padding-top: var(--sat);
+  padding-left: max(16px, var(--sal));
+  padding-right: max(16px, var(--sar));
+  padding-bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(8, 12, 24, 0.88);
+  background-color: #080c18 !important;
+  background: rgba(8, 12, 24, 0.95) !important;
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--line);
@@ -1362,7 +1385,10 @@ header div {
   right: 0;
   height: calc(58px + var(--sab));
   padding-bottom: var(--sab);
-  background: rgba(10, 15, 28, 0.94);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+  background-color: #0a0f1c !important;
+  background: rgba(10, 15, 28, 0.96) !important;
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
   border-top: 1px solid #1a253c;
