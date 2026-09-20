@@ -10,8 +10,7 @@
   "ios": {
     "contentInset": "never",
     "backgroundColor": "#080c18",
-    "allowsLinkPreview": false,
-    "scrollEnabled": false
+    "allowsLinkPreview": false
   },
   "backgroundColor": "#080c18"
 }

@@ -5552,3 +5552,58 @@ aside nav button.active .nav-svg,
     height: 130px;
   }
 }
+
+
+/* Universal iOS Smooth Scrolling & Touch Fix */
+html, body {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: auto !important;
+  touch-action: pan-y pan-x !important;
+}
+
+#content, main, .app {
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y pan-x !important;
+}
+
+/* Page View Transition Animations */
+#content {
+  animation: pageViewFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes pageViewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Smooth Tab and Card Transitions */
+.tab-pane {
+  animation: tabFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced Modal Box Animation */
+.modalbox {
+  animation: modalScaleUp 0.24s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@keyframes modalScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
