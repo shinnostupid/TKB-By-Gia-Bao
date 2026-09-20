@@ -6776,7 +6776,31 @@ if ($('#notify')) $('#notify').onclick = async () => {
 };
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  navigator.serviceWorker.register('sw.js').catch(() => { });
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    // Proactively check for new updates from Vercel whenever opened
+    reg.update().catch(() => {});
+    
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      if (newWorker) {
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // New version detected, auto reload to apply instant updates in IPA!
+            window.location.reload();
+          }
+        });
+      }
+    });
+  }).catch(() => { });
+
+  // Listen for controllerchange so when new sw activates, client syncs immediately
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      window.location.reload();
+    }
+  });
 }
 
 window.addEventListener('hashchange', () => {
