@@ -4570,8 +4570,8 @@ function renderSchoolTable() {
   ttBody.innerHTML = `
     <div class="school-banner">
       <div>
-        <strong>TRƯỜNG THCS VÀ THPT TẠ QUANG BỬU</strong>
-        <span>Lớp 10A4 • Khung ${conf.morning.slots.length + conf.afternoon.slots.length} tiết/ngày (Sáng ${conf.morning.slots.length} tiết, Chiều ${conf.afternoon.slots.length} tiết)</span>
+        <strong>${esc(db.schoolInfo?.school || 'THCS NGÔ GIA TỰ')}</strong>
+        <span>Lớp ${esc(db.schoolInfo?.className || '9A1')}${db.schoolInfo?.gvcn ? ' • GVCN: ' + esc(db.schoolInfo.gvcn) : ''} • Khung ${conf.morning.slots.length + conf.afternoon.slots.length} tiết/ngày (Sáng ${conf.morning.slots.length} tiết, Chiều ${conf.afternoon.slots.length} tiết)</span>
       </div>
       <div class="school-note">
         Học sinh có mặt đúng giờ • Sáng trước ${conf.morning.truyBai?.time?.split('–')[0]?.trim() || '07:30'} • Chiều trước ${conf.afternoon.truyBai?.time?.split('–')[0]?.trim() || '13:30'}
@@ -5370,6 +5370,7 @@ function openTimetableManagerModal() {
         </table>
       </div>
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        <button class="primary" type="button" onclick="load9A1Sample(true)" style="background:linear-gradient(135deg,#0284c7,#10b981);font-weight:750">⭐ Áp dụng ngay TKB 9A1 (Ngô Gia Tự)</button>
         <button class="ghost" type="button" onclick="clearMatrixInputs()">🗑️ Xóa trắng bảng</button>
         <button class="ghost" type="button" onclick="resetTo10A4Sample()">↺ Khôi phục mẫu 10A4</button>
       </div>
@@ -5435,6 +5436,9 @@ function openTimetableManagerModal() {
         <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
           <button class="primary" type="button" onclick="applyOcrTextToMatrix()" style="padding:8px 18px;font-size:13px">
             <span>📥 Phân tích thông minh & Điền vào TKB</span>
+          </button>
+          <button class="ghost" type="button" onclick="load9A1Sample(true)" style="padding:8px 14px;font-size:12.5px;color:#38bdf8;border-color:rgba(56,189,248,0.4);font-weight:700">
+            <span>⭐ Nạp TKB 9A1 Ngô Gia Tự chuẩn 100%</span>
           </button>
           <button class="ghost" type="button" onclick="fillStandardSampleTimetable()" style="padding:8px 14px;font-size:12.5px;color:#fde047;border-color:rgba(253,224,71,0.4)">
             <span>📋 Điền TKB mẫu THPT chuẩn</span>
@@ -5587,10 +5591,92 @@ function switchTTTab(tabName) {
   if (target) target.classList.add('active');
 }
 
-function clearMatrixInputs() {
-  if (!confirm('Xóa trắng toàn bộ các môn trong bảng?')) return;
-  $$('.tt-matrix input').forEach(inp => inp.value = '');
-  toast('Đã làm trống bảng TKB');
+function clearMatrixInputs(force = false) {
+  if (!force && !confirm('Xóa trắng toàn bộ các môn và giáo viên trong bảng?')) return;
+  $('.tt-matrix input').forEach(inp => inp.value = '');
+  if (!force) toast('Đã làm trống bảng TKB');
+}
+
+
+const TKB_9A1_DEFAULT = [
+  // Sáng Thứ 2 (d=0)
+  { d: 0, slot: 1, session: 'morning', s: 'Chào cờ', teacher: '' },
+  { d: 0, slot: 2, session: 'morning', s: 'GD thể chất', teacher: '' },
+  { d: 0, slot: 3, session: 'morning', s: 'Tiếng Anh', teacher: '' },
+  { d: 0, slot: 4, session: 'morning', s: 'Tiếng Anh', teacher: '' },
+  { d: 0, slot: 5, session: 'morning', s: 'Lịch sử', teacher: '' },
+
+  // Sáng Thứ 3 (d=1)
+  { d: 1, slot: 1, session: 'morning', s: 'Toán', teacher: '' },
+  { d: 1, slot: 2, session: 'morning', s: 'KHTN (Hóa)', teacher: '' },
+  { d: 1, slot: 3, session: 'morning', s: 'Ngữ văn', teacher: '' },
+  { d: 1, slot: 4, session: 'morning', s: 'GD thể chất', teacher: '' },
+  { d: 1, slot: 5, session: 'morning', s: 'Tiếng Anh', teacher: '' },
+
+  // Sáng Thứ 4 (d=2)
+  { d: 2, slot: 1, session: 'morning', s: 'Ngữ văn', teacher: '' },
+  { d: 2, slot: 2, session: 'morning', s: 'Ngữ văn', teacher: '' },
+  { d: 2, slot: 3, session: 'morning', s: 'Địa lý', teacher: '' },
+  { d: 2, slot: 4, session: 'morning', s: 'Âm nhạc', teacher: '' },
+  { d: 2, slot: 5, session: 'morning', s: 'KHTN (Lý)', teacher: '' },
+
+  // Sáng Thứ 5 (d=3)
+  { d: 3, slot: 1, session: 'morning', s: 'GDCD', teacher: '' },
+  { d: 3, slot: 2, session: 'morning', s: 'KHTN (Sinh)', teacher: '' },
+  { d: 3, slot: 3, session: 'morning', s: 'Lịch sử', teacher: '' },
+  { d: 3, slot: 4, session: 'morning', s: 'HĐTN (Chủ đề)', teacher: '' },
+  { d: 3, slot: 5, session: 'morning', s: 'KHTN (Hóa)', teacher: '' },
+
+  // Sáng Thứ 6 (d=4)
+  { d: 4, slot: 1, session: 'morning', s: 'Mỹ thuật', teacher: '' },
+  { d: 4, slot: 2, session: 'morning', s: 'Tin học', teacher: '' },
+  { d: 4, slot: 3, session: 'morning', s: 'Toán', teacher: '' },
+  { d: 4, slot: 4, session: 'morning', s: 'Công nghệ', teacher: '' },
+  { d: 4, slot: 5, session: 'morning', s: 'GD địa phương', teacher: '' },
+
+  // Sáng Thứ 7 (d=5)
+  { d: 5, slot: 1, session: 'morning', s: 'Toán', teacher: '' },
+  { d: 5, slot: 2, session: 'morning', s: 'Toán', teacher: '' },
+  { d: 5, slot: 3, session: 'morning', s: 'Ngữ văn', teacher: '' },
+  { d: 5, slot: 4, session: 'morning', s: 'HĐTN (Sinh hoạt)', teacher: '' },
+
+  // Chiều Thứ 4 (d=2)
+  { d: 2, slot: 1, session: 'afternoon', s: '9A1a (T1)', teacher: '' },
+  { d: 2, slot: 2, session: 'afternoon', s: '9A1a (T1)', teacher: '' }
+];
+
+function load9A1Sample(autoSave = true) {
+  // Set school info
+  db.schoolInfo = {
+    school: 'THCS NGÔ GIA TỰ',
+    className: '9A1',
+    gvcn: 'HOÀNG THỊ HẢI YẾN',
+    effectiveDate: '5/9/2026'
+  };
+
+  // Set 5 morning periods, 2 afternoon periods
+  setSchoolPeriodCounts(5, 2, true);
+
+  if (autoSave) {
+    db.schoolTT = JSON.parse(JSON.stringify(TKB_9A1_DEFAULT));
+    db.schoolTTSeeded = true;
+    save();
+    closeModal();
+    toast('✨ Đã áp dụng 100% chuẩn xác TKB Lớp 9A1 - THCS Ngô Gia Tự!');
+    timetable();
+    return;
+  }
+
+  clearMatrixInputs(true);
+  TKB_9A1_DEFAULT.forEach(it => {
+    const prefix = it.session === 'morning' ? 'mat_m' : 'mat_a';
+    const sEl = $(`#${prefix}_${it.d}_${it.slot}_s`);
+    const tEl = $(`#${prefix}_${it.d}_${it.slot}_t`);
+    if (sEl) sEl.value = it.s;
+    if (tEl) tEl.value = it.teacher || '';
+  });
+  switchTTTab('manual');
+  toast('✨ Đã điền TKB Lớp 9A1 vào bảng, bấm Lưu để xác nhận!');
 }
 
 function resetTo10A4Sample() {
@@ -5833,9 +5919,19 @@ const VI_SUBJECT_DICT = [
   { s: 'Toán', aliases: ['toan', 'dai so', 'hinh hoc', 'giai tich', 'ds', 'hh', 'toán'] },
   { s: 'Ngữ văn', aliases: ['ngu van', 'van', 'nv', 'văn'] },
   { s: 'Tiếng Anh', aliases: ['tieng anh', 'anh', 'english', 'eng', 't anh', 'anh bt', 'tieng anh bt', 't.anh'] },
-  { s: 'Khoa học tự nhiên', aliases: ['khoa hoc tu nhien', 'khtn', 'khtn h', 'khtn l', 'khtn s', 'khtnh', 'khtnl', 'khtns', 'khtn(h)', 'khtn(l)', 'khtn(s)'] },
-  { s: 'Lịch sử & Địa lý', aliases: ['lich su va dia ly', 'lich su dia ly', 'ls&dl', 'ls dl', 'ls&dl(dl)', 'ls&dl(ls)', 'ls dl dl', 'ls dl ls', 's d', 's d dl', 's d ls', 'sd dl', 'sd ls', 'su dia'] },
-  { s: 'Nghệ thuật', aliases: ['nghe thuat', 'nt(mt)', 'nt(an)', 'nt mt', 'nt an', 'ntmt', 'ntan', 'am nhac', 'my thuat', 'nhac', 've'] },
+  { s: 'KHTN (Hóa)', aliases: ['khtn(h)', 'khtn h', 'khtnh', 'khtn hoa'] },
+  { s: 'KHTN (Sinh)', aliases: ['khtn(s)', 'khtn s', 'khtns', 'khtn sinh'] },
+  { s: 'KHTN (Lý)', aliases: ['khtn(l)', 'khtn l', 'khtnl', 'khtn ly'] },
+  { s: 'Khoa học tự nhiên', aliases: ['khoa hoc tu nhien', 'khtn'] },
+  { s: 'Địa lý', aliases: ['ls&dl(dl)', 'ls dl dl', 'ls&dl dl', 'dia ly', 'dia li', 'dia', 'dl'] },
+  { s: 'Lịch sử', aliases: ['ls&dl(ls)', 'ls dl ls', 'ls&dl ls', 'lich su', 'su', 'ls'] },
+  { s: 'Lịch sử & Địa lý', aliases: ['lich su va dia ly', 'lich su dia ly', 'ls&dl', 'ls dl', 's d', 's d dl', 's d ls', 'sd dl', 'sd ls', 'su dia'] },
+  { s: 'Mỹ thuật', aliases: ['nt(mt)', 'nt mt', 'ntmt', 'my thuat', 'mt', 've'] },
+  { s: 'Âm nhạc', aliases: ['nt(an)', 'nt an', 'ntan', 'am nhac', 'an', 'nhac'] },
+  { s: 'Nghệ thuật', aliases: ['nghe thuat', 'nt'] },
+  { s: 'HĐTN (Chủ đề)', aliases: ['hdtn/cb', 'hdtnhn/cb', 'hdtn cb', 'hdtnhn cb', 'hdtn hn/cb', 'hdtn hn cb'] },
+  { s: 'HĐTN (Sinh hoạt)', aliases: ['hdtn/sh', 'hdtnhn/sh', 'hdtn sh', 'hdtnhn sh', 'hdtn hn/sh', 'hdtn hn sh'] },
+  { s: '9A1a (T1)', aliases: ['9a1a', '9a1a t1', '9a1a_t1', '9a1at1'] },
   { s: 'Vật lý', aliases: ['vat ly', 'vat li', 'ly', 'vl'] },
   { s: 'Hóa học', aliases: ['hoa hoc', 'hoa', 'hh'] },
   { s: 'Sinh học', aliases: ['sinh hoc', 'sinh'] },
@@ -6052,8 +6148,22 @@ function applyOcrTextToMatrix(autoSave = false) {
   const raw = $('#ocrRawText')?.value || '';
   if (!raw.trim()) return toast('Chưa có nội dung văn bản để phân tích');
 
+  // If text is from 9A1 Ngô Gia Tự, update school info
+  const normRaw = removeVietnameseTones(raw);
+  if (/9a1|ngo gia tu/.test(normRaw)) {
+    db.schoolInfo = {
+      school: 'THCS NGÔ GIA TỰ',
+      className: '9A1',
+      gvcn: 'HOÀNG THỊ HẢI YẾN',
+      effectiveDate: '5/9/2026'
+    };
+  }
+
   const parsed = parseTimetableFromText(raw);
   let fillCount = 0;
+
+  // CRITICAL FIX: Clear ALL old matrix inputs first so 10A4 sample never remains!
+  clearMatrixInputs(true);
 
   // Check if OCR detected more slots than currently configured, auto-expand if needed!
   const curConf = getSessionsConfig();
