@@ -167,7 +167,27 @@ if (db.settings && (db.settings.name === 'Bạn' || !db.settings.name)) {
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const save = () => localStorage.setItem(K, JSON.stringify(db));
-const today = () => new Date().toISOString().slice(0, 10);
+function toLocalDateStr(val) {
+  if (!val) return '';
+  if (typeof val === 'string') {
+    const s = val.trim();
+    const match = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+    if (match) {
+      return `${match[1]}-${String(match[2]).padStart(2, '0')}-${String(match[3]).padStart(2, '0')}`;
+    }
+    const matchVN = s.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);
+    if (matchVN) {
+      return `${matchVN[3]}-${String(matchVN[2]).padStart(2, '0')}-${String(matchVN[1]).padStart(2, '0')}`;
+    }
+  }
+  const date = (val instanceof Date) ? val : new Date(val);
+  if (isNaN(date.getTime())) return '';
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+const today = () => toLocalDateStr(new Date());
 const id = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 function esc(s = '') {
@@ -424,9 +444,8 @@ function getDatesOfCurrentWeek(dateObj = new Date()) {
 
   const dates = [];
   for (let i = 0; i < 7; i++) {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    dates.push(d.toISOString().slice(0, 10));
+    const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i, 12, 0, 0);
+    dates.push(toLocalDateStr(d));
   }
   return dates;
 }
@@ -679,7 +698,7 @@ function getDayScheduleSummary(offsetDays = 0) {
   const jsDay = d.getDay(); // 0: CN, 1: T2, ..., 6: T7
   const dayIdx = jsDay === 0 ? 6 : jsDay - 1; // 0: T2 ... 6: CN
   const dayName = FULL_WEEK_DAYS[dayIdx];
-  const dateStr = d.toISOString().slice(0, 10);
+  const dateStr = toLocalDateStr(d);
   const weekKey = getWeekKey(d);
 
   // Overrides for this week
@@ -2452,7 +2471,7 @@ function formatWeatherDayName(dateStr, idx) {
   
   const tmr = new Date();
   tmr.setDate(tmr.getDate() + 1);
-  const tmrStr = tmr.toISOString().slice(0, 10);
+  const tmrStr = toLocalDateStr(tmr);
   if (dateStr === tmrStr) return 'Ngày mai';
 
   return name;
@@ -4004,19 +4023,23 @@ function toggleTaskDone(taskId) {
         });
       }
       t.done = true;
+      t.completedAt = today();
       save();
       playChime();
       toast('🎉 Tuyệt vời! Đã hoàn thành bài tập!');
       renderTasksList();
+      if (location.hash === '#progress') progress();
       if (location.hash === '#dashboard' || !location.hash) dashboard();
       return true;
     });
   } else {
     if (confirm(`Chuyển bài tập "${t.title}" về trạng thái Chưa hoàn thành để làm tiếp?`)) {
       t.done = false;
+      delete t.completedAt;
       save();
       toast('Đã chuyển bài tập về Chưa xong');
       renderTasksList();
+      if (location.hash === '#progress') progress();
       if (location.hash === '#dashboard' || !location.hash) dashboard();
     }
   }
@@ -4169,6 +4192,7 @@ function taskModal(editId = null) {
         category: cat,
         priority: $('#ftPrio').value,
         due,
+        createdAt: today(),
         body: $('#ftBody').value.trim(),
         done: false,
         subtasks
@@ -4176,7 +4200,9 @@ function taskModal(editId = null) {
     }
     save();
     toast(isEdit ? 'Đã cập nhật bài tập' : 'Đã thêm BTVN thành công!');
-    tasks();
+    if (location.hash === '#progress') progress();
+    else if (location.hash === '#dashboard' || !location.hash) dashboard();
+    else tasks();
     return true;
   });
 }
@@ -6179,27 +6205,41 @@ let selectedChartDayIdx = null;
 
 function progress() {
   const now = new Date();
-  const dayOfWeek = (now.getDay() + 6) % 7; // 0 = Thứ 2, ..., 6 = Chủ Nhật
-  const monday = new Date(now);
-  monday.setDate(now.getDate() - dayOfWeek);
-  monday.setHours(0, 0, 0, 0);
+  const jsDay = now.getDay();
+  const dayOfWeek = jsDay === 0 ? 6 : jsDay - 1; // 0 = Thứ 2, ..., 6 = Chủ Nhật
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dayOfWeek, 12, 0, 0);
 
   const dayLabels = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ Nhật'];
   const dayShort = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
   const weekDays = [];
+  const todayStr = today();
 
   for (let i = 0; i < 7; i++) {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    const dateStr = d.toISOString().slice(0, 10);
-    const isToday = dateStr === today();
+    const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i, 12, 0, 0);
+    const dateStr = toLocalDateStr(d);
+    const isToday = dateStr === todayStr;
 
-    // Tasks due on this day OR completed on this day
-    const tasksDue = (db.tasks || []).filter(t => t.due === dateStr);
-    const tasksDone = (db.tasks || []).filter(t => {
-      const comp = t.completedAt || (t.done ? t.due : null);
-      return comp === dateStr;
+    // Tasks due on this day
+    const tasksDue = (db.tasks || []).filter(t => {
+      const taskDue = toLocalDateStr(t.due);
+      if (taskDue) return taskDue === dateStr;
+      const taskCreated = toLocalDateStr(t.createdAt || t.created);
+      if (taskCreated) return taskCreated === dateStr;
+      return isToday;
     });
+
+    // Tasks completed on this day
+    const tasksDone = (db.tasks || []).filter(t => {
+      if (!t.done) return false;
+      const comp = toLocalDateStr(t.completedAt);
+      if (comp) return comp === dateStr;
+      const taskDue = toLocalDateStr(t.due);
+      if (taskDue) return taskDue === dateStr;
+      const taskCreated = toLocalDateStr(t.createdAt || t.created);
+      if (taskCreated) return taskCreated === dateStr;
+      return isToday;
+    });
+
     const tasksPending = tasksDue.filter(t => !t.done);
 
     weekDays.push({
@@ -6427,24 +6467,27 @@ function progress() {
           </div>
         </div>
 
-        ${activeDay.tasksDue.length === 0 && activeDay.tasksDone.length === 0 ? `
-          <div style="font-size:12.5px;color:var(--muted);padding:8px 0">
-            Không có bài tập nào cần nộp hoặc hoàn thành trong ngày ${activeDay.dayName}.
-          </div>
-        ` : `
-          <div style="display:grid;gap:6px">
-            ${activeDay.tasksDue.map(t => `
+        ${(() => {
+          const dayTasks = Array.from(new Set([...activeDay.tasksDue, ...activeDay.tasksDone]));
+          if (dayTasks.length === 0) {
+            return `<div style="font-size:12.5px;color:var(--muted);padding:8px 0">Không có bài tập nào cần nộp hoặc hoàn thành trong ngày ${activeDay.dayName}.</div>`;
+          }
+          return `<div style="display:grid;gap:6px">
+            ${dayTasks.map(t => `
               <div style="display:flex;align-items:center;justify-content:space-between;background:#131d33;border:1px solid #1e2c47;padding:8px 12px;border-radius:10px;font-size:12.5px">
                 <div style="display:flex;align-items:center;gap:8px">
                   <span>${t.done ? '✅' : '⏳'}</span>
                   <b style="color:#38bdf8">${esc(t.subject || 'BTVN')}:</b>
                   <span style="color:#e2e8f0;${t.done ? 'text-decoration:line-through;opacity:0.75' : ''}">${esc(t.title)}</span>
                 </div>
-                <span class="badge ${t.done ? 'success' : 'danger'}">${t.done ? 'Đã xong' : 'Chưa xong'}</span>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span class="badge ${t.done ? 'success' : 'danger'}">${t.done ? 'Đã xong' : 'Chưa xong'}</span>
+                  <button class="ghost" style="padding:2px 6px;font-size:11px" onclick="taskModal('${t.id}')">Chi tiết</button>
+                </div>
               </div>
             `).join('')}
-          </div>
-        `}
+          </div>`;
+        })()}
       </div>
     </div>
 
