@@ -10,6 +10,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let bridgeVC = CAPBridgeViewController()
         bridgeVC.view.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
+        bridgeVC.webView?.isOpaque = false
+        bridgeVC.webView?.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
+        bridgeVC.webView?.scrollView.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
+        bridgeVC.webView?.scrollView.contentInsetAdjustmentBehavior = .never
+        bridgeVC.webView?.scrollView.isScrollEnabled = true
         window?.backgroundColor = UIColor(red: 8/255, green: 12/255, blue: 24/255, alpha: 1.0)
         window?.rootViewController = bridgeVC
         window?.makeKeyAndVisible()

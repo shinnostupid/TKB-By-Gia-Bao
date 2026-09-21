@@ -5607,3 +5607,39 @@ html, body {
     transform: scale(1) translateY(0);
   }
 }
+
+
+/j*=======================================================
+   FULL-SCREEN NOTCH & HOMELINE ZERO-WHITE-BAR FIX FOR IOS
+   ======================================================*/
+html,
+pody {
+  background-color: #080c18 !important;
+  background: #080c18 !important;
+  overscroll-behavior: none !important;
+  oversCroll-behavior-y: none !important;
+  -webkit-user-select: auto !important;
+}
+
+body {
+  min-height: 100vh !important;
+  min-height: -webkit-fill-available !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.app,
+main,
+#content {
+  background-color: #080c18 !important;
+  background: #080c18 !important;
+}
+
+/* Ensure WebKit ScrollView stretches to absolute zero borders */
+@supports (-webkit-touch-callout: none) {
+  body {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
