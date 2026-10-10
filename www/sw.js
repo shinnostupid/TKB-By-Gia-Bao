@@ -1,4 +1,4 @@
-const CACHE = 'giabao-v58';
+const CACHE = 'giabao-v59';
 const ASSETS = [
   './',
   './index.html',
