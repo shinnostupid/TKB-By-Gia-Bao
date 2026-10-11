@@ -10,7 +10,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -36,28 +36,28 @@
                     <span class="score-lbl">ĐIỂM</span>
                     <span class="score-val" id="val-score">0</span>
                 </div>
-                <div class="score-box highlight">
+                <div class="score-box">
                     <span class="score-lbl">KỶ LỤC</span>
                     <span class="score-val" id="val-best">0</span>
                 </div>
             </div>
         </header>
 
-        <!-- Control Action Bar -->
-        <div class="actions-bar">
-            <p class="hint-text">Vuốt hoặc phím mũi tên để <strong>hợp nhất vô tận</strong>.</p>
+        <!-- Above Game Bar -->
+        <div class="above-game">
+            <p class="game-intro">Ghép các ô số để đạt <strong>2048 &amp; vô tận!</strong></p>
             <div class="control-buttons">
-                <button type="button" class="btn-ctrl" id="btn-undo" title="Hoàn tác nước đi (Ctrl + Z)">
+                <button type="button" class="btn-ctrl" id="btn-undo" title="Hoàn tác (Ctrl+Z)">
                     <span>↩</span> <span class="btn-lbl">Undo</span>
                 </button>
                 <button type="button" class="btn-ctrl" id="btn-sound" title="Bật/Tắt âm thanh">
-                    <span>🔊</span> <span class="btn-lbl">Âm thanh</span>
+                    <span>🔊</span>
                 </button>
-                <button type="button" class="btn-ctrl" id="btn-help" title="Hướng dẫn & Mẹo">
+                <button type="button" class="btn-ctrl" id="btn-help" title="Hướng dẫn">
                     <span>❓</span>
                 </button>
                 <button type="button" class="btn-ctrl primary" id="btn-new" title="Bắt đầu ván mới">
-                    <span>⚡</span> <span>Ván mới</span>
+                    <span>Ván mới</span>
                 </button>
             </div>
         </div>
@@ -67,15 +67,10 @@
             <!-- 16 Cells rendered dynamically -->
         </main>
 
-        <!-- Footer Info -->
-        <footer class="game-footer">
-            <div class="footer-stat">
-                Ô CAO NHẤT: <strong id="val-max-tile">-</strong>
-            </div>
-            <div class="footer-tip">
-                💡 Chạm vào ô để xem số đầy đủ
-            </div>
-        </footer>
+        <!-- Classic Game Explanation Footer -->
+        <p class="game-explanation">
+            <strong>CÁCH CHƠI:</strong> Dùng <strong>phím mũi tên</strong> hoặc <strong>vuốt màn hình</strong> để di chuyển các ô. Các ô có cùng số khi chạm vào nhau sẽ <strong>hợp nhất thành một</strong>. Tiếp tục gộp để phá kỷ lục <strong>2048, 4096 và vô tận!</strong>
+        </p>
     </div>
 
     <!-- 1. Modal Inspect Exact Number -->
