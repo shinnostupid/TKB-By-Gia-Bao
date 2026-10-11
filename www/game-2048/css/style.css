@@ -35,14 +35,23 @@ html, body {
     touch-action: pan-y;
 }
 
-/* Container */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100dvh;
+}
+
+/* Container — Centered Horizontally & Vertically */
 .game-viewport {
     max-width: 500px;
     width: 100%;
-    margin: 0 auto;
-    padding: max(20px, env(safe-area-inset-top)) 15px max(30px, env(safe-area-inset-bottom)) 15px;
+    margin: auto 0;
+    padding: max(20px, env(safe-area-inset-top)) 15px max(24px, env(safe-area-inset-bottom)) 15px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 14px;
 }
 
@@ -311,6 +320,19 @@ html, body {
 
 .game-explanation strong {
     font-weight: 700;
+}
+
+/* Copyright Footer (play2048.co Style) */
+.game-copyright {
+    text-align: center;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #8f7a66;
+    opacity: 0.75;
+    letter-spacing: 0.3px;
+    padding-top: 4px;
+    padding-bottom: 8px;
+    user-select: none;
 }
 
 /* Floating Mini Close Button (top-left) */

@@ -1,1 +1,537 @@
-const a0_0x273bde=a0_0x5407;(function(_0x32ad1f,_0x394623){const _0x5b4cab=a0_0x5407,_0x3bb644=_0x32ad1f();while(!![]){try{const _0x15aa67=parseInt(_0x5b4cab(0x2ce,'NCIP'))/0x1+-parseInt(_0x5b4cab(0x35c,'@wS('))/0x2*(-parseInt(_0x5b4cab(0x200,'s2AD'))/0x3)+parseInt(_0x5b4cab(0x35f,'XFi*'))/0x4*(-parseInt(_0x5b4cab(0x245,'s2AD'))/0x5)+parseInt(_0x5b4cab(0x1b8,'2j5j'))/0x6*(parseInt(_0x5b4cab(0x23f,'s2AD'))/0x7)+parseInt(_0x5b4cab(0x27c,'d&pa'))/0x8*(parseInt(_0x5b4cab(0x1c1,'w[hY'))/0x9)+-parseInt(_0x5b4cab(0x1f6,'i9Ii'))/0xa*(parseInt(_0x5b4cab(0x228,'*U4['))/0xb)+-parseInt(_0x5b4cab(0x269,']kTq'))/0xc*(parseInt(_0x5b4cab(0x2c7,'2j5j'))/0xd);if(_0x15aa67===_0x394623)break;else _0x3bb644['push'](_0x3bb644['shift']());}catch(_0x135a20){_0x3bb644['push'](_0x3bb644['shift']());}}}(a0_0x3324,0xe36d9));function a0_0x3324(){const _0x55da5b=['W4RdKmkNWRNdJsJcUr/cLZ8','FmkmnG','WP4nFe8HfCkFWRO','ASkjlWb5W7vFgmoAW5yUW4NcHq','z1dcKsyyW4yja8oGdL0','W7CItxldPCkjWP3dPrDtW64','qLz2dmkp','W5aYw0m','wwhcQheIW543n8okpW7dQghdS8oujCkB','sY/dSGWlbaFdKG','W6NcLmk7W4GiF1THWOOsjaC3','BH8LWRxcUKJdMZ3cHSkr','W7pcISoPWRqdW7eF','W7pcT3/cUSo1W6SU','WRJdSsNcG8kmWPiM','Fh3cTv54amo6','WORcUCkzW73dJ8o8bgxcH3BdPI1vWRRdHrFcNq0','v8o1vW','E2xcReS','wSoOW7esWPf2WOS','gxpdOCkrW7S7mJe','WRPdxLO','W6tcMSoVWR0MW6a','xSo1xmov','edyfW5pcK8kwWRXBW4VdR8orudC','W4FcIK7cUSop','WRbXfs/cLCkaWQpdNIbe','AspdJGBcN0OFb8o/','aHLjW4BcLa','Er7dI8kRW712WP3dHbRdI8kyWQy','WQVcRw7cLmobtSk/','Br7dISk3W5D6WP7dJq0','W7f2gdRcL8k4WQO','cshdUwb8W6G9','WQ3cQMpcJ8oTv8kTz8oH','W5ddK8kxWR/dLJ4','WOVdImoU','W4VdGSkwWOxdIJlcQbRcNq','WPVcISospW','WPZcH8oenSoR','WQ7cUw/cNq','mSkMW6naqCorW7O','x8o5xW','w19pWRVdPSoiqSoj','W60qwwXcASkDW6S','DSkdnrf0W7jWfCoi','WO90WQCIaCkIjW','yZZdQbVcJg8shCoYhMtdUCk3WRm','WOZcS8km','qZZdT8kqFq','kdRdM8opWQVdKSkO','pWFcVmkG','A23cS1DphCoquxBdNfJdMq','FL3dGq','W48/vflcS1G4vupcGhK','u8oNBCosW5pdMmovov91','stldGCksW5Sbca','WQeXW4/dSIZdOq','bg3cUq','abrvW4hcOI8fW4hdVgFdMLi','w19pWRVdPSoiqSoi','W65VW61OW6qAi2ODWP4+dLVdL3ZcVSoFW4ddMSk9','bWDdW4JcKJ8XW4ZdP2/dGvxdLmotW5KWWRhdPW','W53cLf3cQSohAtrqWO4ZWQX5WOKEW5ObWRe','W5WdoSoWW6WvWONdO0/cHH4cWRy','WQ9hqeVdMSkQW6C','wdFdN8kxW4Oq','WOrYWOKHc8kLieRdJ2S','W67cVgJcUSoPW6qFW7ldUNKkaG','WR7cSwBcJmom','kx/cKrpdINWy','WOJcU8kmW7ddGSokkMdcJxVdTG','WQ4TWRHVW7yzfW','aXrlW4W','W6NcLCk6','W6KtxMm3W7xcLCoaW6lcO8oZW4KunSoD','WORdImoUBfxcMq','F1RdO8oNtSoNFay6oCobamon','vSoaWO8LWQC6','ohjmimoKW7VdTtvgW5XZBIC','xmo8W64wWQbRWPxdJey','ad4s','wdtdSSkEESozW6e','WO9UWQq9emkcpu7dHh4','bG0HqmotjCo+imk1tqC','ccCwW4lcMSk/WRXOW4FdRW','v0P+fmkcoCoE','WPBdJCoHCfhcMtL2WQWppG','DbhdJSk2W5j3WPFdMH/dHSkdWQ1qFSkuWQ/dIW','tSoMrSoAW5VdJSotfxXc','W5pcM0BcUG','W5ZdM8krmCkPn8o4','W4dcK0FcQW','W48/vflcS1GRse7cGxVdLNq','WRfGgtJcSmkfWQVdJa','wdxdTCkwFCou','W54IuvVcUKGB','W6NcS2/cHSo0W64sW63dQG','WQ5wxe3dLmk/W6FdL8o1reVcJHTg','W6xcS2/cVq','smo8W68kWP1HWPtdJeC','W4NcJ8k9jG','xvbKhCkvhSoAg8kC','B0ZdNCoL','u8oNBSorW5xdNCoe','WR3cUxdcN8obtSkAEa','As4AA8kMWPZcRH5lW4a','W4tdGSkiWRm','C8ocFJiMymkYW6KoWOiu','W5hdHSkgWRNdIZFcLa','ECkZWPhdNCoUcW','vSooWOeuWPWGrCklW4/cMCkCcSkiwa','W6iaseCoW4a','oW/cOSkGfSkWiZem','wYJdHmkqW4OqcqyIWOu8WQhcPa','wmoDWPWHWOCWDCktW77cHmkEfW','yfmkW4NdTxxcSSk/W5hcMmoYECkP','EdeuB8k8WPJcQXjxW5DMEce4aCoOBG','W6tcMSoVWR0MW6e','WRdcP8opaw/dNCkq','lmk2W64','fX1hW43cIs00W4/dPghdHW','W4W2t0pcTL8ervW','W4yyeCo+W6S0WO7dUu0','C8ocFJiMymkHW7qdWOmwn8ke','jCkLW7DgymoyW5FcSG','W4NcTmkDW6iWCHvDWQy0C0zZCSoOWOGHxSonWO9YW6uGyqOv','W4FdGSkwWR7dTcm','W7Gewg0QW7ZcNW','W7pcJ8kwW4Gtruf8WOeh','acSsW6lcMSktWQTRW4VdVq','WQNdQdi','wYRdRSkrFCouW4TF','sHzdW4qbWQaWp8oS','kJ7dISouWQVdNCkDWQzU','xJFdISkmW58rhJq','WRRcSgVcNCoixSkpAmoLWPhcP8k7ia','WR5jWOilkmksDghdS0pdSCobW70c','WOxdIXZcNCo8Dsf2WP8','WQPlv0VdNq','jSk2W7Te','W6HWW7HkW7GEa2WCWOq','W7tcMSoUWRivW60riW','lZNdQuaB','W7VdTSkmndFdKSktdCoO','WO5ZWQ4VemkZb0VdJM/dKCoZW5jvpG','WQ9lvfFdGq','BCodEq','WPNcQSkoW6JdKSo6lMZcMW','xv9tWRJdRmor','AMhcShXJcCoqv2FdHG','W5WAimo+W6S0WR8','W6P8W6vS','WO7cRSkiW4NdI8o+mgJcJhldOq','W5dcGYNcMmoRWOC','lJ7dISohWQFdISkNWRS','W6JcK8k4W4S9wfj5WOO','Eh9VWOZcO8o4vCoIWPOE','xb5DW5W7WRCLnSo6','s0NdKmoOBcS','W6pcT3VcVmoYW5CwW7xdPG','D10oW4i','t8o4W7WoWPTSWRtdJejyW7W','W6JcVgRcOmoWW6KsW7pdR3Oue8okW79ZW5/dNG','nG4RW6tcVSk2W7LpW6BdJ8oZEbWpWOm','W5hcLe7cRComFG','kmk5W7HeqmoXW4BcVSkclMa','WRrrCLpdNmkUW6C','WQ57W645WQbkra','lXxcICkGyGTZW6/cHmoc','W5FcLvG','WPRcUSkjW73dImoXgW','scVdGSknW5SLgJmP','yfacW57dKx/cT8kBW4dcMCoR','W5XEB0Ggf8kkWO/cPSoEAG','W59AFf8mdCkqWPi','WO/dKSojz3FcGYj9WRSil2xdIwC','zN/cGvnIhSoh','xSo1xmovW7JdNSotmuv7W6tcNa','W5FcIe7cVSoFyGjsWO4JWQTV','CmogDI4pFmksW7anWOiypCkz','yXC8WPhcUL0','WO/cH8oalSojpSoPlmomWRpdHa','q2lcJwC/W6yYomou','xmkSfKvxW51Di8oVWOu','W6iotwCXW4pcSCojW7q','W64luxzt','wmoHq8orW5NdN8os','tJVdTqSBfa','s0XCWRVdKCoDymou','W4Dsyf09fG','lY/dN8osWQpdMSkuWRa','WRHAqW','WOdcUmk1W7ldJCoSlMFcJwxdSYzxWRG','WOVcPmktW6/dJ8onk2tcJwu','g8kTWQ0yWPjHWPS','W4RdU8omW7RdNCo6iq','WQ5kwLRdMCk8','AGCXWP/cVwtdIdtcGSkfz1y','WQ7dTsxcJ8kQWQSZWORcKW','C8k9WPu','W6dcSx/cSmoWW5uwW7xdQW','W6dcP2JcUSoAW64fW6q','xNdcU2ePW7OnlW','y1qkW4ldRxtcG8kwW5pcNSo8ASk/','W7FcLCk6','xmooWPqL','ASkjlWb5W7u','W7FdTSkmdWVdKSkBbmo+','WRVcT27cLmoLvmkRBmoH','W4ZcG8kPlqroc2/dRW','yZGfD8kM','W7VdSSkwadFdJW','WP1GWRK6dCk1oeBdKG','xv5Hk8kpjmoifSkb','WOvKWQiPdmkI','DmolztaVCmk0W6u','BG/dMCk0W5bjWP7dIqFdGCkDWOPXE8kvWQ/dJq','chxcT8kApmoxW58','W7xcS27cSSo5W7mHW7K','kmkKW5jaqCorW4RcUCkc','WOPGWQyR','WOFdLmoKyg7cUY99WR8Dk3u','WRZdStdcKSkTWPG+WPVcIa','W7OExwC','W6Guv24MW6tcTq','puPGW4/dOhNdPaZcL8kytW','WOZcMSounSoQoCog','WPRcU8kzW7NdNW','gwNcV1T7xKFdSrOKW4ldTmkk','WQ7cVxBcRCouxCk+yCoGWOBcSW','FmkXWOhdKmouiCkAWQHg','Fs7dKWu','W4Gkomo6','W5VcIYRcMa','BXJdMSkIWPyPW57cIeZcKCoAW6qKjCojW7RcLrv8Fc3dPmk3','W6ieuMuRW6q','bdmgW4JcNCk/WRHIW4/dQCoetq','W7lcPN3cOCo5','qYRdSCkAE8oIW45NWQy','W5dcM1JcT8o9FG','wYNdPSkgwCoDW5H/WRRdLComW4ddQtJdKG','WO7cQSkrW7K','kCkYW79gwSon','lJBdLmou','W4BcN1JcUSoF','sW1oW4yMWPeeaW','D1amW4xdOhZcGCksW4lcHmo6','Dr7dI8kqW5zWWPFdHbO','xW9kW402','dMxcULi','ospdUvebW5ldUrLE','rKT9cSkgkSoin8keuspdKmkFWPa','jadcPmk7cSkWjYClemobjW','WRvnrvRdH8klW7xdU8oT','stddQ8ktBmofW4O','At3dHbtcJN8Ta8o2hM7dQa','t8ooWOSNWPyHCmkB','rItdV8kRzSoeW5PUWO/dImo2W4BdSIq','bmkAW4ybCCoXW6lcHCkIa1dcOq','wxNcPMK4W4C1iSowkaRdI3G','WQvLgIpcVSkSWQ/dKszgW44R','z1KcW5FdRN7cJmkBW4tcICo3','obxcGCoZBZ9J','pNVcKKBdIY5niCosjhFdImkz','wCoOW7KxWPTpWPNdH1vAW7xcGq','ccCAW7xcM8kEWQ0','txdcPgm','W7RdPmk7bIZdK8kFd8oR','EcRdGHRcK3yN','W6rZW758W7WrfhKyWPuZb0JdJhdcV8oe','WRRcQgpcJ8okASkGyCo9WOBcSSkCjSoXWOS1qW','W5/cHCk5paDUdW','drRdUCoWWO3dSmorWO9lz20','xHbdW4qtWROUp8oS','j8k+W7PnyConW5RcU8ka','W4XAy10','tYBdNSkwW6OCfIiZ','BGOL','dqzKW4BcIsKdW4NdPMK','FcGrBmk6','WP5PWQOQc8kHf0ZdJwpdIa','jWFcVSkXk8k8','WQ3cUxhcKmoNvCkJBmoGWOZcT8kW','WPRcQSkkW7K','m8kYW7Hfv8ol','W4dcGCk+kWbrd3/dO8ko','W7ddPCkAbIVdNSkWdCoJd2XUW4awW6y3FbS','yLmpW4VdGh7cP8ksW5C','xWTDW4C5WReAj8oWW5iG','Bbm4WPm','W6KEqMvtE8k5W4O','W5LuyLqOf8kHWOBcTq','BHFdKCkMW5j9WQldNrldL8kk','FCktjWjhW7bOfq','C04gW4BdTxxcHSksW53cJCoVzSkIkxyvjsu','WQD/dq','ESkZWO/dKa','WQ1dquVdNmk7W67dV8oN','WQ3cUxhcKmoYqW','xHbBW4KMWRe','FKVdLmoJBIa','W6pdUmkmeXFdKSkckmoIgg1RW4auW4aZzGnZrX7cJ8kA','W6KtxMm3W7xcGmoeW6lcOCoSW5CBj8oShshcQG','wdhdQmknAmowW5XlWR7dICo+W4/dOYu','WRDGhZ3cV8kXWQldNJ5eW5KBbmkNs8kGW64','W7lcMCk9W4auqG','W6RcK8k9W4Kiu0Dn','W60avMC','D8odCYmI','s3xcRuuJW6i0jmoGlHpdMG','W5xcMq7cK8ojWP3cRSodsmkpW4yVW6BcNW','W7JcICk4W4SzqKy','W6Kwxhy','BXRdM8kSW5D1WQS','wYtdTCklymosW5vJWQW','WQtdTsVcGCkSWO8','WQ0SW6JdRYtdQ8kxW6VdKCkl','WPJcISommG','WQtcUxO','z8olEJi','wL1HdmkglSobh8kw','xZxdHmkzW5KqcrqIWOmWWRlcR8kKqspdJZa','wtldQqW5','AcpdGaBcJN8m','W5tcJY7cMSoxWPW','v1b9c8ktgCoef8katq','W4OgjCoCW7a9WPxdSe/cHW','W5dcM1JcT8o/BJXhWP0','rIBdLCkQW5CzdW','BXddLmkVW793WPxdHbS','W6OuaqNdKSkwW4ZdQSoaCa','sY/dOGOIibtdMrmTW4ddKG','crXi','WQi2W4BdRa','WQL/cc/cHCko','pdRdSaPLiSo3rLddTG','u8oNA8oCW4/dG8oipLy','nCkLW7DpqCovW4lcO8ka','mYZdUSopWQ3dJCkfWQPZta','W7Kjvg03W4tcR8ofW6JcSG','WQJcRwBcKColD8kTBSoLWOtcPCkS','eI8gW5xcMG','FfJdOSoIgmkDasqRkW','kCk2W6vYwSoqW4BcU8kb','W6X5W6XkW78thNKQWOmWeG','W4xcGCk5dsvm','zY7dMq','y1qmW4JdTq','gNxcOLy9Dmk9','WPxdKCoYyhxcKW','EmkuiGX6W5X9hSoAW4mSW54','o33cL0ddJs9ppCo2ow7dR8kC','W6v8W7TmW50V','W75TW7PGW6qA','EY0uyCkbWQdcRHzcW5zCuYa','WO/cISoti8oWmSoYlmon','W53cJmkRmtT0a37dPSklWRNcG1q','WPpdKCoKAhxcKW','W7ldOSkBdJddTSkxd8oTcx11','qJBdJSkrF8oeW5vOWRRdLCo+W4RdQJi','jWFcVSkXkmk6kYax','W6ddTmkEcZO','WQD/eZRcVCkeWRRdMG','WOddImoSzq','At3dHbtcJN8/fCoJcxFdSSk2WRFcNvm','WO7dKmo6lG5/cq','WPRcO8ktW7pdJ8onk2tcJwu','xSocWOKdWPS0vmkeW7RcHq','WOJdGmo0FhpcLYjeWRCEoM8','smogWPC','W7Kivq','zmolzd8EBCkpW7Kq','WQm+W4FdPq','DaZdSCkTW4HSWP7dHHVdLSkoWQPOCG','zMlcRLP5p8olvhBdNq','Er7dI8kRW7PSWOddIqRdJCkaWQy','WO/dKSoeAhlcNID9WRK','W6tcMSoVWR0KW7aQp8oZ','pZhdOfe','rv5GdmkolSobh8kw','W5q+svxcSeq6quVcMMNdGa','smoZtCoCWPtcM8knCamNWR7dNGLmDqtdOGqMW4RdG8o/W6a','WRddSCkzatNcI8og','W4FdGSkwWR7dOttcOHRcNtFcGmox','W7lcO2NcTmoVW68U','ACkGWOVdKSoFfSkjWO9aCCkoW6a7W5RcMSoFW64V','wmoDWPWHWOCWDCklW7dcLCkEe8kDxuG','WP7cICos','fsCqW5xcM8krWRvPW50','Fa/dImkVW4DBWP3dHW3dKa','W44jjG','WQnXeY8','WPlcISovnmoXnmoT','W4VdGSkwWPpdRWS','qZtdSbyHaXddHrmOW4NdHCkTWQyQWPtcOa','nSkYW7DrxCoxW6/cSSkti3G','W4ddKCkaWRFdLJ7cIXRcLJNcG8oqWR3dM8ohWPJdSIS','FetdNmo0','z23cS2XJaCohxgy','smoEWOWHWOa9FW','zmolzd8CFa','s2tcRw8JW4m6omosprNdMa','W5xcJ0/cTSoesJbmWO42WQvU','W4NcGCk5ia','gNhcSmoooCo5W4fHWOFdRmon','FgtcR1b/','WQ1JpcxcVSksWRRdLILg','gmkFW4KMWPuZqa','mWXtW4hcSxBcPG','W60EqNzFBmkdW5zD','wb5DW483WQaFkG','WQ/dOIFcH8kWWP4gWPBcICkbWQLxmmo6bWhdV8kTua','kZJdRfaCW4RdKHfyWQu','dwxcPf8yzq','WPZdKCo9cJ9UgK/dUG','wsRdPXqJprNdLGSVW5FdOSkmWQmRWPtcPG','WO/dKSobzwJcGcS','WOhdGmoTBa','W7KjuMCVW7tcLSoDW6hcS8o9','W6/cOhlcGmkIWPGX','kmoAEd4KCmkhW65yW5espCkwALJdINK','WPRcU8koW7xdJ8o8','WRXxv1BdMSkvW6pdTmo1tu/cMW','WPxcM8oqW6/cKaVcGcdcJslcUG','W44yiCo6W6OZWO7dS1K','WOrYWOOIdCkGmq','W5FdGSkxWRhdHY/cMW8','qZtdQay/oHZdKWyI','W7P0W6X9W7G','qNdcULuKW6C+oSox','wSoDWPO','fbruW53cJZKBW4xdUW','ttpdUCkAW7DxWRu','wdBdMmkFW40DiW','WRDGdcpcPCke','WQVdSs/cGW','WRLdqfFdO8kG','W5hcGYK','zMlcTKPNbSohqMpdL1VdKSkVW4BdJSklW5W','mYZdSCooWRtdI8kDWQ14wsZdVvCE','aICpW4q','W6ddO8kncdtdNG','WQhcUxhcVCoPAG','WQldOIZcS8kSW6er','W63cLCkWW5mu','kbZcTCk1c8k2hcqEa8oyia','W7lcLmoWWRKXW7CGnSoK','wb5DW483WQaFkW','WP/dMNFcM8kpWO7cPa','WOX0WQ8Nc8kBnu3dGgVdN8o2','DmkaiqTWW6u','WPxdICoHBw7cGqX/WQSi','W6NcImoEWROFW6OZm8oVWO4','WP/dMNFcM8ozWO7cPa','h3FcLCopW5uNdr8TWPi','WQ9nx1pdTmk2W6xdTSoX','W7pcK8o1WRaCW70xl8oTWPOH','rK9Zd8kjhCobg8kCwJddTCkpWO5AWRtdKW','xtpdOHCL','Af7dOmkYt8k1kq','wN7cUNieW6CVh8oDlaNdHNRdUSokiCknWQiHamoKj8kk','EH7dLCkM','umo4W7qzWPX2','xCo1qSoy','EYahBmk7WQVcQXzD','uSoCWRSVWPWMuSkkW7hcKq','Et/dHbdcNG','FhZcPvPV','Ag3cRvO','yGeuWPRcU1/dJa','W7uAwwvEEW','BcayFq','W71XW6LWW5qEaMm','W6msEw0SW6pcSSobW6pcPW','uCoUW5WsWP10WP0','c8kMgCkiWOVcNSkqhLbhW6dcHM4','WPldK8oPBMBcKZXaWR0ik2ldI1hcJCoBW5RdIa','WP7dLSo6Fqzwp23dMmkS','W74nvwncASkQW4TEptGzW4VcHSkB','W5/cH8kOkuaSrJVcUmoAW4tdHGddRCoZWQpcImk0DCozW4Lq','wd3dPajLxvNcL0b/WPdcJmozW711W4hdVGrZlCohwa','W7/cKCkKW6quv0DYWOOt','uCoUW5KFWODQWPhdH1m','WPJcHSkSoc5fdG','W7OasxyQW7pcQSonW74','W48Nt17cQ1K','qX1CW5WZWRCLnSo6','WQpdI8kSWRmwW7OK','WPPKWQO+c8k4geBdL2NdLG','gwxcPumNF8kiWOGn','W5xcNK/cNmoeAZ5qWRWLWQ9S','DCkRWPldMSom','jqOrW5ddIxZcMCkU','AeddHCocEsTSW4pcJq','W74qqW','sSo7rSotW4JdJSotcq','rvnZaCk3iSoAh8kxsJi','WPlcL8osW6FcKHpcTrhcOrpcPq','BCkZWPddGCoremkxWRLq','la/cVCkX','yf0rW5pdQhpcRmkBW4e','sb5CW4agWR0KnSo7','ebruW47cGY4HW5G','BZFdKq','WOZcN8otomoYnmonpCohWQRdKq','W4pdM8k+pHBdTCkX','WRVdTspcLSkRWPuEWPVcJCkrWRy','sgtcPwOPW7OO','WOZcG8oimSo1nCoDiCoFWRtdK8kEW60','W6BcS3hcSa','Ae3dMmo0zt1vW4lcHmosrq','W57cImkLjXXia3BdR8kD','W50ojSo6W6WFWOJdUKJcMW','WRrXdd7cUmkcWQldMJq','WOVdGmoNz2tcGHXYWROto3q','W4ZcLCk+jY51gh4','WPNcPmkvW7ldJ8o8mfa','BI7dKH3cVM8meSoJbwRdTq','W6ZcKSoYWRaNW7aJlSoP','W5VdV8kWW7pdVSoxc38','WRq+W5JdTcldU8kpW6FdJa','DmodEYm','W75TW6L+W74VhwOaWPiTigNdIxhcV8oc','W5S2ufi','WORcUCkzW73dJ8o8fMhcMMldOtbEWQ/dLX7cHbtcGa','FgtcR1b/pmolxwFdHW','rLbtWRNdSCoRFCovWQzx','wSo4W7OxWPPsWPNdNvW','i8kAjZeSz8kb','W5FdKCkmWRhdHt7cVYxcMIRcKSoCWR3dR8o7WPZdOtO','WRa+W5JdPY7dRmk1W7S','Bs7dJba','W5WFj8oWW7m5','W4SYxeFcSfiKrvNcLNa','sX5cW40','oa/cPSkX'];a0_0x3324=function(){return _0x55da5b;};return a0_0x3324();}function a0_0x5407(_0x3a0236,_0x1f4890){_0x3a0236=_0x3a0236-0x194;const _0x3324e9=a0_0x3324();let _0x54071a=_0x3324e9[_0x3a0236];if(a0_0x5407['rLYKLL']===undefined){var _0x2f4716=function(_0x4c672c){const _0x13f999='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x1dfc4e='',_0x3fc26a='';for(let _0x59be7b=0x0,_0x49b8e2,_0x398dfc,_0xb38bfa=0x0;_0x398dfc=_0x4c672c['charAt'](_0xb38bfa++);~_0x398dfc&&(_0x49b8e2=_0x59be7b%0x4?_0x49b8e2*0x40+_0x398dfc:_0x398dfc,_0x59be7b++%0x4)?_0x1dfc4e+=String['fromCharCode'](0xff&_0x49b8e2>>(-0x2*_0x59be7b&0x6)):0x0){_0x398dfc=_0x13f999['indexOf'](_0x398dfc);}for(let _0x31e0ca=0x0,_0x10bba2=_0x1dfc4e['length'];_0x31e0ca<_0x10bba2;_0x31e0ca++){_0x3fc26a+='%'+('00'+_0x1dfc4e['charCodeAt'](_0x31e0ca)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x3fc26a);};const _0x28b97f=function(_0x59e709,_0x36968a){let _0xc1f9bc=[],_0x39167b=0x0,_0x3910f3,_0x4ada0d='';_0x59e709=_0x2f4716(_0x59e709);let _0x48c503;for(_0x48c503=0x0;_0x48c503<0x100;_0x48c503++){_0xc1f9bc[_0x48c503]=_0x48c503;}for(_0x48c503=0x0;_0x48c503<0x100;_0x48c503++){_0x39167b=(_0x39167b+_0xc1f9bc[_0x48c503]+_0x36968a['charCodeAt'](_0x48c503%_0x36968a['length']))%0x100,_0x3910f3=_0xc1f9bc[_0x48c503],_0xc1f9bc[_0x48c503]=_0xc1f9bc[_0x39167b],_0xc1f9bc[_0x39167b]=_0x3910f3;}_0x48c503=0x0,_0x39167b=0x0;for(let _0x461653=0x0;_0x461653<_0x59e709['length'];_0x461653++){_0x48c503=(_0x48c503+0x1)%0x100,_0x39167b=(_0x39167b+_0xc1f9bc[_0x48c503])%0x100,_0x3910f3=_0xc1f9bc[_0x48c503],_0xc1f9bc[_0x48c503]=_0xc1f9bc[_0x39167b],_0xc1f9bc[_0x39167b]=_0x3910f3,_0x4ada0d+=String['fromCharCode'](_0x59e709['charCodeAt'](_0x461653)^_0xc1f9bc[(_0xc1f9bc[_0x48c503]+_0xc1f9bc[_0x39167b])%0x100]);}return _0x4ada0d;};a0_0x5407['HCSUjV']=_0x28b97f,a0_0x5407['ROpAsf']={},a0_0x5407['rLYKLL']=!![];}const _0xe71c34=_0x3324e9[0x0];a0_0x5407['swkJdq']!==_0xe71c34&&(a0_0x5407['ROpAsf']={},a0_0x5407['swkJdq']=_0xe71c34);const _0x2aec6a=a0_0x5407['ROpAsf'][_0x3a0236];return _0x2aec6a===undefined?(a0_0x5407['INEqpK']===undefined&&(a0_0x5407['INEqpK']=!![]),_0x54071a=a0_0x5407['HCSUjV'](_0x54071a,_0x1f4890),a0_0x5407['ROpAsf'][_0x3a0236]=_0x54071a):_0x54071a=_0x2aec6a,_0x54071a;}class Player{constructor(_0x1dfc4e){const _0x14ea23=a0_0x5407;this[_0x14ea23(0x374,'QQ5m')]=_0x1dfc4e,this[_0x14ea23(0x214,'S@ZL')]=null;const _0x3fc26a=this[_0x14ea23(0x36c,']kTq')]&&this[_0x14ea23(0x306,'XNaM')][_0x14ea23(0x20e,'Gs1A')]<this[_0x14ea23(0x2c3,'vH&m')][_0x14ea23(0x351,'KpKk')]||window[_0x14ea23(0x1d8,'5$gI')]<window[_0x14ea23(0x320,'XNaM')]&&window[_0x14ea23(0x270,'m!iQ')]<=0x300;this[_0x14ea23(0x309,'hkq3')]=_0x3fc26a?0x4c:0x44,this[_0x14ea23(0x19d,'XHJm')]=_0x3fc26a?0x4c:0x44,this[_0x14ea23(0x1de,'q**8')]=0xe,this['x']=0x0,this['y']=0x0,this['vx']=0x0,this['vy']=0x0,this[_0x14ea23(0x373,'AYk1')]=0x230,this[_0x14ea23(0x315,'#ix)')]=0x0,this[_0x14ea23(0x2b6,'m!iQ')]=0x0,this[_0x14ea23(0x343,'XIU5')]=0x14,this[_0x14ea23(0x337,'m!iQ')]=0xc,this[_0x14ea23(0x19a,'2!jS')]=0x0,this[_0x14ea23(0x384,'acmC')]=0.42,this[_0x14ea23(0x387,'w[hY')]=0x0,this[_0x14ea23(0x213,'*U4[')]=0x1,this[_0x14ea23(0x1f1,'zE]x')]=0x1,this[_0x14ea23(0x229,'%SEu')]=0x0,this[_0x14ea23(0x369,'i9Ii')]=0x0,this[_0x14ea23(0x24a,'KpKk')]=0x1,this[_0x14ea23(0x1d0,']kTq')]=0x0,this[_0x14ea23(0x284,'iCgU')]=0.12,this[_0x14ea23(0x265,'s2AD')]=!![],this[_0x14ea23(0x331,'J&4[')]=![],this[_0x14ea23(0x32c,'h^)K')]=0x0,this[_0x14ea23(0x1e1,'tIUY')]=1.3,this[_0x14ea23(0x257,'AYk1')]=0x0,this[_0x14ea23(0x1f2,'tiUT')]=0x0,this[_0x14ea23(0x290,'zINd')]=0x0,this[_0x14ea23(0x29f,'tIUY')]=![],this[_0x14ea23(0x204,'[ejf')]=0x0,this[_0x14ea23(0x2bd,'KpKk')]=![],this[_0x14ea23(0x1a7,'NCIP')]=0x0,this[_0x14ea23(0x21c,'o$cu')]=![],this[_0x14ea23(0x1d7,'ff3!')]=![],this[_0x14ea23(0x1ec,'XFi*')]=0x0,this[_0x14ea23(0x32b,'5$gI')]=!![];}[a0_0x273bde(0x24f,'o)i9')](_0x59be7b){const _0x442c96=a0_0x273bde;this[_0x442c96(0x1c3,'Gs1A')]=_0x59be7b;}[a0_0x273bde(0x36f,'d@8$')](_0x49b8e2,_0x398dfc){const _0xcebe04=a0_0x273bde;this['x']=_0x49b8e2,this['y']=_0x398dfc,this['vx']=0x0,this['vy']=0x0,this[_0xcebe04(0x355,'XIU5')]=0x0,this[_0xcebe04(0x1fc,'AYk1')]=0x0,this[_0xcebe04(0x2e1,'o)i9')]=0x0,this[_0xcebe04(0x2fa,'[ejf')]=0x0,this[_0xcebe04(0x35d,'b&aG')]=0x1,this[_0xcebe04(0x325,']kTq')]=0x1,this[_0xcebe04(0x39a,'E$Xg')]=0x0,this[_0xcebe04(0x378,'%SEu')]=0x0;const _0xb38bfa=window[_0xcebe04(0x2dc,'%SEu')]&&window[_0xcebe04(0x376,'NCIP')][_0xcebe04(0x313,']kTq')]?window[_0xcebe04(0x3aa,'i9Ii')][_0xcebe04(0x360,'o$cu')]():{'magnet':0x0,'shield':0x0,'blaster':0x0,'warp':0x0,'emp':0x0};this[_0xcebe04(0x301,'*U4[')]=_0xb38bfa;const _0x31e0ca=_0xb38bfa[_0xcebe04(0x224,'^A(4')]||0x0;this[_0xcebe04(0x264,'KDwg')]=0x4b+_0x31e0ca*0x73;const _0x10bba2=_0xb38bfa[_0xcebe04(0x1a5,'w[hY')]||0x0;this[_0xcebe04(0x380,'E$Xg')]=_0x10bba2>=0x3?0x3:_0x10bba2>=0x2?0x2:0x1,this[_0xcebe04(0x37e,'J&4[')]=_0x10bba2>=0x3?0.075:_0x10bba2>=0x2?0.09:_0x10bba2>=0x1?0.105:0.12,this[_0xcebe04(0x26f,'5$gI')]=0x0,this[_0xcebe04(0x344,'XIU5')]=!![];const _0x59e709=_0xb38bfa[_0xcebe04(0x362,'w[hY')]||0x0;this[_0xcebe04(0x395,'o$cu')]=_0x59e709>=0x3?0.5:_0x59e709>=0x2?0.75:_0x59e709>=0x1?0x1:1.3,this[_0xcebe04(0x386,'KtGd')]=![],this[_0xcebe04(0x2b5,'vH&m')]=0x0,this[_0xcebe04(0x1a9,'d@8$')]=0x0;const _0x36968a=_0xb38bfa[_0xcebe04(0x33f,'%SEu')]||0x0;this[_0xcebe04(0x346,'E$Xg')]=_0x36968a>=0x3?0x2:_0x36968a>=0x1?0x1:0x0,this[_0xcebe04(0x30a,'KtGd')]=this[_0xcebe04(0x2f6,'tiUT')]>0x0,this[_0xcebe04(0x2e6,'tiUT')]=0x0,this[_0xcebe04(0x22e,'J&4[')]=_0x36968a>=0x2?1.8:1.2;const _0xc1f9bc=_0xb38bfa[_0xcebe04(0x27b,'^A(4')]||0x0;this[_0xcebe04(0x1d1,'zE]x')]=_0xc1f9bc>=0x2?0x2:_0xc1f9bc>=0x1?0x1:0x0,this[_0xcebe04(0x1c2,'Gs1A')]=this[_0xcebe04(0x243,'iCgU')]>0x0,this[_0xcebe04(0x27a,'tIUY')]=![],this[_0xcebe04(0x33c,']kTq')]=0x0,this[_0xcebe04(0x219,'#ix)')]=![],this[_0xcebe04(0x31d,'XIU5')]=0x0,this[_0xcebe04(0x202,'KDwg')]=!![];}[a0_0x273bde(0x292,'acmC')](){const _0x13e9f1=a0_0x273bde;this[_0x13e9f1(0x31c,'j1yt')]=Math[_0x13e9f1(0x217,'AjMH')](0x3,this[_0x13e9f1(0x25c,'XHJm')]+0x1);this[_0x13e9f1(0x39c,'@wS(')][_0x13e9f1(0x211,'vH&m')]&&(this[_0x13e9f1(0x385,'J&4[')][_0x13e9f1(0x299,'ff3!')][_0x13e9f1(0x1ee,'tIUY')](this['x'],this['y']-0x28,_0x13e9f1(0x38b,'#ix)')+this[_0x13e9f1(0x277,'q**8')]+'!',_0x13e9f1(0x222,'AjMH')),this[_0x13e9f1(0x357,'KpKk')][_0x13e9f1(0x1e6,'acmC')][_0x13e9f1(0x30b,'KpKk')](this['x'],this['y'],0x50,_0x13e9f1(0x29b,'J&4['),0x3));if(window[_0x13e9f1(0x340,'@wS(')])window[_0x13e9f1(0x367,'acmC')][_0x13e9f1(0x252,'NCIP')](_0x13e9f1(0x2b3,'VFAz'));}[a0_0x273bde(0x2c1,']kTq')](){const _0x481688=a0_0x273bde;this[_0x481688(0x346,'E$Xg')]=Math[_0x481688(0x1ae,'vH&m')](0x2,(this[_0x481688(0x25e,'b&aG')]||0x0)+0x1),this[_0x481688(0x1b9,'XNaM')]=!![],this[_0x481688(0x260,'o)i9')]=0x0;this[_0x481688(0x348,'zE]x')][_0x481688(0x3a4,'%SEu')]&&this[_0x481688(0x38e,'d&pa')][_0x481688(0x263,'S@ZL')][_0x481688(0x3a9,'[ejf')](this['x'],this['y']-0x28,_0x481688(0x31e,'acmC'),_0x481688(0x1cf,'s2AD'));if(window[_0x481688(0x383,'j1yt')])window[_0x481688(0x358,'KDwg')][_0x481688(0x327,'E$Xg')](_0x481688(0x349,'^A(4'));}[a0_0x273bde(0x1e7,'ff3!')](_0x39167b=0x6){const _0x28e757=a0_0x273bde;this[_0x28e757(0x391,'vH&m')]=!![],this[_0x28e757(0x2cd,'KpKk')]=_0x39167b;this[_0x28e757(0x21a,'acmC')][_0x28e757(0x34f,'KpKk')]&&this[_0x28e757(0x26d,'q**8')][_0x28e757(0x26a,'VFAz')][_0x28e757(0x1ee,'tIUY')](this['x'],this['y']-0x28,_0x28e757(0x27e,'J&4['),_0x28e757(0x1e0,'KtGd'));if(window[_0x28e757(0x340,'@wS(')])window[_0x28e757(0x1f4,'d@8$')][_0x28e757(0x2d1,'KDwg')](_0x28e757(0x3a7,'o)i9'));}[a0_0x273bde(0x370,'AYk1')](){const _0x1d071c=a0_0x273bde;this[_0x1d071c(0x285,'@wS(')]=Math[_0x1d071c(0x30d,'tiUT')](0x2,(this[_0x1d071c(0x1a8,'gh!Z')]||0x0)+0x1),this[_0x1d071c(0x1eb,'tIUY')]=!![];this[_0x1d071c(0x19f,'b&aG')][_0x1d071c(0x24b,'QQ5m')]&&this[_0x1d071c(0x38e,'d&pa')][_0x1d071c(0x1fb,'2!jS')][_0x1d071c(0x2b8,'vH&m')](this['x'],this['y']-0x28,_0x1d071c(0x37d,'XNaM'),_0x1d071c(0x322,'Gs1A'));if(window[_0x1d071c(0x1c8,'KtGd')])window[_0x1d071c(0x1ad,'XFi*')][_0x1d071c(0x330,'b&aG')](_0x1d071c(0x31f,'d@8$'));}[a0_0x273bde(0x2d3,'h^)K')](){const _0x2b5729=a0_0x273bde;if(!this[_0x2b5729(0x2ea,'[ejf')])return![];this[_0x2b5729(0x310,'5$gI')]=Math[_0x2b5729(0x28b,'h^)K')](0x0,(this[_0x2b5729(0x307,'Gs1A')]||0x1)-0x1);this[_0x2b5729(0x2fc,'acmC')]<=0x0&&(this[_0x2b5729(0x1bb,'s2AD')]=![]);this[_0x2b5729(0x339,'#ix)')]&&this[_0x2b5729(0x2d8,'S@ZL')][_0x2b5729(0x2a4,'h^)K')]>=0x3&&(this[_0x2b5729(0x1d5,'tiUT')]=0x0);if(this[_0x2b5729(0x28f,'%SEu')][_0x2b5729(0x379,'i9Ii')])this[_0x2b5729(0x275,'w[hY')][_0x2b5729(0x25d,'J&4[')][_0x2b5729(0x2a1,'b&aG')]();this[_0x2b5729(0x195,'[ejf')][_0x2b5729(0x2de,'j1yt')]&&(this[_0x2b5729(0x1e9,'S@ZL')][_0x2b5729(0x1e6,'acmC')][_0x2b5729(0x1e4,'zE]x')](this['x'],this['y'],0x226,_0x2b5729(0x227,'AjMH'),0x6),this[_0x2b5729(0x2e5,'tIUY')][_0x2b5729(0x1e6,'acmC')][_0x2b5729(0x240,'2!jS')](this['x'],this['y'],_0x2b5729(0x2c2,'Gs1A'),0x2d,1.8),this[_0x2b5729(0x312,'Gs1A')][_0x2b5729(0x30e,']kTq')][_0x2b5729(0x28a,']kTq')](this['x'],this['y']-0x32,_0x2b5729(0x332,'^A(4'),_0x2b5729(0x227,'AjMH')));window[_0x2b5729(0x340,'@wS(')]&&(window[_0x2b5729(0x1b6,'o$cu')][_0x2b5729(0x32e,'tiUT')](1.5),window[_0x2b5729(0x37f,'S@ZL')][_0x2b5729(0x1c4,'JNG$')]());if(this[_0x2b5729(0x3a3,'0JH&')][_0x2b5729(0x248,'AYk1')]&&this[_0x2b5729(0x236,'5$gI')][_0x2b5729(0x1a2,'NCIP')][_0x2b5729(0x20a,'gh!Z')])for(let _0x3910f3 of this[_0x2b5729(0x19f,'b&aG')][_0x2b5729(0x2a7,'^A(4')][_0x2b5729(0x375,'hkq3')]){const _0x4ada0d=_0x3910f3['y']-this['y'],_0x48c503=_0x3910f3['x']-this['x'],_0x461653=Math[_0x2b5729(0x24d,'0JH&')](_0x48c503,_0x4ada0d)||0x1;_0x461653<0x1e0&&(_0x3910f3['vy']=-0x140,_0x3910f3['vx']+=_0x48c503/_0x461653*0xdc,_0x3910f3[_0x2b5729(0x294,'S@ZL')](0x2));}return this[_0x2b5729(0x1ef,'o)i9')][_0x2b5729(0x273,'tIUY')](0xe),!![];}[a0_0x273bde(0x2a0,'b&aG')](){const _0xb124d9=a0_0x273bde;if(this[_0xb124d9(0x38f,'*U4[')]>0x0||!this[_0xb124d9(0x2e2,'h^)K')])return![];this[_0xb124d9(0x1b2,'h^)K')]=!![],this[_0xb124d9(0x267,'w[hY')]=0.22,this[_0xb124d9(0x1db,'zINd')]=this[_0xb124d9(0x297,'ff3!')],this[_0xb124d9(0x198,'AjMH')]=!![],this[_0xb124d9(0x388,'Gs1A')]=0.32;const _0xbf6127=0x3b6;let _0x3b5258=this['vx'],_0x3b0df8=this['vy'];const _0x23af37=Math[_0xb124d9(0x2ab,'i9Ii')](_0x3b5258,_0x3b0df8);_0x23af37>0xa?(this[_0xb124d9(0x2f0,'zINd')]=_0x3b5258/_0x23af37*_0xbf6127,this[_0xb124d9(0x36a,'d@8$')]=_0x3b0df8/_0x23af37*_0xbf6127):(this[_0xb124d9(0x2f9,'tIUY')]=0x0,this[_0xb124d9(0x1ff,'QQ5m')]=-_0xbf6127);this[_0xb124d9(0x357,'KpKk')][_0xb124d9(0x1c5,'b&aG')]&&(this[_0xb124d9(0x231,'h^)K')][_0xb124d9(0x26a,'VFAz')][_0xb124d9(0x30b,'KpKk')](this['x'],this['y'],0x5a,_0xb124d9(0x2c0,'w[hY'),0x4),this[_0xb124d9(0x1d6,'VFAz')][_0xb124d9(0x300,'#ix)')][_0xb124d9(0x21f,'2j5j')](this['x'],this['y'],0x10,_0xb124d9(0x1fa,'E$Xg')),this[_0xb124d9(0x203,'KDwg')][_0xb124d9(0x246,'[ejf')][_0xb124d9(0x3a1,'E$Xg')](this['x'],this['y']-0x1e,_0xb124d9(0x317,'m!iQ'),_0xb124d9(0x22d,'2j5j')));if(window[_0xb124d9(0x208,'%SEu')])window[_0xb124d9(0x1c0,'^A(4')][_0xb124d9(0x23a,'Gs1A')]();return this[_0xb124d9(0x31b,'E$Xg')][_0xb124d9(0x1a3,'*U4[')](0x6),!![];}[a0_0x273bde(0x1a4,'XFi*')](){const _0x337153=a0_0x273bde;if(!this[_0x337153(0x321,'%SEu')]||!this[_0x337153(0x21a,'acmC')][_0x337153(0x298,'o$cu')])return;const _0x1a39fa=this['x']-0x16,_0x593ee1=this['x']+0x16,_0x11aa06=this['y']-0x1c;if(this[_0x337153(0x328,'d&pa')]===0x1)this[_0x337153(0x278,'AYk1')][_0x337153(0x35b,'[ejf')][_0x337153(0x389,'o$cu')](_0x1a39fa,_0x11aa06,0x0,-0x370,0x1),this[_0x337153(0x28f,'%SEu')][_0x337153(0x335,'h^)K')][_0x337153(0x2ef,'JNG$')](_0x593ee1,_0x11aa06,0x0,-0x370,0x1);else this[_0x337153(0x1ed,'XNaM')]===0x2?(this[_0x337153(0x364,'AjMH')][_0x337153(0x28d,'j1yt')][_0x337153(0x389,'o$cu')](_0x1a39fa,_0x11aa06,-0x78,-0x35c,0x1),this[_0x337153(0x1dc,'hkq3')][_0x337153(0x2d0,'NCIP')][_0x337153(0x282,'J&4[')](this['x'],_0x11aa06-0x8,0x0,-0x398,1.5),this[_0x337153(0x278,'AYk1')][_0x337153(0x2a8,'KpKk')][_0x337153(0x201,'XFi*')](_0x593ee1,_0x11aa06,0x78,-0x35c,0x1)):(this[_0x337153(0x255,'2j5j')][_0x337153(0x199,'iCgU')][_0x337153(0x22b,'NCIP')](_0x1a39fa-0x6,_0x11aa06,-0x8c,-0x366,1.2),this[_0x337153(0x385,'J&4[')][_0x337153(0x2b2,'*U4[')][_0x337153(0x26c,'Gs1A')](_0x1a39fa+0x6,_0x11aa06,-0x28,-0x384,1.2),this[_0x337153(0x203,'KDwg')][_0x337153(0x2b2,'*U4[')][_0x337153(0x3ab,'S@ZL')](_0x593ee1-0x6,_0x11aa06,0x28,-0x384,1.2),this[_0x337153(0x2a2,'o$cu')][_0x337153(0x2da,'q**8')][_0x337153(0x353,'ff3!')](_0x593ee1+0x6,_0x11aa06,0x8c,-0x366,1.2));this[_0x337153(0x19b,'ff3!')]=4.8,this[_0x337153(0x1be,'QQ5m')]=0.93,this[_0x337153(0x286,'zINd')]=1.05,this[_0x337153(0x28f,'%SEu')][_0x337153(0x23e,'KDwg')](1.8);this[_0x337153(0x25f,'XIU5')][_0x337153(0x2f4,'q**8')]&&Math[_0x337153(0x30f,'m!iQ')]()<0.6&&(this[_0x337153(0x278,'AYk1')][_0x337153(0x359,'XHJm')][_0x337153(0x37a,'w[hY')](_0x1a39fa,_0x11aa06,0x3,_0x337153(0x2d5,'b&aG')),this[_0x337153(0x28f,'%SEu')][_0x337153(0x318,'AYk1')][_0x337153(0x2ed,'zE]x')](_0x593ee1,_0x11aa06,0x3,_0x337153(0x21d,'XIU5')));if(window[_0x337153(0x1b6,'o$cu')])window[_0x337153(0x223,'KpKk')][_0x337153(0x36b,'i9Ii')]();}[a0_0x273bde(0x288,'XHJm')](){const _0x268516=a0_0x273bde;if(this[_0x268516(0x2a9,'w[hY')])return![];if(this[_0x268516(0x1f0,'5$gI')]){this[_0x268516(0x27d,'^A(4')]=Math[_0x268516(0x2f2,'XNaM')](0x0,(this[_0x268516(0x2d7,'q**8')]||0x1)-0x1);this[_0x268516(0x302,'o$cu')]<=0x0&&(this[_0x268516(0x350,'NCIP')]=![]);this[_0x268516(0x32a,'KDwg')]=!![],this[_0x268516(0x2b9,'d@8$')]=this[_0x268516(0x3a8,'KtGd')]||1.2;if(this[_0x268516(0x374,'QQ5m')][_0x268516(0x1fb,'2!jS')]){this[_0x268516(0x239,'JNG$')][_0x268516(0x2eb,'2j5j')][_0x268516(0x2c5,'[ejf')](this['x'],this['y'],0x6e,_0x268516(0x33e,']kTq'),0x4),this[_0x268516(0x1ef,'o)i9')][_0x268516(0x256,'E$Xg')][_0x268516(0x32d,'d@8$')](this['x'],this['y'],0x14,_0x268516(0x272,'tiUT'));const _0x5b23f3=this[_0x268516(0x2db,'XIU5')]?_0x268516(0x2f8,'iCgU'):_0x268516(0x303,'KpKk');this[_0x268516(0x363,'gh!Z')][_0x268516(0x1dd,'NCIP')][_0x268516(0x399,'KtGd')](this['x'],this['y']-0x1e,_0x5b23f3,_0x268516(0x249,'zINd'));}if(window[_0x268516(0x1c0,'^A(4')])window[_0x268516(0x1f3,'J&4[')][_0x268516(0x1c6,'s2AD')]();return this[_0x268516(0x203,'KDwg')][_0x268516(0x262,'gh!Z')](),this[_0x268516(0x2d4,'d@8$')][_0x268516(0x1e3,'0JH&')](0x9),![];}return this[_0x268516(0x23c,'j1yt')]=![],!![];}[a0_0x273bde(0x1c7,'KDwg')](_0x5af5dc,_0x585138){const _0x5604df=a0_0x273bde;if(!this[_0x5604df(0x237,'@wS(')])return;if(this[_0x5604df(0x19e,'VFAz')]){this[_0x5604df(0x2e4,'JNG$')]-=_0x5af5dc;if(this[_0x5604df(0x33c,']kTq')]<=0x0)this[_0x5604df(0x226,'zINd')]=![];}if(this[_0x5604df(0x33b,']kTq')]){this[_0x5604df(0x2d2,'ff3!')]-=_0x5af5dc;if(this[_0x5604df(0x218,'5$gI')]<=0x0)this[_0x5604df(0x32a,'KDwg')]=![];}this[_0x5604df(0x20f,'J&4[')]&&(this[_0x5604df(0x22a,'zINd')]+=_0x5af5dc*0x4);this[_0x5604df(0x34a,'KtGd')]>0x0&&(this[_0x5604df(0x2ca,'j1yt')]-=_0x5af5dc);if(this[_0x5604df(0x2f5,'gh!Z')])this[_0x5604df(0x2ae,'5$gI')]-=_0x5af5dc,this['vx']=this[_0x5604df(0x2e8,'0JH&')],this['vy']=this[_0x5604df(0x3a5,'o$cu')],this[_0x5604df(0x2a5,'m!iQ')]=this[_0x5604df(0x216,'%SEu')],this[_0x5604df(0x39d,'2!jS')]=this[_0x5604df(0x336,'XFi*')],this[_0x5604df(0x34b,'o$cu')]+=Math['PI']*0x2/0.22*_0x5af5dc,this[_0x5604df(0x215,'XHJm')][_0x5604df(0x1dd,'NCIP')]&&this[_0x5604df(0x2bc,'*U4[')]&&this[_0x5604df(0x2a2,'o$cu')][_0x5604df(0x254,'0JH&')][_0x5604df(0x1ce,'w[hY')](this['x'],this['y'],this[_0x5604df(0x2d9,'i9Ii')],this[_0x5604df(0x2d6,'d@8$')]+this[_0x5604df(0x39e,'d&pa')],this[_0x5604df(0x22c,'XFi*')],this[_0x5604df(0x34e,'KtGd')]),this[_0x5604df(0x1d9,'ff3!')]<=0x0&&(this[_0x5604df(0x356,'XNaM')]=![],this[_0x5604df(0x316,'iCgU')]=0x0);else{const _0x43868b=this[_0x5604df(0x1b4,'#ix)')]?this[_0x5604df(0x234,'w[hY')]*1.45:this[_0x5604df(0x293,'d@8$')];let _0x58be9d=0x0,_0x2a4e6e=0x0;if(_0x585138[_0x5604df(0x281,'q**8')])_0x58be9d-=0x1;if(_0x585138[_0x5604df(0x30c,'%SEu')])_0x58be9d+=0x1;if(_0x585138['up'])_0x2a4e6e-=0x1;if(_0x585138[_0x5604df(0x2df,'s2AD')])_0x2a4e6e+=0x1;if(_0x58be9d!==0x0&&_0x2a4e6e!==0x0){const _0x363b8f=Math[_0x5604df(0x34d,'JNG$')](_0x58be9d,_0x2a4e6e);_0x58be9d/=_0x363b8f,_0x2a4e6e/=_0x363b8f;}if(_0x585138[_0x5604df(0x2ec,'*U4[')]&&_0x585138[_0x5604df(0x2a6,'2!jS')]!==null){const _0x1453d9=_0x5604df(0x2be,'XIU5')in window||navigator[_0x5604df(0x2e9,'zE]x')]>0x0||window[_0x5604df(0x2cf,'acmC')]&&window[_0x5604df(0x398,'s2AD')](_0x5604df(0x206,'tiUT'))[_0x5604df(0x1ea,'b&aG')],_0x46da8f=_0x1453d9&&_0x585138[_0x5604df(0x251,'h^)K')]!==null?_0x585138[_0x5604df(0x266,']kTq')]-0x30:_0x585138[_0x5604df(0x2fe,'i9Ii')],_0x2ef6d3=_0x585138[_0x5604df(0x194,'iCgU')]-this['x'],_0xc6c9b5=_0x46da8f!==null?_0x46da8f-this['y']:0x0,_0x5834e3=Math[_0x5604df(0x24d,'0JH&')](_0x2ef6d3,_0xc6c9b5);if(_0x5834e3>0x4){const _0x227621=Math[_0x5604df(0x347,'iCgU')](0x1,_0x5834e3/0x55);this[_0x5604df(0x2e3,'o$cu')]=_0x2ef6d3/_0x5834e3*_0x43868b*_0x227621,this[_0x5604df(0x274,'VFAz')]=_0xc6c9b5/_0x5834e3*_0x43868b*_0x227621;}else this[_0x5604df(0x37b,'zE]x')]=0x0,this[_0x5604df(0x308,'zINd')]=0x0;}else this[_0x5604df(0x258,'vH&m')]=_0x58be9d*_0x43868b,this[_0x5604df(0x352,'tiUT')]=_0x2a4e6e*_0x43868b;const _0x2f3702=Math[_0x5604df(0x1e5,'b&aG')](this[_0x5604df(0x329,'d&pa')])>0xa?this[_0x5604df(0x34c,'s2AD')]:this[_0x5604df(0x2f7,'XNaM')],_0x5f0add=Math[_0x5604df(0x1e8,'gh!Z')](this[_0x5604df(0x345,'J&4[')])>0xa?this[_0x5604df(0x361,'0JH&')]:this[_0x5604df(0x3a0,'^A(4')];this['vx']+=(this[_0x5604df(0x221,'AYk1')]-this['vx'])*(0x1-Math[_0x5604df(0x2cb,'acmC')](-_0x2f3702*_0x5af5dc)),this['vy']+=(this[_0x5604df(0x20c,'tIUY')]-this['vy'])*(0x1-Math[_0x5604df(0x2af,'o)i9')](-_0x5f0add*_0x5af5dc)),this[_0x5604df(0x38c,'AYk1')]+=(0x0-this[_0x5604df(0x1ab,'ff3!')])*(0x1-Math[_0x5604df(0x2aa,']kTq')](-0x12*_0x5af5dc)),_0x585138[_0x5604df(0x2dd,'XIU5')]&&(_0x585138[_0x5604df(0x291,'h^)K')]=![],this[_0x5604df(0x1f5,'s2AD')]());}this['x']+=this['vx']*_0x5af5dc,this['y']+=this['vy']*_0x5af5dc;const _0x1a9181=this[_0x5604df(0x2bf,'o$cu')]/0x2,_0x43917e=this[_0x5604df(0x1a6,'AjMH')]/0x2,_0x4f69fe=this[_0x5604df(0x22f,'ff3!')][_0x5604df(0x305,'%SEu')],_0x3f411f=this[_0x5604df(0x1a1,'tiUT')][_0x5604df(0x351,'KpKk')];this['x']=Math[_0x5604df(0x1bc,'w[hY')](_0x1a9181+0x5,Math[_0x5604df(0x2b4,'QQ5m')](_0x4f69fe-_0x1a9181-0x5,this['x'])),this['y']=Math[_0x5604df(0x1a0,'o$cu')](_0x43917e+0xa,Math[_0x5604df(0x29e,'KDwg')](_0x3f411f-_0x43917e-0xf,this['y']));const _0x234de0=this[_0x5604df(0x2fb,'iCgU')]?this[_0x5604df(0x235,'5$gI')]*1.45:this[_0x5604df(0x35e,']kTq')],_0x50381c=this['vx']/_0x234de0*this[_0x5604df(0x1aa,'*U4[')];this[_0x5604df(0x36e,'#ix)')]+=(_0x50381c-this[_0x5604df(0x26b,'tiUT')])*(0x1-Math[_0x5604df(0x2fd,'XHJm')](-0xf*_0x5af5dc));const _0x46b45f=0x1-this['vy']/_0x234de0*0.12,_0x5d6447=0x1+this['vy']/_0x234de0*0.08;this[_0x5604df(0x289,'5$gI')]+=(_0x5d6447-this[_0x5604df(0x311,'gh!Z')])*(0x1-Math[_0x5604df(0x259,'w[hY')](-0xe*_0x5af5dc)),this[_0x5604df(0x2a3,'XNaM')]+=(_0x46b45f-this[_0x5604df(0x325,']kTq')])*(0x1-Math[_0x5604df(0x390,'@wS(')](-0xe*_0x5af5dc)),this[_0x5604df(0x2ac,'#ix)')]+=(0x0-this[_0x5604df(0x2e7,'tIUY')])*(0x1-Math[_0x5604df(0x33a,'%SEu')](-0x16*_0x5af5dc)),this[_0x5604df(0x2e0,'NCIP')]+=_0x5af5dc*3.4,this[_0x5604df(0x1b5,'[ejf')]-=_0x5af5dc;const _0x302d4a=_0x5604df(0x377,'2j5j')in window||navigator[_0x5604df(0x37c,'i9Ii')]>0x0||window[_0x5604df(0x20d,'XFi*')]<=0x334,_0x30c691=_0x585138[_0x5604df(0x1f7,'5$gI')]||this[_0x5604df(0x283,'XFi*')]||_0x302d4a&&this[_0x5604df(0x2c3,'vH&m')]&&this[_0x5604df(0x306,'XNaM')][_0x5604df(0x334,'2!jS')]===_0x5604df(0x212,'ff3!')||_0x585138[_0x5604df(0x2ee,'E$Xg')]&&this[_0x5604df(0x255,'2j5j')]&&this[_0x5604df(0x239,'JNG$')][_0x5604df(0x368,'XIU5')]===_0x5604df(0x25b,'KtGd');_0x30c691&&this[_0x5604df(0x261,'s2AD')]<=0x0&&(this[_0x5604df(0x26f,'5$gI')]=this[_0x5604df(0x2ba,'gh!Z')],this[_0x5604df(0x1bd,'E$Xg')]());if(this[_0x5604df(0x35a,'2!jS')][_0x5604df(0x19c,'i9Ii')]){const _0x5d9812=this['x']-0xe*Math[_0x5604df(0x250,'2!jS')](this[_0x5604df(0x28c,'5$gI')]),_0x369105=this['x']+0xe*Math[_0x5604df(0x3a2,'S@ZL')](this[_0x5604df(0x28c,'5$gI')]),_0x4c8eb7=this['y']+0x1a,_0x1b1b5b=this['vy']<-0x28;this[_0x5604df(0x203,'KDwg')][_0x5604df(0x232,'JNG$')][_0x5604df(0x1fd,'XHJm')](_0x5d9812,_0x4c8eb7,this['vx']*0.08,_0x1b1b5b?4.5:0x0,this[_0x5604df(0x23b,'[ejf')]||_0x1b1b5b),this[_0x5604df(0x39c,'@wS(')][_0x5604df(0x1dd,'NCIP')][_0x5604df(0x26e,']kTq')](_0x369105,_0x4c8eb7,this['vx']*0.08,_0x1b1b5b?4.5:0x0,this[_0x5604df(0x233,'zE]x')]||_0x1b1b5b);}}[a0_0x273bde(0x397,'XNaM')](_0x248158){const _0xbc7f18=a0_0x273bde;if(!this[_0xbc7f18(0x20b,'KpKk')])return;_0x248158[_0xbc7f18(0x279,'2j5j')]();const _0x221c6e=Math[_0xbc7f18(0x1d4,'[ejf')](this[_0xbc7f18(0x333,'[ejf')])*1.6;_0x248158[_0xbc7f18(0x1b3,'XNaM')](this['x'],this['y']+this[_0xbc7f18(0x287,'XIU5')]+_0x221c6e),_0x248158[_0xbc7f18(0x3a6,'AYk1')](this[_0xbc7f18(0x2ad,'2j5j')]+this[_0xbc7f18(0x220,'zINd')]),_0x248158[_0xbc7f18(0x1cb,'KtGd')](this[_0xbc7f18(0x2cc,'i9Ii')],this[_0xbc7f18(0x1e2,'XIU5')]);this[_0xbc7f18(0x1c9,'i9Ii')]&&(_0x248158[_0xbc7f18(0x371,'E$Xg')]=Math[_0xbc7f18(0x296,'vH&m')](Date[_0xbc7f18(0x342,'0JH&')]()/0x46)%0x2===0x0?0.35:0x1);this[_0xbc7f18(0x207,']kTq')]&&this[_0xbc7f18(0x247,'q**8')][_0xbc7f18(0x1cc,'S@ZL')]&&this[_0xbc7f18(0x29d,'tIUY')][_0xbc7f18(0x1d2,'KDwg')]>0x0?(_0x248158[_0xbc7f18(0x1fe,'hkq3')]=this[_0xbc7f18(0x2b1,'h^)K')]?0x1a:this[_0xbc7f18(0x1da,'KDwg')]?0x20:0xe,_0x248158[_0xbc7f18(0x393,'KpKk')]=this[_0xbc7f18(0x244,'j1yt')]?_0xbc7f18(0x1f9,'zE]x'):this[_0xbc7f18(0x1f8,'S@ZL')]?_0xbc7f18(0x354,'i9Ii'):_0xbc7f18(0x381,'o)i9'),_0x248158[_0xbc7f18(0x29c,'o$cu')](this[_0xbc7f18(0x1bf,'KDwg')],-this[_0xbc7f18(0x21e,'iCgU')]/0x2,-this[_0xbc7f18(0x230,'j1yt')]/0x2,this[_0xbc7f18(0x392,'JNG$')],this[_0xbc7f18(0x3ac,'iCgU')])):(_0x248158[_0xbc7f18(0x38d,'XNaM')]=_0xbc7f18(0x2f1,'KtGd'),_0x248158[_0xbc7f18(0x31a,'XIU5')](),_0x248158[_0xbc7f18(0x2c8,'zE]x')](0x0,-this[_0xbc7f18(0x366,'[ejf')]/0x2),_0x248158[_0xbc7f18(0x394,'2j5j')](this[_0xbc7f18(0x1b7,'acmC')]/0x2,this[_0xbc7f18(0x32f,'@wS(')]/0x2),_0x248158[_0xbc7f18(0x2c6,'KDwg')](0x0,this[_0xbc7f18(0x36d,'XNaM')]*0.3),_0x248158[_0xbc7f18(0x338,'d&pa')](-this[_0xbc7f18(0x196,'tiUT')]/0x2,this[_0xbc7f18(0x238,'2!jS')]/0x2),_0x248158[_0xbc7f18(0x326,'*U4[')](),_0x248158[_0xbc7f18(0x1af,'VFAz')]());if(this[_0xbc7f18(0x372,'ff3!')]){_0x248158[_0xbc7f18(0x396,']kTq')]();const _0x5ee9e7=0x1+Math[_0xbc7f18(0x1d3,'zE]x')](this[_0xbc7f18(0x2b0,'q**8')])*0.08,_0xb5a9c5=(this[_0xbc7f18(0x280,'NCIP')]/0x2+0xa)*_0x5ee9e7,_0x494004=_0x248158[_0xbc7f18(0x2b7,'Gs1A')](0x0,0x0,_0xb5a9c5*0.6,0x0,0x0,_0xb5a9c5);_0x494004[_0xbc7f18(0x1ba,'Gs1A')](0x0,_0xbc7f18(0x1df,'h^)K')),_0x494004[_0xbc7f18(0x197,'J&4[')](0.7,_0xbc7f18(0x365,'ff3!')),_0x494004[_0xbc7f18(0x24c,'d@8$')](0x1,_0xbc7f18(0x242,'XFi*')),_0x248158[_0xbc7f18(0x2ff,'AYk1')]=_0x494004,_0x248158[_0xbc7f18(0x25a,'b&aG')]=_0xbc7f18(0x33d,'j1yt'),_0x248158[_0xbc7f18(0x1ca,'2j5j')]=2.5,_0x248158[_0xbc7f18(0x225,'KDwg')]=0x12,_0x248158[_0xbc7f18(0x2f3,'vH&m')]=_0xbc7f18(0x205,'XHJm'),_0x248158[_0xbc7f18(0x341,'XHJm')](),_0x248158[_0xbc7f18(0x210,'zE]x')](0x0,0x0,_0xb5a9c5,0x0,Math['PI']*0x2),_0x248158[_0xbc7f18(0x1cd,'KDwg')](),_0x248158[_0xbc7f18(0x21b,'KtGd')](),_0x248158[_0xbc7f18(0x268,'zINd')]=1.5,_0x248158[_0xbc7f18(0x39b,'AYk1')]=_0xbc7f18(0x241,'s2AD'),_0x248158[_0xbc7f18(0x271,'j1yt')]();for(let _0x1d1195=0x0;_0x1d1195<0x6;_0x1d1195++){const _0xbd7a30=_0x1d1195*Math['PI']/0x3+this[_0xbc7f18(0x39f,'ff3!')]*0.2,_0x5a902d=Math[_0xbc7f18(0x324,'d@8$')](_0xbd7a30)*(_0xb5a9c5*0.85),_0x2f38c5=Math[_0xbc7f18(0x2c4,'iCgU')](_0xbd7a30)*(_0xb5a9c5*0.85);if(_0x1d1195===0x0)_0x248158[_0xbc7f18(0x1b0,'S@ZL')](_0x5a902d,_0x2f38c5);else _0x248158[_0xbc7f18(0x314,'AjMH')](_0x5a902d,_0x2f38c5);}_0x248158[_0xbc7f18(0x295,'w[hY')](),_0x248158[_0xbc7f18(0x276,'gh!Z')](),_0x248158[_0xbc7f18(0x38a,'s2AD')]();}_0x248158[_0xbc7f18(0x2bb,'%SEu')]();}}window[a0_0x273bde(0x319,'o)i9')]=Player;
+/**
+ * Player Ship Entity for NEON DODGE
+ * Full 2D Space Flight, Blaster Weapon System, Warp Dash / Barrel Roll,
+ * Precision Hitbox, and Dynamic Visual Effects.
+ */
+class Player {
+    constructor(game) {
+        this.game = game;
+        this.sprite = null;
+
+        // Dynamic responsive ship sizing (Larger on portrait mobile for high impact)
+        const isPortrait = (this.game && this.game.width < this.game.height) || (window.innerWidth < window.innerHeight && window.innerWidth <= 768);
+        this.width = isPortrait ? 76 : 68;
+        this.height = isPortrait ? 76 : 68;
+        this.hitboxRadius = 14; // Precision cockpit hitbox
+
+        this.x = 0;
+        this.y = 0;
+        this.vx = 0;
+        this.vy = 0;
+
+        this.speed = 560; // Agile responsive top speed
+        this.targetVx = 0;
+        this.targetVy = 0;
+        this.accelRate = 20.0; // Responsive engine thrust
+        this.dragRate = 12.0;  // Smooth natural space coasting deceleration
+
+        this.tilt = 0; // Current roll angle (radians)
+        this.maxTilt = 0.42; // ~24 degrees dynamic banking
+
+        this.recoilY = 0; // Blaster kickback spring
+        this.squashX = 1.0;
+        this.squashY = 1.0;
+        this.rollAngle = 0; // 360-degree barrel roll during warp dash
+        this.hoverSway = 0; // Subtle cosmic hover bobbing
+
+        // Weapon System (MANUAL SHOOTING ONLY — No auto-fire)
+        this.weaponLevel = 1; // 1: Twin blasters, 2: Triple spread, 3: Quad plasma
+        this.shootTimer = 0;
+        this.shootInterval = 0.12; // Rapid responsive manual fire
+        this.autoFire = true; // Strictly manual!
+
+        // Warp Dash / Roll System
+        this.isDashing = false;
+        this.dashDuration = 0;
+        this.dashCooldown = 1.3;
+        this.dashTimer = 0;
+        this.dashVx = 0;
+        this.dashVy = 0;
+
+        // Power-ups and defensive states
+        this.hasShield = false;
+        this.shieldPulse = 0;
+        this.isBoosting = false;
+        this.boostTimer = 0;
+        this.hasEMP = false;
+
+        this.isInvulnerable = false;
+        this.invulnerableTimer = 0;
+
+        this.isAlive = true;
+    }
+
+    setSprite(img) {
+        this.sprite = img;
+    }
+
+    reset(spawnX, spawnY) {
+        this.x = spawnX;
+        this.y = spawnY;
+        this.vx = 0;
+        this.vy = 0;
+        this.targetVx = 0;
+        this.targetVy = 0;
+        this.tilt = 0;
+        this.recoilY = 0;
+        this.squashX = 1.0;
+        this.squashY = 1.0;
+        this.rollAngle = 0;
+        this.hoverSway = 0;
+
+        // Apply Upgrades from Hangar / Storage
+        const upgrades = (window.storageManager && window.storageManager.getUpgrades)
+            ? window.storageManager.getUpgrades()
+            : { magnet: 0, shield: 0, blaster: 0, warp: 0, emp: 0 };
+
+        this.upgrades = upgrades;
+
+        // 1. Magnet Tractor Beam Perk
+        const magnetLvl = upgrades.magnet || 0;
+        this.magnetRadius = 75 + magnetLvl * 115; // L0: 75px, L1: 190px, L2: 305px, L3: 420px
+
+        // 2. Plasma Blaster Perk
+        const blasterLvl = upgrades.blaster || 0;
+        this.weaponLevel = blasterLvl >= 3 ? 3 : (blasterLvl >= 2 ? 2 : 1);
+        this.shootInterval = blasterLvl >= 3 ? 0.075 : (blasterLvl >= 2 ? 0.09 : (blasterLvl >= 1 ? 0.105 : 0.12));
+        this.shootTimer = 0;
+        this.autoFire = true;
+
+        // 3. Warp Engine Perk
+        const warpLvl = upgrades.warp || 0;
+        this.dashCooldown = warpLvl >= 3 ? 0.5 : (warpLvl >= 2 ? 0.75 : (warpLvl >= 1 ? 1.0 : 1.3));
+        this.isDashing = false;
+        this.dashDuration = 0;
+        this.dashTimer = 0;
+
+        // 4. Nano Shield Perk
+        const shieldLvl = upgrades.shield || 0;
+        this.shieldCharges = shieldLvl >= 3 ? 2 : (shieldLvl >= 1 ? 1 : 0);
+        this.hasShield = this.shieldCharges > 0;
+        this.shieldPulse = 0;
+        this.postHitInvulnerableTime = shieldLvl >= 2 ? 1.8 : 1.2;
+
+        // 5. EMP Overcharger Perk
+        const empLvl = upgrades.emp || 0;
+        this.empCharges = empLvl >= 2 ? 2 : (empLvl >= 1 ? 1 : 0);
+        this.hasEMP = this.empCharges > 0;
+
+        this.isBoosting = false;
+        this.boostTimer = 0;
+
+        this.isInvulnerable = false;
+        this.invulnerableTimer = 0;
+        this.isAlive = true;
+    }
+
+
+    upgradeWeapon() {
+        this.weaponLevel = Math.min(3, this.weaponLevel + 1);
+        if (this.game.particles) {
+            this.game.particles.createFloatingText(this.x, this.y - 40, `WEAPON LVL ${this.weaponLevel}!`, '#00f0ff');
+            this.game.particles.createShockwave(this.x, this.y, 80, '#00f0ff', 3);
+        }
+        if (window.audioManager) window.audioManager.playPowerup('energy');
+    }
+
+    applyShield() {
+        this.shieldCharges = Math.min(2, (this.shieldCharges || 0) + 1);
+        this.hasShield = true;
+        this.shieldPulse = 0;
+        if (this.game.particles) {
+            this.game.particles.createFloatingText(this.x, this.y - 40, "SHIELD CHARGED!", '#00ffcc');
+        }
+        if (window.audioManager) window.audioManager.playPowerup('shield');
+    }
+
+    applyBoost(duration = 6.0) {
+        this.isBoosting = true;
+        this.boostTimer = duration;
+        if (this.game.particles) {
+            this.game.particles.createFloatingText(this.x, this.y - 40, "MAX THRUST!", '#ffff00');
+        }
+        if (window.audioManager) window.audioManager.playPowerup('energy');
+    }
+
+    grantEMP() {
+        this.empCharges = Math.min(2, (this.empCharges || 0) + 1);
+        this.hasEMP = true;
+        if (this.game.particles) {
+            this.game.particles.createFloatingText(this.x, this.y - 40, "EMP CHARGED!", '#ff0055');
+        }
+        if (window.audioManager) window.audioManager.playPowerup('energy');
+    }
+
+    triggerEMP() {
+        if (!this.hasEMP) return false;
+
+        this.empCharges = Math.max(0, (this.empCharges || 1) - 1);
+        if (this.empCharges <= 0) {
+            this.hasEMP = false;
+        }
+
+        // If Level 3 EMP perk, immediately refresh Dash!
+        if (this.upgrades && this.upgrades.emp >= 3) {
+            this.dashTimer = 0;
+        }
+
+        if (this.game.bullets) this.game.bullets.clear();
+        if (this.game.particles) {
+            this.game.particles.createShockwave(this.x, this.y, 550, '#00ffff', 6);
+            this.game.particles.createExplosion(this.x, this.y, '#00ffff', 45, 1.8);
+            this.game.particles.createFloatingText(this.x, this.y - 50, "EMP BLAST!", '#00ffff');
+        }
+        if (window.audioManager) {
+            window.audioManager.playExplosion(1.5);
+            window.audioManager.playShieldHit();
+        }
+        if (this.game.obstacles && this.game.obstacles.asteroids) {
+            for (let ast of this.game.obstacles.asteroids) {
+                const dy = ast.y - this.y;
+                const dx = ast.x - this.x;
+                const dist = Math.hypot(dx, dy) || 1;
+                if (dist < 480) {
+                    ast.vy = -320;
+                    ast.vx += (dx / dist) * 220;
+                    ast.takeDamage(2);
+                }
+            }
+        }
+        this.game.triggerScreenShake(14);
+        return true;
+    }
+
+    /**
+     * Warp Dash / Barrel Roll maneuver
+     */
+    dash() {
+        if (this.dashTimer > 0 || !this.isAlive) return false;
+
+        this.isDashing = true;
+        this.dashDuration = 0.22;
+        this.dashTimer = this.dashCooldown;
+        this.isInvulnerable = true;
+        this.invulnerableTimer = 0.32; // Invincible during dash!
+
+        // Determine dash vector from velocity or default forward
+        const currentSpeed = 950;
+        let dirX = this.vx;
+        let dirY = this.vy;
+        const len = Math.hypot(dirX, dirY);
+
+        if (len > 10) {
+            this.dashVx = (dirX / len) * currentSpeed;
+            this.dashVy = (dirY / len) * currentSpeed;
+        } else {
+            this.dashVx = 0;
+            this.dashVy = -currentSpeed; // Dash straight forward
+        }
+
+        if (this.game.particles) {
+            this.game.particles.createShockwave(this.x, this.y, 90, '#00f0ff', 4);
+            this.game.particles.createSparks(this.x, this.y, 16, '#00f0ff');
+            this.game.particles.createFloatingText(this.x, this.y - 30, "WARP DASH!", '#00f0ff');
+        }
+
+        if (window.audioManager) window.audioManager.playDash();
+        this.game.triggerScreenShake(6);
+        return true;
+    }
+
+    /**
+     * Player Weapon Fire (Twin, Triple, Quad Plasma Blasters)
+     */
+    shoot() {
+        if (!this.isAlive || !this.game.bullets) return;
+
+        const leftWingX = this.x - 22;
+        const rightWingX = this.x + 22;
+        const noseY = this.y - 28;
+
+        if (this.weaponLevel === 1) {
+            // Twin blasters from wings
+            this.game.bullets.spawnPlayerBullet(leftWingX, noseY, 0, -880, 1);
+            this.game.bullets.spawnPlayerBullet(rightWingX, noseY, 0, -880, 1);
+        } else if (this.weaponLevel === 2) {
+            // Triple spread blasters
+            this.game.bullets.spawnPlayerBullet(leftWingX, noseY, -120, -860, 1);
+            this.game.bullets.spawnPlayerBullet(this.x, noseY - 8, 0, -920, 1.5);
+            this.game.bullets.spawnPlayerBullet(rightWingX, noseY, 120, -860, 1);
+        } else {
+            // Quad plasma cannons
+            this.game.bullets.spawnPlayerBullet(leftWingX - 6, noseY, -140, -870, 1.2);
+            this.game.bullets.spawnPlayerBullet(leftWingX + 6, noseY, -40, -900, 1.2);
+            this.game.bullets.spawnPlayerBullet(rightWingX - 6, noseY, 40, -900, 1.2);
+            this.game.bullets.spawnPlayerBullet(rightWingX + 6, noseY, 140, -870, 1.2);
+        }
+
+        // Dynamic recoil kickback & muzzle compression
+        this.recoilY = 4.8;
+        this.squashY = 0.93;
+        this.squashX = 1.05;
+        this.game.triggerScreenShake(1.8);
+
+        // Muzzle flash sparks
+        if (this.game.particles && Math.random() < 0.6) {
+            this.game.particles.createSparks(leftWingX, noseY, 3, '#00f0ff');
+            this.game.particles.createSparks(rightWingX, noseY, 3, '#00f0ff');
+        }
+
+        if (window.audioManager) window.audioManager.playPlayerShoot();
+    }
+
+
+    takeHit() {
+        if (this.isInvulnerable) return false;
+
+        if (this.hasShield) {
+            this.shieldCharges = Math.max(0, (this.shieldCharges || 1) - 1);
+            if (this.shieldCharges <= 0) {
+                this.hasShield = false;
+            }
+            this.isInvulnerable = true;
+            this.invulnerableTimer = this.postHitInvulnerableTime || 1.2;
+
+            if (this.game.particles) {
+                this.game.particles.createShockwave(this.x, this.y, 110, '#00ffcc', 4);
+                this.game.particles.createSparks(this.x, this.y, 20, '#00ffcc');
+                const hitMsg = this.hasShield ? "SHIELD HIT! (1 LAYER LEFT)" : "SHIELD BROKEN!";
+                this.game.particles.createFloatingText(this.x, this.y - 30, hitMsg, '#00ffcc');
+            }
+            if (window.audioManager) window.audioManager.playShieldHit();
+            this.game.resetCombo();
+            this.game.triggerScreenShake(9);
+            return false;
+        }
+
+        // Direct hit: lethal
+        this.isAlive = false;
+        return true;
+    }
+
+    update(dt, input) {
+        if (!this.isAlive) return;
+
+        // Boost countdown
+        if (this.isBoosting) {
+            this.boostTimer -= dt;
+            if (this.boostTimer <= 0) this.isBoosting = false;
+        }
+
+        // Invulnerability countdown
+        if (this.isInvulnerable) {
+            this.invulnerableTimer -= dt;
+            if (this.invulnerableTimer <= 0) this.isInvulnerable = false;
+        }
+
+        // Shield pulsing animation
+        if (this.hasShield) {
+            this.shieldPulse += dt * 4;
+        }
+
+        // Dash cooldown & duration
+        if (this.dashTimer > 0) {
+            this.dashTimer -= dt;
+        }
+
+        if (this.isDashing) {
+            this.dashDuration -= dt;
+            this.vx = this.dashVx;
+            this.vy = this.dashVy;
+            this.targetVx = this.dashVx;
+            this.targetVy = this.dashVy;
+
+            // Full 360-degree barrel roll rotation
+            this.rollAngle += (Math.PI * 2 / 0.22) * dt;
+
+            // Leave ghost afterimage during warp dash
+            if (this.game.particles && this.sprite) {
+                this.game.particles.createAfterimage(this.x, this.y, this.sprite, this.tilt + this.rollAngle, this.width, this.height);
+            }
+
+            if (this.dashDuration <= 0) {
+                this.isDashing = false;
+                this.rollAngle = 0;
+            }
+        } else {
+            // Normal Movement with Fluid Physics & Easing (NO square/stiff instant velocity)
+            const currentSpeed = this.isBoosting ? this.speed * 1.45 : this.speed;
+            let moveX = 0;
+            let moveY = 0;
+
+            if (input.left) moveX -= 1;
+            if (input.right) moveX += 1;
+            if (input.up) moveY -= 1;
+            if (input.down) moveY += 1;
+
+            if (moveX !== 0 && moveY !== 0) {
+                const len = Math.hypot(moveX, moveY);
+                moveX /= len;
+                moveY /= len;
+            }
+
+            // Direct Touch / Pointer drag handling with smooth spring tracking
+            if (input.pointerActive && input.pointerX !== null) {
+                const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+                // On mobile touch screens, offset target Y by -48px so player's thumb is below the ship
+                const targetY = (isTouch && input.pointerY !== null) ? (input.pointerY - 48) : input.pointerY;
+                const dx = input.pointerX - this.x;
+                const dy = (targetY !== null ? targetY - this.y : 0);
+                const dist = Math.hypot(dx, dy);
+
+                if (dist > 4) {
+                    const factor = Math.min(1.0, dist / 85);
+                    this.targetVx = (dx / dist) * currentSpeed * factor;
+                    this.targetVy = (dy / dist) * currentSpeed * factor;
+                } else {
+                    this.targetVx = 0;
+                    this.targetVy = 0;
+                }
+            } else {
+                this.targetVx = moveX * currentSpeed;
+                this.targetVy = moveY * currentSpeed;
+            }
+
+            // Fluid exponential acceleration and coasting deceleration (Smooth aerodynamic momentum)
+            const rateX = Math.abs(this.targetVx) > 10 ? this.accelRate : this.dragRate;
+            const rateY = Math.abs(this.targetVy) > 10 ? this.accelRate : this.dragRate;
+            this.vx += (this.targetVx - this.vx) * (1 - Math.exp(-rateX * dt));
+            this.vy += (this.targetVy - this.vy) * (1 - Math.exp(-rateY * dt));
+
+            // Smooth roll angle back to 0 when not dashing
+            this.rollAngle += (0 - this.rollAngle) * (1 - Math.exp(-18 * dt));
+
+            // Check dash trigger
+            if (input.dash) {
+                input.dash = false;
+                this.dash();
+            }
+        }
+
+        // Integrate Position
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
+
+        // Full 2D Boundary constraints (User can fly freely all the way to the top!)
+        const padX = this.width / 2;
+        const padY = this.height / 2;
+        const screenW = this.game.width;
+        const screenH = this.game.height;
+
+        this.x = Math.max(padX + 5, Math.min(screenW - padX - 5, this.x));
+        this.y = Math.max(padY + 10, Math.min(screenH - padY - 15, this.y));
+
+        // Smooth Banking Tilt (Dynamic Roll Physics)
+        const speedNorm = this.isBoosting ? this.speed * 1.45 : this.speed;
+        const targetTilt = (this.vx / speedNorm) * this.maxTilt;
+        this.tilt += (targetTilt - this.tilt) * (1 - Math.exp(-15 * dt));
+
+        // Dynamic Squash & Stretch based on vertical acceleration & thrust
+        const targetSquashY = 1.0 - (this.vy / speedNorm) * 0.12;
+        const targetSquashX = 1.0 + (this.vy / speedNorm) * 0.08;
+        this.squashX += (targetSquashX - this.squashX) * (1 - Math.exp(-14 * dt));
+        this.squashY += (targetSquashY - this.squashY) * (1 - Math.exp(-14 * dt));
+
+        // Weapon Recoil Spring Recovery
+        this.recoilY += (0 - this.recoilY) * (1 - Math.exp(-22 * dt));
+
+        // Subtle Organic Space Hover Bobbing
+        this.hoverSway += dt * 3.4;
+
+        // Blaster Manual Fire ONLY (User holds/taps Space, J, or Mouse)
+        // Blaster Fire: Manual OR Auto-Fire on Mobile/Touch
+        this.shootTimer -= dt;
+        const isMobileOrTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 820);
+        const shouldFire = input.shoot || this.autoFire || (isMobileOrTouch && this.game && this.game.state === 'PLAYING') || (input.pointerActive && this.game && this.game.state === 'PLAYING');
+        if (shouldFire && this.shootTimer <= 0) {
+            this.shootTimer = this.shootInterval;
+            this.shoot();
+        }
+
+        // Dynamic Engine Thruster Flares
+        if (this.game.particles) {
+            const leftExhaustX = this.x - 14 * Math.cos(this.tilt);
+            const rightExhaustX = this.x + 14 * Math.cos(this.tilt);
+            const exhaustY = this.y + 26;
+
+            const isAcceleratingUp = this.vy < -40;
+            this.game.particles.createThrusterFlame(leftExhaustX, exhaustY, this.vx * 0.08, isAcceleratingUp ? 4.5 : 0, this.isBoosting || isAcceleratingUp);
+            this.game.particles.createThrusterFlame(rightExhaustX, exhaustY, this.vx * 0.08, isAcceleratingUp ? 4.5 : 0, this.isBoosting || isAcceleratingUp);
+        }
+    }
+
+    render(ctx) {
+        if (!this.isAlive) return;
+
+        ctx.save();
+        const bobOffset = Math.sin(this.hoverSway) * 1.6;
+        ctx.translate(this.x, this.y + this.recoilY + bobOffset);
+        ctx.rotate(this.tilt + this.rollAngle);
+        ctx.scale(this.squashX, this.squashY);
+
+
+        // Invulnerability flickering
+        if (this.isInvulnerable) {
+            ctx.globalAlpha = Math.floor(Date.now() / 70) % 2 === 0 ? 0.35 : 1.0;
+        }
+
+        // Draw Player Sprite
+        if (this.sprite && this.sprite.complete && this.sprite.naturalWidth > 0) {
+            ctx.shadowBlur = this.isBoosting ? 26 : (this.isDashing ? 32 : 14);
+            ctx.shadowColor = this.isDashing ? '#00ffff' : (this.isBoosting ? '#00e5ff' : '#00bfff');
+            ctx.drawImage(this.sprite, -this.width / 2, -this.height / 2, this.width, this.height);
+        } else {
+            ctx.fillStyle = '#00f0ff';
+            ctx.beginPath();
+            ctx.moveTo(0, -this.height / 2);
+            ctx.lineTo(this.width / 2, this.height / 2);
+            ctx.lineTo(0, this.height * 0.3);
+            ctx.lineTo(-this.width / 2, this.height / 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Render Shield Forcefield
+        if (this.hasShield) {
+            ctx.save();
+            const pulse = 1 + Math.sin(this.shieldPulse) * 0.08;
+            const shieldRadius = (this.width / 2 + 10) * pulse;
+
+            const shieldGrad = ctx.createRadialGradient(0, 0, shieldRadius * 0.6, 0, 0, shieldRadius);
+            shieldGrad.addColorStop(0, 'rgba(0, 255, 200, 0.05)');
+            shieldGrad.addColorStop(0.7, 'rgba(0, 255, 200, 0.25)');
+            shieldGrad.addColorStop(1, 'rgba(0, 255, 220, 0.7)');
+
+            ctx.fillStyle = shieldGrad;
+            ctx.strokeStyle = '#00ffcc';
+            ctx.lineWidth = 2.5;
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = '#00ffcc';
+
+            ctx.beginPath();
+            ctx.arc(0, 0, shieldRadius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Hexagonal energy accents
+            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = 'rgba(0, 255, 200, 0.4)';
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const a = (i * Math.PI / 3) + this.shieldPulse * 0.2;
+                const px = Math.cos(a) * (shieldRadius * 0.85);
+                const py = Math.sin(a) * (shieldRadius * 0.85);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.closePath();
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        ctx.restore();
+    }
+}
+
+window.Player = Player;
