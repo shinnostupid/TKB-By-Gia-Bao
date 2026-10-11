@@ -96,13 +96,10 @@
 
 <body>
 
-    <!-- Back to Study OS Floating Button for iPad / Phone / PC -->
-    <div id="studyos-back-bar" style="position:fixed;top:10px;left:10px;z-index:9999999;pointer-events:auto;display:flex;gap:8px;align-items:center">
-        <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,23,42,0.88);backdrop-filter:blur(12px);border:1px solid rgba(56,189,248,0.5);color:#38bdf8;padding:8px 16px;border-radius:999px;font-family:'Orbitron','Inter',sans-serif;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.7),0 0 12px rgba(56,189,248,0.3);user-select:none;-webkit-tap-highlight-color:transparent;transition:all 0.2s ease">
-            <span style="font-size:14px">🏠</span>
-            <span>GÓC HỌC TẬP</span>
-        </button>
-    </div>
+    <!-- Sleek Non-Intrusive Floating Close Button for Mobile & PC -->
+    <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" title="Thoát về Góc Học Tập" style="position:fixed;top:max(8px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));z-index:9999999;width:34px;height:34px;border-radius:50%;background:rgba(15,23,42,0.55);backdrop-filter:blur(8px);border:1px solid rgba(56,189,248,0.3);color:#38bdf8;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:sans-serif;font-size:16px;font-weight:900;box-shadow:0 2px 10px rgba(0,0,0,0.5);opacity:0.65;transition:all 0.2s ease;user-select:none;-webkit-tap-highlight-color:transparent">
+        ✕
+    </button>
     <script>
       function exitGameToStudyOS() {
         try {
@@ -117,6 +114,10 @@
         }
       }
     </script>
+
+
+    <!-- Back to Study OS Floating Button for iPad / Phone / PC -->
+    
 
     <div id="game-container">
         <!-- Main Rendering Canvas -->
@@ -466,18 +467,24 @@
                         <span id="touch-autofire-label">TỰ BẮN: BẬT</span>
                     </button>
 
-                    <div class="touch-action-row">
+                    <div class="touch-action-row" style="display:flex;gap:10px;align-items:center">
                         <!-- EMP Blast Trigger Button -->
-                        <button id="btn-emp" class="touch-round-btn emp-btn hidden" title="Kích hoạt EMP Blast (Phím E / Space)">
+                        <button id="btn-emp" class="touch-round-btn emp-btn hidden" title="Kích hoạt EMP Blast">
                             <span class="round-icon">💣</span>
                             <span class="round-name">EMP</span>
                             <span id="hud-emp-count" class="emp-badge">1</span>
                         </button>
 
                         <!-- Warp Dash Button -->
-                        <button id="touch-btn-dash" class="touch-round-btn dash-btn" title="Lướt né Warp Dash (Bất tử 0.3s)">
+                        <button id="touch-btn-dash" class="touch-round-btn dash-btn" title="Lướt né Warp Dash">
                             <span class="round-icon">⚡</span>
                             <span class="round-name">DASH</span>
+                        </button>
+
+                        <!-- Manual / Turbo Fire Button -->
+                        <button id="touch-btn-fire" class="touch-round-btn fire-btn" style="background:rgba(255,0,85,0.25);border:2px solid #ff0055;box-shadow:0 0 16px rgba(255,0,85,0.4)" title="Bắn pháo Plasma">
+                            <span class="round-icon">🔥</span>
+                            <span class="round-name">BẮN</span>
                         </button>
                     </div>
                 </div>
