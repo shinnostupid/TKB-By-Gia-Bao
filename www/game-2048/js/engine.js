@@ -80,6 +80,7 @@ class Infinite2048Engine {
         let moved = false;
 
         let i = 0;
+        const movements = [];
         while (i < nonNulls.length) {
             const current = nonNulls[i];
             const next = nonNulls[i + 1];
@@ -95,6 +96,8 @@ class Infinite2048Engine {
                     fromB: next.origIdx,
                     value: mergedVal
                 });
+                movements.push({ fromIdx: current.origIdx, toIdx: targetIdx, val: current.val, mergedInto: mergedVal });
+                movements.push({ fromIdx: next.origIdx, toIdx: targetIdx, val: next.val, mergedInto: mergedVal });
                 if (current.origIdx !== targetIdx || next.origIdx !== targetIdx) {
                     moved = true;
                 }
@@ -102,6 +105,7 @@ class Infinite2048Engine {
                 i += 2; // Both tiles consumed
             } else {
                 result[targetIdx] = current.val;
+                movements.push({ fromIdx: current.origIdx, toIdx: targetIdx, val: current.val });
                 if (current.origIdx !== targetIdx) {
                     moved = true;
                 }
@@ -110,7 +114,7 @@ class Infinite2048Engine {
             }
         }
 
-        return { result, scoreGain, merges, moved };
+        return { result, scoreGain, merges, movements, moved };
     }
 
     /**
@@ -126,46 +130,71 @@ class Infinite2048Engine {
         let movedOverall = false;
         let totalScoreGain = 0n;
         const allMerges = [];
+        const allMovements = [];
 
         if (direction === 'left') {
             for (let r = 0; r < this.size; r++) {
                 const row = this.board[r];
-                const { result, scoreGain, merges, moved } = this.slideLine(row);
+                const { result, scoreGain, merges, movements, moved } = this.slideLine(row);
                 if (moved) movedOverall = true;
                 totalScoreGain += scoreGain;
                 this.board[r] = result;
                 merges.forEach(m => allMerges.push({ r, c: m.targetIdx, value: m.value }));
+                movements.forEach(m => allMovements.push({
+                    fromR: r, fromC: m.fromIdx,
+                    toR: r, toC: m.toIdx,
+                    val: m.val,
+                    mergedInto: m.mergedInto
+                }));
             }
         } else if (direction === 'right') {
             for (let r = 0; r < this.size; r++) {
                 const reversed = [...this.board[r]].reverse();
-                const { result, scoreGain, merges, moved } = this.slideLine(reversed);
+                const { result, scoreGain, merges, movements, moved } = this.slideLine(reversed);
                 if (moved) movedOverall = true;
                 totalScoreGain += scoreGain;
                 this.board[r] = result.reverse();
                 merges.forEach(m => allMerges.push({ r, c: this.size - 1 - m.targetIdx, value: m.value }));
+                movements.forEach(m => allMovements.push({
+                    fromR: r, fromC: this.size - 1 - m.fromIdx,
+                    toR: r, toC: this.size - 1 - m.toIdx,
+                    val: m.val,
+                    mergedInto: m.mergedInto
+                }));
             }
         } else if (direction === 'up') {
             for (let c = 0; c < this.size; c++) {
                 const col = [];
                 for (let r = 0; r < this.size; r++) col.push(this.board[r][c]);
-                const { result, scoreGain, merges, moved } = this.slideLine(col);
+                const { result, scoreGain, merges, movements, moved } = this.slideLine(col);
                 if (moved) movedOverall = true;
                 totalScoreGain += scoreGain;
                 for (let r = 0; r < this.size; r++) this.board[r][c] = result[r];
                 merges.forEach(m => allMerges.push({ r: m.targetIdx, c, value: m.value }));
+                movements.forEach(m => allMovements.push({
+                    fromR: m.fromIdx, fromC: c,
+                    toR: m.toIdx, toC: c,
+                    val: m.val,
+                    mergedInto: m.mergedInto
+                }));
             }
         } else if (direction === 'down') {
             for (let c = 0; c < this.size; c++) {
                 const col = [];
                 for (let r = this.size - 1; r >= 0; r--) col.push(this.board[r][c]);
-                const { result, scoreGain, merges, moved } = this.slideLine(col);
+                const { result, scoreGain, merges, movements, moved } = this.slideLine(col);
                 if (moved) movedOverall = true;
                 totalScoreGain += scoreGain;
                 for (let r = 0; r < this.size; r++) {
                     this.board[this.size - 1 - r][c] = result[r];
                 }
                 merges.forEach(m => allMerges.push({ r: this.size - 1 - m.targetIdx, c, value: m.value }));
+                movements.forEach(m => allMovements.push({
+                    fromR: this.size - 1 - m.fromIdx, fromC: c,
+                    toR: this.size - 1 - m.toIdx, toC: c,
+                    val: m.val,
+                    mergedInto: m.mergedInto
+                }));
             }
         }
 
@@ -197,6 +226,7 @@ class Infinite2048Engine {
         return {
             moved: true,
             scoreGain: totalScoreGain,
+            movements: allMovements,
             merges: allMerges,
             spawn: newSpawn,
             gameOver: this.gameOver

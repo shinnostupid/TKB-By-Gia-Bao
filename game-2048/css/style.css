@@ -209,18 +209,31 @@ html, body {
 .grid-cell {
     background: var(--cell-empty);
     border-radius: var(--radius-tile);
-    position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-/* Classic Tiles */
-.tile-item {
+#tile-container {
     position: absolute;
     inset: 0;
+    pointer-events: none;
+}
+
+/* Sliding Animated Tiles */
+.tile-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: var(--radius-tile);
+    pointer-events: auto;
+    transition: transform 100ms ease-in-out;
+    will-change: transform;
+    z-index: 2;
+}
+
+.tile-inner {
+    width: 100%;
+    height: 100%;
     border-radius: var(--radius-tile);
     display: flex;
     align-items: center;
@@ -229,18 +242,23 @@ html, body {
     font-size: 42px;
     cursor: pointer;
     line-height: 1;
-    transition: transform 0.12s ease;
+    user-select: none;
+    position: relative;
 }
 
-.tile-item:active {
+.tile-inner:active {
     transform: scale(0.95);
 }
 
-.tile-item.tile-new {
+.tile-item.tile-new .tile-inner {
     animation: tileAppear 0.18s ease-in forwards;
 }
 
 .tile-item.tile-merged {
+    z-index: 5;
+}
+
+.tile-item.tile-merged .tile-inner {
     animation: tileMergePop 0.2s ease-in-out forwards;
 }
 
@@ -256,15 +274,15 @@ html, body {
 }
 
 /* Dynamic Font Sizes matching Classic 2048 */
-.tile-item.font-medium {
+.tile-inner.font-medium {
     font-size: 34px;
 }
 
-.tile-item.font-small {
+.tile-inner.font-small {
     font-size: 26px;
 }
 
-.tile-item.font-tiny {
+.tile-inner.font-tiny {
     font-size: 20px;
 }
 
