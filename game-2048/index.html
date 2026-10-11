@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>2048 INFINITE — Hợp Nhất Vô Tận</title>
+    <meta name="description" content="Trò chơi 2048 Infinite không giới hạn số. Hợp nhất vô hạn với độ chính xác tuyệt đối qua BigInt.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Sleek Minimal Floating Close Button for Mobile & PC -->
+    <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" title="Thoát về Góc Học Tập">
+        ✕
+    </button>
+
+    <div class="game-viewport">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="brand-box">
+                <h1 class="brand-title">2048</h1>
+                <div class="brand-badge"><span>♾️</span> INFINITE MODE</div>
+            </div>
+
+            <div class="scores-wrapper">
+                <div id="score-gain-floater">+0</div>
+                <div class="score-box">
+                    <span class="score-lbl">ĐIỂM</span>
+                    <span class="score-val" id="val-score">0</span>
+                </div>
+                <div class="score-box highlight">
+                    <span class="score-lbl">KỶ LỤC</span>
+                    <span class="score-val" id="val-best">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Control Action Bar -->
+        <div class="actions-bar">
+            <p class="hint-text">Vuốt hoặc phím mũi tên để <strong>hợp nhất vô tận</strong>.</p>
+            <div class="control-buttons">
+                <button type="button" class="btn-ctrl" id="btn-undo" title="Hoàn tác nước đi (Ctrl + Z)">
+                    <span>↩</span> <span class="btn-lbl">Undo</span>
+                </button>
+                <button type="button" class="btn-ctrl" id="btn-sound" title="Bật/Tắt âm thanh">
+                    <span>🔊</span> <span class="btn-lbl">Âm thanh</span>
+                </button>
+                <button type="button" class="btn-ctrl" id="btn-help" title="Hướng dẫn & Mẹo">
+                    <span>❓</span>
+                </button>
+                <button type="button" class="btn-ctrl primary" id="btn-new" title="Bắt đầu ván mới">
+                    <span>⚡</span> <span>Ván mới</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4x4 Grid Board -->
+        <main class="board-container" id="grid-board">
+            <!-- 16 Cells rendered dynamically -->
+        </main>
+
+        <!-- Footer Info -->
+        <footer class="game-footer">
+            <div class="footer-stat">
+                Ô CAO NHẤT: <strong id="val-max-tile">-</strong>
+            </div>
+            <div class="footer-tip">
+                💡 Chạm vào ô để xem số đầy đủ
+            </div>
+        </footer>
+    </div>
+
+    <!-- 1. Modal Inspect Exact Number -->
+    <div id="modal-inspect" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">🔍 CHI TIẾT Ô SỐ</h3>
+                <button type="button" class="btn-ctrl btn-close-modal" data-target="modal-inspect">✕</button>
+            </div>
+
+            <div class="inspect-meta-grid">
+                <div class="meta-pill">
+                    <span class="meta-lbl">DẠNG LŨY THỪA</span>
+                    <span class="meta-val" id="inspect-power-val">2^11</span>
+                </div>
+                <div class="meta-pill">
+                    <span class="meta-lbl">ĐỘ DÀI KÝ TỰ</span>
+                    <span class="meta-val" id="inspect-digits-count">4 chữ số</span>
+                </div>
+            </div>
+
+            <div>
+                <span class="meta-lbl" style="display:block;margin-bottom:6px">GIÁ TRỊ THẬP PHÂN CHÍNH XÁC (BIGINT):</span>
+                <div class="inspect-box" id="inspect-exact-val">2048</div>
+            </div>
+
+            <button type="button" class="btn-modal-action" id="btn-copy-exact-val">
+                📋 Sao Chép Giá Trị
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Modal Help & Rules -->
+    <div id="modal-help" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">📖 LUẬT CHƠI 2048 INFINITE</h3>
+                <button type="button" class="btn-ctrl btn-close-modal" data-target="modal-help">✕</button>
+            </div>
+
+            <div style="font-size:0.92rem;line-height:1.6;color:#cbd5e1;display:flex;flex-direction:column;gap:10px">
+                <p>• <b>Không giới hạn 2048:</b> Bạn có thể tiếp tục hợp nhất lên 4096, 8192, 65536, 2^50, 2^500... mãi mãi!</p>
+                <p>• <b>Toán học chính xác tuyệt đối:</b> Sử dụng công nghệ <code>BigInt</code> giúp lưu trữ số nguyên vô hạn chữ số mà không bao giờ bị làm tròn hay sai lệch.</p>
+                <p>• <b>Điều khiển:</b></p>
+                <p style="padding-left:12px">
+                    - <b>PC / Laptop:</b> Dùng 4 phím Mũi tên hoặc W A S D.<br>
+                    - <b>Điện thoại:</b> Vuốt màn hình 4 hướng cực nhạy.
+                </p>
+                <p>• <b>Nút Hoàn tác (Undo):</b> Khôi phục lại nước đi vừa rồi bất cứ khi nào bạn đi nhầm.</p>
+            </div>
+
+            <button type="button" class="btn-modal-action btn-close-modal" data-target="modal-help">
+                Đã Hiểu • Bắt Đầu Chơi
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. Modal Game Over -->
+    <div id="modal-gameover" class="modal-overlay hidden">
+        <div class="modal-card" style="text-align:center">
+            <h2 style="font-size:2rem;font-weight:900;color:#f43f5e">HẾT NƯỚC ĐI!</h2>
+            <p style="color:#94a3b8;font-size:0.9rem">Không còn ô trống hoặc cặp ô nào có thể hợp nhất.</p>
+
+            <div class="inspect-meta-grid" style="margin:12px 0">
+                <div class="meta-pill">
+                    <span class="meta-lbl">TỔNG ĐIỂM</span>
+                    <span class="meta-val" id="gameover-score-val">0</span>
+                </div>
+                <div class="meta-pill">
+                    <span class="meta-lbl">Ô CAO NHẤT</span>
+                    <span class="meta-val" id="gameover-max-tile">2048</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn-modal-action" id="btn-gameover-replay">
+                🔄 Chơi Lại Ván Mới
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/engine.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/display.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
