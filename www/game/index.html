@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>NEON DODGE — Survive The Void</title>
+    <meta name="description"
+        content="Trò chơi arcade sci-fi né đạn và thiên thạch siêu kịch tính với đồ họa neon và laser xoay hiểm hóc.">
+
+    <!-- iOS Safari & Mobile App Web Capabilities -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Neon Dodge">
+    <meta name="theme-color" content="#040711">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- Google Fonts with Full Vietnamese Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,700&family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css?v=3.0_cosmic">
+</head>
+
+
+<body>
+
+    <!-- Back to Study OS Floating Button for iPad / Phone / PC -->
+    <div id="studyos-back-bar" style="position:fixed;top:10px;left:10px;z-index:9999999;pointer-events:auto;display:flex;gap:8px;align-items:center">
+        <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" style="display:inline-flex;align-items:center;gap:6px;background:rgba(15,23,42,0.88);backdrop-filter:blur(12px);border:1px solid rgba(56,189,248,0.5);color:#38bdf8;padding:8px 16px;border-radius:999px;font-family:'Orbitron','Inter',sans-serif;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.7),0 0 12px rgba(56,189,248,0.3);user-select:none;-webkit-tap-highlight-color:transparent;transition:all 0.2s ease">
+            <span style="font-size:14px">🏠</span>
+            <span>GÓC HỌC TẬP</span>
+        </button>
+    </div>
+    <script>
+      function exitGameToStudyOS() {
+        try {
+          if (window.audioManager && typeof window.audioManager.stopMusic === 'function') {
+            window.audioManager.stopMusic();
+          }
+        } catch (_) {}
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'EXIT_GAME' }, '*');
+        } else {
+          window.location.href = '../#arcade';
+        }
+      }
+    </script>
+
+    <div id="game-container">
+        <!-- Main Rendering Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Subtle CRT / Scanline effect overlay -->
+        <div class="scanlines"></div>
+
+        <!-- ================= 1. MENU SCREEN: ARCADE COMMAND DECK ================= -->
+        <section id="screen-menu" class="screen-layer">
+            <div class="menu-command-deck">
+
+                <!-- LEFT SIDE TERMINAL: PILOT DOSSIER -->
+                <aside class="menu-side-terminal pilot-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-title"><span class="sci-dot green pulse"></span> HỒ SƠ PHI CÔNG</span>
+                        <span class="terminal-id">ID: 04-CYBER</span>
+                    </div>
+
+                    <div class="pilot-profile-card" id="menu-pilot-badge" title="Nhấp để đổi tên phi công">
+                        <div class="pilot-avatar-frame">
+                            <span class="pilot-avatar-icon">👨‍🚀</span>
+                            <span class="pilot-status-ring"></span>
+                        </div>
+                        <div class="pilot-info-box">
+                            <div class="pilot-rank-badge">ELITE COMMANDER</div>
+                            <div class="pilot-name-display" id="menu-pilot-name">PILOT: GIA BAO DZ <span class="edit-icon">✏️</span></div>
+                        </div>
+                    </div>
+
+                    <div class="terminal-divider"></div>
+
+                    <div class="terminal-section-title">THÔNG SỐ SỰ NGHIỆP</div>
+                    <div class="stats-matrix">
+                        <div class="stat-matrix-row">
+                            <span class="stat-name"><span class="matrix-icon">🏆</span> ĐIỂM KỶ LỤC</span>
+                            <span class="stat-val highlight-gold" id="menu-stat-best">0</span>
+                        </div>
+                        <div class="stat-matrix-row">
+                            <span class="stat-name"><span class="matrix-icon">⏱️</span> KỶ LỤC SỐNG</span>
+                            <span class="stat-val highlight-cyan" id="menu-stat-time">00:00</span>
+                        </div>
+                        <div class="stat-matrix-row">
+                            <span class="stat-name"><span class="matrix-icon">⚡</span> COMBO MAX</span>
+                            <span class="stat-val highlight-pink" id="menu-stat-combo">x1</span>
+                        </div>
+                        <div class="stat-matrix-row">
+                            <span class="stat-name"><span class="matrix-icon">🪙</span> XU ĐÃ NHẶT</span>
+                            <span class="stat-val highlight-gold" id="menu-stat-coins">250 XU</span>
+                        </div>
+                    </div>
+
+                    <div class="terminal-divider"></div>
+
+                    <!-- Quick System Controls -->
+                    <div class="quick-terminal-actions">
+                        <button id="quick-toggle-music" class="quick-icon-btn" title="Bật/Tắt Nhạc Nền">
+                            <span class="icon">🎵</span> <span id="quick-music-text">NHẠC: BẬT</span>
+                        </button>
+                        <button id="quick-toggle-sfx" class="quick-icon-btn" title="Bật/Tắt Âm SFX">
+                            <span class="icon">🔊</span> <span id="quick-sfx-text">SFX: BẬT</span>
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- CENTER COMMAND DECK: COMBAT LAUNCHPAD -->
+                <main class="menu-center-deck">
+                    <!-- Top Bar Badges -->
+                    <div class="menu-top-bar">
+                        <div class="system-status-pill">
+                            <span class="system-status-dot"></span>
+                            <span class="system-status-text">NEON CORE ONLINE • READY FOR PC &amp; IOS</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Hero Logo Box -->
+                    <div class="logo-box">
+                        <div class="logo-halo-ring"></div>
+                        <h1 class="game-logo">
+                            <span class="neon-text-blue logo-neon-glow">NEON</span>
+                            <span class="neon-text-pink logo-neon-glow">DODGE</span>
+                        </h1>
+                        <p class="game-subtitle">SURVIVE THE VOID</p>
+                    </div>
+
+                    <!-- Primary Actions -->
+                    <div class="menu-actions">
+                        <button id="btn-menu-play" class="btn btn-primary btn-hero-launch btn-glow-blue">
+                            <span class="btn-icon">▶</span>
+                            <div class="btn-labels">
+                                <span class="btn-text">XUẤT KÍCH CHIẾN ĐẤU</span>
+                                <span class="btn-subtext">CHỌN ĐỘ KHÓ &amp; BAY NGAY</span>
+                            </div>
+                        </button>
+
+                        <button id="btn-menu-shop" class="btn btn-shop-hero btn-glow-gold">
+                            <div class="btn-shop-inner">
+                                <span class="btn-icon">🛒</span>
+                                <div class="btn-shop-labels">
+                                    <span class="btn-text">CỬA HÀNG VẬT PHẨM TRỢ NĂNG</span>
+                                    <span class="btn-subtext">NÂNG CẤP CHIẾN HẠM VĨNH VIỄN</span>
+                                </div>
+                                <div class="btn-shop-wallet-tag">
+                                    <img src="assets/coin-icon.png" alt="Coin" class="btn-coin-mini">
+                                    <span id="menu-coin-count">250</span>
+                                </div>
+                            </div>
+                        </button>
+
+                        <div class="menu-sub-actions">
+                            <button id="btn-menu-leaderboard" class="btn btn-secondary">
+                                <span class="btn-text">🏆 BẢNG XẾP HẠNG</span>
+                            </button>
+                            <button id="btn-menu-how-to-play" class="btn btn-secondary">
+                                <span class="btn-text">📖 HƯỚNG DẪN</span>
+                            </button>
+                            <button id="btn-menu-settings" class="btn btn-secondary">
+                                <span class="btn-text">⚙️ CÀI ĐẶT</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Ticker / Tip Marquee -->
+                    <div class="tactical-tip-banner">
+                        <span class="tip-icon">💡</span>
+                        <span class="tip-content" id="menu-tactical-tip">MẸO CHIẾN ĐẤU: Dùng Warp Dash (Shift / Q / nút Dash) để lướt bất tử xuyên qua Laser xoay 360°!</span>
+                    </div>
+
+                    <div class="version-tag">VERSION 3.0 — QUANTUM COMMAND &amp; DUAL PLATFORM (PC + IOS)</div>
+                </main>
+
+                <!-- RIGHT SIDE TERMINAL: HANGAR SHIP STATUS -->
+                <aside class="menu-side-terminal hangar-terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-title"><span class="sci-dot blue pulse"></span> XƯỞNG CHIẾN HẠM</span>
+                        <span class="terminal-id">MK-IV VOID VIPER</span>
+                    </div>
+
+                    <!-- Holographic Ship Preview Display -->
+                    <div class="ship-holo-bay">
+                        <div class="holo-grid-plane"></div>
+                        <div class="holo-radar-ring"></div>
+                        <img src="assets/player.png" alt="Player Ship" class="holo-ship-img" id="menu-holo-ship">
+                        <div class="holo-thruster-glow"></div>
+                        <div class="ship-callsign">VOID VIPER • INTERCEPTOR</div>
+                    </div>
+
+                    <!-- Ship Combat Readiness Bar -->
+                    <div class="ship-power-card">
+                        <div class="power-header">
+                            <span class="power-title">CÔNG SUẤT HỆ THỐNG</span>
+                            <span class="power-val highlight-gold" id="menu-hangar-power">20%</span>
+                        </div>
+                        <div class="power-meter-track">
+                            <div class="power-meter-fill" id="menu-power-bar" style="width: 20%;"></div>
+                        </div>
+                        <div class="power-sub" id="menu-power-tier-text">TIER 1 COMBAT READY</div>
+                    </div>
+
+                    <!-- Modules Installed Overview -->
+                    <div class="terminal-section-title">CÁC MODULE ĐÃ TRANG BỊ</div>
+                    <div class="modules-compact-grid">
+                        <div class="module-chip" id="chip-magnet">
+                            <span class="mod-icon">🧲</span>
+                            <div class="mod-info">
+                                <span class="mod-name">Nam Châm</span>
+                                <span class="mod-level" id="menu-mod-magnet">LV 0/3</span>
+                            </div>
+                        </div>
+                        <div class="module-chip" id="chip-shield">
+                            <span class="mod-icon">🛡️</span>
+                            <div class="mod-info">
+                                <span class="mod-name">Khiên Nano</span>
+                                <span class="mod-level" id="menu-mod-shield">LV 0/3</span>
+                            </div>
+                        </div>
+                        <div class="module-chip" id="chip-blaster">
+                            <span class="mod-icon">⚡</span>
+                            <div class="mod-info">
+                                <span class="mod-name">Pháo Plasma</span>
+                                <span class="mod-level" id="menu-mod-blaster">LV 0/3</span>
+                            </div>
+                        </div>
+                        <div class="module-chip" id="chip-warp">
+                            <span class="mod-icon">🚀</span>
+                            <div class="mod-info">
+                                <span class="mod-name">Bước Nhảy</span>
+                                <span class="mod-level" id="menu-mod-warp">LV 0/3</span>
+                            </div>
+                        </div>
+                        <div class="module-chip" id="chip-emp">
+                            <span class="mod-icon">💣</span>
+                            <div class="mod-info">
+                                <span class="mod-name">Bom EMP</span>
+                                <span class="mod-level" id="menu-mod-emp">LV 0/3</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary btn-hangar-quick-upgrade" id="btn-quick-hangar-upgrade">
+                        <span>NÂNG CẤP CHIẾN HẠM ➔</span>
+                    </button>
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- ================= 2. DIFFICULTY SELECT SCREEN ================= -->
+        <section id="screen-difficulty" class="screen-layer hidden">
+            <div class="screen-content">
+                <h2 class="section-title neon-text-blue">CHỌN ĐỘ KHÓ</h2>
+                <p class="section-subtitle">CHOOSE DIFFICULTY LEVEL</p>
+
+                <div class="difficulty-grid">
+                    <!-- EASY -->
+                    <div class="difficulty-card easy btn-difficulty-card" data-difficulty="EASY">
+                        <div class="card-indicator green"><span class="sci-dot green"></span></div>
+                        <div class="diff-info">
+                            <div class="diff-header-row">
+                                <h3 class="diff-title">EASY</h3>
+                            </div>
+                            <div class="diff-tag">DÀNH CHO NGƯỜI MỚI</div>
+                            <div class="diff-mobile-summary">Tốc độ chậm • 0.8x Điểm • Không đạn địch</div>
+                        </div>
+                        <ul class="diff-specs">
+                            <li>Tốc độ di chuyển chậm</li>
+                            <li>Ít thiên thạch xuất hiện</li>
+                            <li>Không có đạn bắn từ địch</li>
+                            <li>Không có laser xoay</li>
+                            <li>Hệ số điểm: 0.8x</li>
+                        </ul>
+                        <button class="btn btn-diff-select green">XUẤT KÍCH</button>
+                    </div>
+
+                    <!-- NORMAL -->
+                    <div class="difficulty-card normal btn-difficulty-card highlighted" data-difficulty="NORMAL">
+                        <div class="card-indicator blue"><span class="sci-dot blue"></span></div>
+                        <div class="diff-info">
+                            <div class="diff-header-row">
+                                <h3 class="diff-title">NORMAL</h3>
+                                <div class="recommended-badge">KHUYÊN DÙNG</div>
+                            </div>
+                            <div class="diff-tag">GAMEPLAY MẶC ĐỊNH</div>
+                            <div class="diff-mobile-summary">Tiêu chuẩn • 1.0x Điểm • Đa dạng thiên thạch</div>
+                        </div>
+                        <ul class="diff-specs">
+                            <li>Thiên thạch xuất hiện liên tục</li>
+                            <li>Tốc độ tăng dần theo level</li>
+                            <li>Đa dạng kích thước thiên thạch</li>
+                            <li>Thu thập năng lượng & khiên</li>
+                            <li>Hệ số điểm: 1.0x</li>
+                        </ul>
+                        <button class="btn btn-diff-select blue">XUẤT KÍCH</button>
+                    </div>
+
+                    <!-- HARD -->
+                    <div class="difficulty-card hard btn-difficulty-card" data-difficulty="HARD">
+                        <div class="card-indicator red"><span class="sci-dot red"></span></div>
+                        <div class="diff-info">
+                            <div class="diff-header-row">
+                                <h3 class="diff-title">HARD</h3>
+                            </div>
+                            <div class="diff-tag">THỬ THÁCH THỰC SỰ</div>
+                            <div class="diff-mobile-summary">Cực hạn • 1.5x Điểm • Boss + Laser xoay</div>
+                        </div>
+                        <ul class="diff-specs">
+                            <li>Phi thuyền địch & đạn chùm</li>
+                            <li>Laser Beacons xoay 360°</li>
+                            <li>Boss Flagship cấp Elite</li>
+                            <li>Mật độ chướng ngại cực lớn</li>
+                            <li>Hệ số điểm: 1.5x</li>
+                        </ul>
+                        <button class="btn btn-diff-select red">XUẤT KÍCH</button>
+                    </div>
+                </div>
+
+                <div class="screen-footer-actions">
+                    <button id="btn-difficulty-back" class="btn btn-subtle">QUAY LẠI MENU</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. IN-GAME HUD ================= -->
+        <section id="screen-hud" class="screen-layer hidden pointer-events-none">
+            <div class="hud-container">
+                <!-- Top Left: Score & High Score -->
+                <div class="hud-box hud-left">
+                    <div class="hud-label">SCORE</div>
+                    <div id="hud-score" class="hud-value neon-text-blue">0</div>
+                    <div class="hud-sub">BEST: <span id="hud-high-score">0</span></div>
+                </div>
+
+                <!-- Top Center: Level, Time & Coin Counter -->
+                <div class="hud-box hud-center">
+                    <div class="hud-center-top">
+                        <div id="hud-level" class="hud-level-badge">LEVEL 1</div>
+                        <div class="hud-coin-pill" title="Xu thu thập trong trận này">
+                            <img src="assets/coin-icon.png" class="hud-coin-img" alt="Coin">
+                            <span id="hud-coin-count">0</span>
+                        </div>
+                    </div>
+                    <div id="hud-time" class="hud-timer">00:00</div>
+                </div>
+
+                <!-- Top Right: Shield, Combo, Auto-fire & Pause -->
+                <div class="hud-box hud-right pointer-events-auto">
+                    <div class="hud-status-row">
+                        <div id="hud-weapon-badge" class="hud-badge-btn active"
+                            title="Cấp vũ khí phi thuyền (Nhặt tinh thể để nâng cấp)">⚡ TWIN BLASTER</div>
+                        <div id="hud-shield" class="hud-shield-indicator inactive">◈ SHIELD: OFFLINE</div>
+                        <div id="hud-combo" class="hud-combo-badge hidden">
+                            <span class="combo-label">COMBO</span>
+                            <span id="hud-combo-multiplier" class="combo-val">x2</span>
+                        </div>
+                    </div>
+                    <button id="btn-pause" class="btn-pause-square" title="Tạm dừng">
+                        <span>❚❚</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Warning Alert Banner -->
+            <div id="hud-warning-banner" class="hud-warning-banner hidden">
+                <span id="hud-warning-text">▲ LASER CHARGING ▲</span>
+            </div>
+
+            <!-- Floating Toast Alert -->
+            <div id="hud-toast" class="hud-toast hidden"></div>
+
+            <!-- Mobile Touch Controls Dock (iOS Safari & Android Optimized) -->
+            <div id="touch-controls" class="touch-controls-container pointer-events-none hidden">
+                <!-- Left Thumb: D-Pad (only when touchControl === 'buttons') -->
+                <div id="touch-dpad-box" class="touch-dpad pointer-events-auto hidden">
+                    <button id="touch-btn-up" class="touch-btn dpad-btn up" aria-label="Bay lên">▲</button>
+                    <div class="dpad-middle">
+                        <button id="touch-btn-left" class="touch-btn dpad-btn left" aria-label="Bay trái">◀</button>
+                        <button id="touch-btn-down" class="touch-btn dpad-btn down" aria-label="Bay xuống">▼</button>
+                        <button id="touch-btn-right" class="touch-btn dpad-btn right" aria-label="Bay phải">▶</button>
+                    </div>
+                </div>
+
+                <!-- Right Thumb: Action Dock (Combat Controls for Mobile) -->
+                <div id="touch-actions-box" class="touch-actions-dock pointer-events-auto">
+                    <!-- Auto-fire Toggle Pill -->
+                    <button id="touch-btn-autofire" class="touch-pill-btn active" title="Chế độ Tự động bắn">
+                        <span id="touch-autofire-icon">🔫</span>
+                        <span id="touch-autofire-label">TỰ BẮN: BẬT</span>
+                    </button>
+
+                    <div class="touch-action-row">
+                        <!-- EMP Blast Trigger Button -->
+                        <button id="btn-emp" class="touch-round-btn emp-btn hidden" title="Kích hoạt EMP Blast (Phím E / Space)">
+                            <span class="round-icon">💣</span>
+                            <span class="round-name">EMP</span>
+                            <span id="hud-emp-count" class="emp-badge">1</span>
+                        </button>
+
+                        <!-- Warp Dash Button -->
+                        <button id="touch-btn-dash" class="touch-round-btn dash-btn" title="Lướt né Warp Dash (Bất tử 0.3s)">
+                            <span class="round-icon">⚡</span>
+                            <span class="round-name">DASH</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4. GAME OVER SCREEN ================= -->
+        <section id="screen-game-over" class="screen-layer hidden">
+            <div class="modal-card game-over-card">
+                <h2 class="game-over-title neon-text-pink">GAME OVER</h2>
+                <div class="go-score-box">
+                    <span class="go-score-label">FINAL SCORE</span>
+                    <span id="go-score" class="go-score-val neon-text-blue">0</span>
+                </div>
+
+                <div class="go-stats-grid">
+                    <div class="go-stat-item">
+                        <span class="stat-name">CHẾ ĐỘ</span>
+                        <span id="go-difficulty" class="stat-badge normal">NORMAL</span>
+                    </div>
+                    <div class="go-stat-item">
+                        <span class="stat-name">THỜI GIAN SỐNG</span>
+                        <span id="go-time" class="stat-val">00:00</span>
+                    </div>
+                    <div class="go-stat-item">
+                        <span class="stat-name">MAX COMBO</span>
+                        <span id="go-combo" class="stat-val">x1</span>
+                    </div>
+                    <div class="go-stat-item">
+                        <span class="stat-name">THỨ HẠNG</span>
+                        <span id="go-rank" class="stat-val gold">#--</span>
+                    </div>
+                    <div class="go-stat-item">
+                        <span class="stat-name">TIỀN THU THẬP</span>
+                        <span id="go-coins" class="stat-val gold">+0 XU</span>
+                    </div>
+                    <div class="go-stat-item">
+                        <span class="stat-name">TỔNG VÍ TIỀN</span>
+                        <span id="go-wallet" class="stat-val neon-text-blue">0 XU</span>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btn-gameover-replay" class="btn btn-primary btn-glow-pink">
+                        <span class="btn-text">CHƠI LẠI</span>
+                    </button>
+                    <button id="btn-gameover-shop" class="btn btn-shop btn-glow-gold">
+                        <span class="btn-text">🛒 CỬA HÀNG</span>
+                    </button>
+                    <button id="btn-gameover-leaderboard" class="btn btn-secondary">
+                        <span class="btn-text">BẢNG XẾP HẠNG</span>
+                    </button>
+                    <button id="btn-gameover-menu" class="btn btn-subtle">
+                        <span class="btn-text">VỀ MENU</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 5. LEADERBOARD SCREEN ================= -->
+        <section id="screen-leaderboard" class="screen-layer hidden">
+            <div class="screen-content wide">
+                <h2 class="section-title neon-text-blue">BẢNG XẾP HẠNG</h2>
+                <p class="section-subtitle">TOP PILOTS — SURVIVE THE VOID</p>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="btn-lb-filter active" data-filter="ALL">TẤT CẢ</button>
+                    <button class="btn-lb-filter" data-filter="EASY">EASY</button>
+                    <button class="btn-lb-filter" data-filter="NORMAL">NORMAL</button>
+                    <button class="btn-lb-filter" data-filter="HARD">HARD</button>
+                </div>
+
+                <!-- Table Container -->
+                <div class="table-container">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>PHI CÔNG</th>
+                                <th>ĐIỂM SỐ</th>
+                                <th>CHẾ ĐỘ</th>
+                                <th>THỜI GIAN</th>
+                                <th>COMBO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="screen-footer-actions">
+                    <button id="btn-leaderboard-back" class="btn btn-secondary">QUAY LẠI MENU</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 6. HOW TO PLAY SCREEN ================= -->
+        <section id="screen-how-to-play" class="screen-layer hidden">
+            <div class="screen-content wide">
+                <h2 class="section-title neon-text-blue">HƯỚNG DẪN CHIẾN ĐẤU</h2>
+                <p class="section-subtitle">COMBAT PROTOCOL & SURVIVAL MANUAL</p>
+
+                <div class="guide-grid">
+                    <!-- Controls Card -->
+                    <div class="guide-card">
+                        <div class="guide-icon">🎮</div>
+                        <h3 class="guide-title">ĐIỀU KHIỂN &amp; CHIẾN ĐẤU</h3>
+                        <p><strong>PC:</strong> Phím <code>W A S D</code> hoặc mũi tên bay <strong>tự do 2D lên tận đỉnh
+                                màn hình</strong>. Phím <code>Shift</code> hoặc <code>Q</code> để <strong>Warp Dash /
+                                Lướt né</strong> bất tử tức thì. Bắn đạn tự động (phím <code>T</code> bật/tắt) hoặc bắn
+                            thủ công bằng <code>Space</code> / <code>J</code> / Chuột trái. Phím <code>E</code> kích
+                            hoạt sóng nổ EMP.</p>
+                        <p><strong>Mobile:</strong> Chạm vuốt ngón tay trực tiếp trên toàn màn hình hoặc dùng cụm phím
+                            D-Pad 4 hướng + nút Dash &amp; Fire.</p>
+                    </div>
+
+                    <!-- Combat & Destruction Card -->
+                    <div class="guide-card">
+                        <div class="guide-icon">💥</div>
+                        <h3 class="guide-title">BẮN PHÁ &amp; TIÊU DIỆT</h3>
+                        <p>Hỏa lực laser của bạn có thể <strong>bắn nát thiên thạch</strong> và <strong>tiêu diệt phi
+                                thuyền địch</strong> để ghi điểm thưởng và nhặt nâng cấp!</p>
+                        <p>Thiên thạch lớn khi nổ sẽ vỡ thành 2 thiên thạch vừa; thiên thạch vừa vỡ thành 2 thiên thạch
+                            nhỏ.</p>
+                    </div>
+
+                    <!-- Speed Ramp Card -->
+                    <div class="guide-card">
+                        <div class="guide-icon">🚀</div>
+                        <h3 class="guide-title">TỐC ĐỘ TĂNG PHI MÃ</h3>
+                        <p>Càng sống sót lâu, <strong>tốc độ toàn bộ vũ trụ càng tăng chóng mặt</strong> (Speed x1.5,
+                            x2.0, x2.8+)!</p>
+                        <p>Thiên thạch, phi thuyền và đạn địch lao tới dồn dập. Bầu trời sao chuyển sang hiệu ứng
+                            <strong>Warp Streaks</strong> như du hành vượt thời gian!</p>
+                    </div>
+
+                    <!-- Laser & Power-ups Card -->
+                    <div class="guide-card">
+                        <div class="guide-icon">💎</div>
+                        <h3 class="guide-title">VẬT PHẨM &amp; LASER XOAY</h3>
+                        <p><strong>🟣 Weapon:</strong> Nâng cấp hỏa lực từ Pháo Kép ➔ Pháo Ba Tỏa ➔ Đại Bác Plasma 4
+                            Nòng.</p>
+                        <p><strong>🔵 Energy / 🛡 Shield:</strong> Nhận +500 điểm &amp; Khiên chắn bảo vệ 1 hit.</p>
+                        <p><strong>⚡ Laser Beacon:</strong> Báo động sạc tia đỏ 1.8s trước khi quét tử thần 360°. Hãy
+                            dùng <strong>Warp Dash</strong> lướt qua khoảng trống an toàn!</p>
+                    </div>
+                </div>
+
+                <div class="screen-footer-actions">
+                    <button id="btn-how-to-play-back" class="btn btn-secondary">QUAY LẠI MENU</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 6. HANGAR / UPGRADE SHOP SCREEN ================= -->
+        <section id="screen-shop" class="screen-layer hidden">
+            <div class="screen-content wide shop-content">
+                <div class="shop-top-bar">
+                    <button id="btn-shop-top-back" class="btn btn-subtle btn-shop-top-back">⮜ QUAY LẠI MENU</button>
+                    <div class="shop-wallet-box">
+                        <img src="assets/coin-icon.png" alt="Coin" class="shop-wallet-icon">
+                        <div class="shop-wallet-info">
+                            <span class="wallet-label">VÍ TIỀN XU</span>
+                            <span id="shop-coin-balance" class="wallet-value">250</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-header">
+                    <div class="shop-title-group">
+                        <h2 class="section-title neon-text-gold">CỬA HÀNG VẬT PHẨM TRỢ NĂNG</h2>
+                        <p class="section-subtitle">NEON HANGAR — NÂNG CẤP KỸ NĂNG &amp; VŨ KHÍ PHI THUYỀN VĨNH VIỄN</p>
+                        
+                        <!-- Dynamic Ship Readiness Bar -->
+                        <div class="shop-power-bar-wrap">
+                            <span class="shop-power-label">HIỆU SUẤT TỔNG THỂ:</span>
+                            <div class="shop-power-track">
+                                <div id="shop-power-fill" class="shop-power-fill" style="width: 20%;"></div>
+                            </div>
+                            <span id="shop-power-text" class="shop-power-percent">20% (CẤP 3/15)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-guide-banner">
+                    <span class="shop-guide-icon">💡</span>
+                    <span>Bắn nát thiên thạch và tiêu diệt phi thuyền địch để thu thập Xu! Mọi nâng cấp đều có tác dụng vĩnh viễn trong mọi màn chơi.</span>
+                </div>
+
+                <!-- Dynamic Grid of Perk Cards -->
+                <div id="shop-cards-grid" class="shop-cards-grid">
+                    <!-- Rendered by UIManager.renderShop() -->
+                </div>
+
+                <div class="screen-footer-actions">
+                    <button id="btn-shop-back" class="btn btn-primary btn-glow-gold">QUAY LẠI MENU CHÍNH</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 7. MODALS ================= -->
+
+        <!-- Name Input Modal -->
+        <div id="modal-name" class="modal-backdrop hidden">
+            <div class="modal-card">
+                <h3 class="modal-title neon-text-blue">NHẬP TÊN PHI CÔNG</h3>
+                <p class="modal-desc">Định danh của bạn sẽ được vinh danh trên Bảng Xếp Hạng.</p>
+
+                <div class="input-group">
+                    <input type="text" id="input-pilot-name" maxlength="16" placeholder="Shinno..." autocomplete="off">
+                    <div id="name-error-msg" class="error-msg"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btn-name-submit" class="btn btn-primary btn-glow-blue">XÁC NHẬN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Modal -->
+        <div id="modal-pause" class="modal-backdrop hidden">
+            <div class="modal-card">
+                <h3 class="modal-title neon-text-blue">GAME PAUSED</h3>
+                <p class="modal-desc">HỆ THỐNG TẠM DỪNG HOẠT ĐỘNG</p>
+
+                <div class="modal-actions vertical">
+                    <button id="btn-pause-continue" class="btn btn-primary btn-glow-blue">TIẾP TỤC</button>
+                    <button id="btn-pause-restart" class="btn btn-secondary">CHƠI LẠI</button>
+                    <button id="btn-pause-menu" class="btn btn-subtle">VỀ MENU</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="modal-settings" class="modal-backdrop hidden">
+            <div class="modal-card">
+                <h3 class="modal-title neon-text-blue">CÀI ĐẶT HỆ THỐNG</h3>
+
+                <div class="settings-form">
+                    <div class="setting-row">
+                        <label for="setting-pilot-name">Tên Phi Công</label>
+                        <input type="text" id="setting-pilot-name" maxlength="16">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-music">Nhạc Nền (Music)</label>
+                        <input type="checkbox" id="setting-music" class="neon-toggle">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-sfx">Hiệu Ứng Âm Thanh (SFX)</label>
+                        <input type="checkbox" id="setting-sfx" class="neon-toggle">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-volume">Âm Lượng: <span id="setting-volume-val">75%</span></label>
+                        <input type="range" id="setting-volume" min="0" max="100" value="75">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-shake">Rung Màn Hình (Screen Shake)</label>
+                        <input type="checkbox" id="setting-shake" class="neon-toggle">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-low-graphics">Chế Độ Giảm Đồ Họa (Low Graphics)</label>
+                        <input type="checkbox" id="setting-low-graphics" class="neon-toggle">
+                    </div>
+
+                    <div class="setting-row">
+                        <label for="setting-control">Điều Khiển Mobile</label>
+                        <select id="setting-control">
+                            <option value="drag">Vuốt / Kéo Tay Trực Tiếp (Mặc Định)</option>
+                            <option value="buttons">Phím Ảo (Trái / Phải)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btn-settings-close" class="btn btn-primary btn-glow-blue">LƯU &amp; ĐÓNG</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Modules (Bumped to v3.0_cosmic to prevent browser cache issues) -->
+    <script src="js/storage.js?v=3.0_cosmic"></script>
+    <script src="js/audio.js?v=3.0_cosmic"></script>
+    <script src="js/collision.js?v=3.0_cosmic"></script>
+    <script src="js/particles.js?v=3.0_cosmic"></script>
+    <script src="js/player.js?v=3.0_cosmic"></script>
+    <script src="js/bullets.js?v=3.0_cosmic"></script>
+    <script src="js/enemies.js?v=3.0_cosmic"></script>
+    <script src="js/laser.js?v=3.0_cosmic"></script>
+    <script src="js/obstacles.js?v=3.0_cosmic"></script>
+    <script src="js/ui.js?v=3.0_cosmic"></script>
+    <script src="js/game.js?v=3.0_cosmic"></script>
+    <script src="js/main.js?v=3.0_cosmic"></script>
+</body>
+
+
+</html>
