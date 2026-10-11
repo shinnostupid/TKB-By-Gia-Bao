@@ -2,6 +2,73 @@
 <html lang="vi">
 
 <head>
+
+    <!-- ULTIMATE ANTI-F12 & SOURCE CODE PROTECTION -->
+    <script>
+    (function() {
+        if (typeof window === 'undefined') return;
+        
+        function kick() {
+            try {
+                document.documentElement.innerHTML = '<div style="background:#020617;color:#ef4444;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;text-align:center;padding:20px;box-sizing:border-box"><h1 style="font-size:26px;margin-bottom:12px;font-weight:900">⚠️ CẢNH BÁO BẢO MẬT</h1><p style="font-size:16px;color:#cbd5e1;max-width:450px">Hành vi mở DevTools hoặc cố tình soi mã nguồn đã bị chặn.</p><p style="font-size:13px;color:#94a3b8;margin-top:10px">Hệ thống đang tự động thoát...</p></div>';
+            } catch (_) {}
+            setTimeout(function() {
+                try { window.location.replace("about:blank"); } catch (_) { window.location.reload(); }
+            }, 100);
+        }
+
+        // 1. Chặn tất cả phím tắt DevTools (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault(); e.stopPropagation(); kick(); return false;
+            }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I','J','C','i','j','c'].indexOf(e.key) !== -1) {
+                e.preventDefault(); e.stopPropagation(); kick(); return false;
+            }
+            if ((e.ctrlKey || e.metaKey) && ['U','S','u','s'].indexOf(e.key) !== -1) {
+                e.preventDefault(); e.stopPropagation(); kick(); return false;
+            }
+        }, true);
+
+        // 2. Chặn chuột phải (Context Menu)
+        window.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); e.stopPropagation(); return false;
+        }, true);
+
+        // 3. Chặn kéo thả inspect
+        window.addEventListener('dragstart', function(e) { e.preventDefault(); }, true);
+
+        // 4. Phát hiện độ chênh lệch kích thước cửa sổ (khi dock DevTools mở)
+        setInterval(function() {
+            var wDelta = window.outerWidth - window.innerWidth;
+            var hDelta = window.outerHeight - window.innerHeight;
+            if (wDelta > 160 || hDelta > 160) {
+                kick();
+            }
+        }, 800);
+
+        // 5. Bẫy Debugger tự động (nếu mở DevTools sẽ bị kẹt ngay)
+        setInterval(function() {
+            var t0 = Date.now();
+            (function(){debugger;})();
+            if (Date.now() - t0 > 100) {
+                kick();
+            }
+        }, 1000);
+
+        // 6. Bẫy Console Getter Trap
+        try {
+            var probe = new Image();
+            Object.defineProperty(probe, 'id', {
+                get: function() { kick(); }
+            });
+            setInterval(function() {
+                try { console.log(probe); console.clear(); } catch(_) {}
+            }, 1500);
+        } catch(_) {}
+    })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>NEON DODGE — Survive The Void</title>
