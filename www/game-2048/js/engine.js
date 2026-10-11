@@ -13,6 +13,8 @@ class Infinite2048Engine {
         this.history = []; // For Undo functionality
         this.maxHistory = 15;
         this.gameOver = false;
+        this.won = false;
+        this.keepPlaying = false;
         this.lastSpawn = null;
         this.lastMoves = [];
     }
@@ -30,11 +32,17 @@ class Infinite2048Engine {
         this.score = 0n;
         this.history = [];
         this.gameOver = false;
+        this.won = false;
+        this.keepPlaying = false;
         this.lastSpawn = null;
         this.lastMoves = [];
 
         this.spawnTile();
         this.spawnTile();
+    }
+
+    continueGame() {
+        this.keepPlaying = true;
     }
 
     getEmptyCells() {
@@ -205,7 +213,9 @@ class Infinite2048Engine {
         // Save state to undo history
         this.history.push({
             board: prevBoard,
-            score: prevScore
+            score: prevScore,
+            won: this.won,
+            keepPlaying: this.keepPlaying
         });
         if (this.history.length > this.maxHistory) {
             this.history.shift();
@@ -220,6 +230,21 @@ class Infinite2048Engine {
         // Spawn new tile after valid move
         const newSpawn = this.spawnTile();
 
+        // Check for 2048 Win Condition
+        let gameWon = false;
+        if (!this.won && !this.keepPlaying) {
+            for (let r = 0; r < this.size; r++) {
+                for (let c = 0; c < this.size; c++) {
+                    if (this.board[r][c] === 2048n) {
+                        this.won = true;
+                        gameWon = true;
+                        break;
+                    }
+                }
+                if (gameWon) break;
+            }
+        }
+
         // Check for Game Over
         this.gameOver = this.checkGameOver();
 
@@ -229,6 +254,8 @@ class Infinite2048Engine {
             movements: allMovements,
             merges: allMerges,
             spawn: newSpawn,
+            gameWon: gameWon,
+            won: this.won,
             gameOver: this.gameOver
         };
     }
@@ -239,6 +266,8 @@ class Infinite2048Engine {
         const lastState = this.history.pop();
         this.board = this.cloneBoard(lastState.board);
         this.score = lastState.score;
+        this.won = lastState.won ?? false;
+        this.keepPlaying = lastState.keepPlaying ?? false;
         this.gameOver = false;
         this.lastSpawn = null;
         return true;

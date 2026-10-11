@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>2048</title>
-    <meta name="description" content="Trò chơi 2048 Infinite không giới hạn số. Hợp nhất vô hạn với độ chính xác tuyệt đối qua BigInt.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239333ea'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='monospace' font-weight='900' font-size='19' fill='%23ffffff'%3E2048%3C/text%3E%3C/svg%3E">
+    <meta name="description" content="Trò chơi 2048 kinh điển. Ghép các ô số để đạt 2048 và giành chiến thắng!">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23edc22e'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='18' fill='%23ffffff'%3E2048%3C/text%3E%3C/svg%3E">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,91 +17,149 @@
 </head>
 <body>
 
-    <!-- Sleek Minimal Floating Close Button for Mobile & PC -->
-    <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" title="Thoát về Góc Học Tập">
-        ✕
-    </button>
+    <div class="page-container">
 
-    <div class="game-viewport">
-        <!-- Header -->
-        <header class="game-header">
-            <div class="brand-box">
-                <h1 class="brand-title">2048</h1>
-                <div class="brand-badge"><span>♾️</span> INFINITE MODE</div>
+        <!-- 1. Top Navigation Bar (Authentic play2048.co header) -->
+        <header class="top-nav-bar">
+            <!-- Left: Menu hamburger & 2048 title -->
+            <div class="nav-left">
+                <button type="button" id="btn-hamburger" class="btn-hamburger" title="Menu / Thoát về Góc Học Tập" onclick="exitGameToStudyOS()">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                <h1 class="logo-title">2048</h1>
             </div>
 
-            <div class="scores-wrapper">
-                <div id="score-gain-floater">+0</div>
-                <div class="score-box">
-                    <span class="score-lbl">ĐIỂM</span>
-                    <span class="score-val" id="val-score">0</span>
+            <!-- Center: Dual Score Capsules -->
+            <div class="nav-center">
+                <div class="scores-container">
+                    <div id="score-gain-floater">+0</div>
+                    <div class="score-card">
+                        <span class="score-card-lbl">ĐIỂM SỐ</span>
+                        <span class="score-card-val" id="val-score">0</span>
+                    </div>
+                    <div class="score-card">
+                        <span class="score-card-lbl">TỐT NHẤT</span>
+                        <span class="score-card-val" id="val-best">0</span>
+                    </div>
                 </div>
-                <div class="score-box">
-                    <span class="score-lbl">KỶ LỤC</span>
-                    <span class="score-val" id="val-best">0</span>
-                </div>
+            </div>
+
+            <!-- Right: Feedback & New Game Button -->
+            <div class="nav-right">
+                <button type="button" class="btn-feedback" id="btn-feedback" title="Gửi phản hồi / Hướng dẫn">Gửi phản hồi</button>
+                <button type="button" class="btn-new-game" id="btn-new" title="Bắt đầu ván mới">Trò chơi mới</button>
             </div>
         </header>
 
-        <!-- Above Game Bar -->
-        <div class="above-game">
-            <p class="game-intro">Ghép các ô số để đạt <strong>2048 &amp; vô tận!</strong></p>
-            <div class="control-buttons">
-                <button type="button" class="btn-ctrl" id="btn-undo" title="Hoàn tác (Ctrl+Z)">
-                    <span>↩</span> <span class="btn-lbl">Undo</span>
+        <!-- 2. Centered Game Board Area -->
+        <main class="board-area">
+            <div class="board-container" id="grid-board">
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div id="tile-container"></div>
+            </div>
+        </main>
+
+        <!-- 3. Bottom Controls Toolbar (Undo, Sound, Help) -->
+        <div class="bottom-controls">
+            <div class="control-item">
+                <button type="button" class="btn-ctrl-square" id="btn-undo" title="Hoàn tác (Ctrl+Z)">
+                    <span>↺</span>
                 </button>
-                <button type="button" class="btn-ctrl" id="btn-sound" title="Bật/Tắt âm thanh">
+                <div class="control-dashes">---</div>
+            </div>
+            <div class="control-item">
+                <button type="button" class="btn-ctrl-square" id="btn-sound" title="Bật/Tắt âm thanh">
                     <span>🔊</span>
                 </button>
-                <button type="button" class="btn-ctrl" id="btn-help" title="Hướng dẫn">
-                    <span>❓</span>
+                <div class="control-dashes">---</div>
+            </div>
+            <div class="control-item">
+                <button type="button" class="btn-ctrl-square" id="btn-help" title="Luật chơi">
+                    <span>⊞</span>
                 </button>
-                <button type="button" class="btn-ctrl primary" id="btn-new" title="Bắt đầu ván mới">
-                    <span>Ván mới</span>
-                </button>
+                <div class="control-dashes">---</div>
             </div>
         </div>
 
-        <!-- 4x4 Grid Board with 16 background cells and sliding tile container -->
-        <main class="board-container" id="grid-board">
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div class="grid-cell"></div>
-            <div id="tile-container"></div>
-        </main>
-
-        <!-- Classic Game Explanation Footer -->
-        <p class="game-explanation">
-            <strong>CÁCH CHƠI:</strong> Dùng <strong>phím mũi tên</strong> hoặc <strong>vuốt màn hình</strong> để di chuyển các ô. Các ô có cùng số khi chạm vào nhau sẽ <strong>hợp nhất thành một</strong>. Tiếp tục gộp để phá kỷ lục <strong>2048, 4096 và vô tận!</strong>
-        </p>
-
-        <!-- Copyright Footer by DGB -->
+        <!-- 4. Authentic Copyright Footer -->
         <footer class="game-copyright">
-            2048 © 2024–2026 DGB. All rights reserved.
+            2048 © 2024–2026 DGB. Bảo lưu mọi quyền.
         </footer>
+
     </div>
 
-    <!-- 1. Modal Inspect Exact Number -->
+    <!-- Modals -->
+
+    <!-- Win Modal (When combining 2048) -->
+    <div id="modal-win" class="modal-overlay hidden">
+        <div class="modal-card win-card">
+            <div class="win-icon">🏆</div>
+            <h2 class="win-title">BẠN ĐÃ CHIẾN THẮNG!</h2>
+            <p class="win-msg">Chúc mừng bạn đã tạo thành công ô số <strong>2048</strong>!</p>
+            <div class="win-actions">
+                <button type="button" class="btn-win primary" id="btn-win-continue">Tiếp tục chơi</button>
+                <button type="button" class="btn-win secondary" id="btn-win-restart">Trò chơi mới</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="modal-gameover" class="modal-overlay hidden">
+        <div class="modal-card gameover-card">
+            <h2 class="gameover-title">HẾT NƯỚC ĐI!</h2>
+            <p class="gameover-msg">Không còn ô trống hoặc cặp ô nào có thể hợp nhất.</p>
+            <div class="gameover-stat-box">
+                <span class="gameover-lbl">TỔNG ĐIỂM:</span>
+                <span class="gameover-val" id="gameover-score-val">0</span>
+            </div>
+            <button type="button" class="btn-modal-action" id="btn-gameover-replay">🔄 Thử lại</button>
+        </div>
+    </div>
+
+    <!-- Help & Rules Modal -->
+    <div id="modal-help" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">📖 LUẬT CHƠI 2048</h3>
+                <button type="button" class="btn-close-modal" data-target="modal-help">✕</button>
+            </div>
+            <div class="help-content">
+                <p>• <b>Mục tiêu:</b> Dùng các phím mũi tên hoặc vuốt màn hình để di chuyển các ô. Các ô có cùng số khi chạm vào nhau sẽ <b>gộp lại thành một</b>.</p>
+                <p>• <b>Chiến thắng:</b> Hãy kết hợp các ô để tạo thành ô <b>2048</b>!</p>
+                <p>• <b>Điều khiển:</b></p>
+                <p style="padding-left:12px">
+                    - <b>Máy tính:</b> 4 phím Mũi tên hoặc W, A, S, D.<br>
+                    - <b>Điện thoại:</b> Vuốt màn hình 4 hướng (Lên, Xuống, Trái, Phải).
+                </p>
+                <p>• <b>Hoàn tác (Undo):</b> Nhấn biểu tượng ↺ bên dưới bàn cờ để khôi phục lại nước đi vừa rồi.</p>
+            </div>
+            <button type="button" class="btn-modal-action btn-close-modal" data-target="modal-help">Đã Hiểu</button>
+        </div>
+    </div>
+
+    <!-- Inspect Exact Number Modal (Click on any tile) -->
     <div id="modal-inspect" class="modal-overlay hidden">
         <div class="modal-card">
             <div class="modal-header">
                 <h3 class="modal-title">🔍 CHI TIẾT Ô SỐ</h3>
-                <button type="button" class="btn-ctrl btn-close-modal" data-target="modal-inspect">✕</button>
+                <button type="button" class="btn-close-modal" data-target="modal-inspect">✕</button>
             </div>
-
             <div class="inspect-meta-grid">
                 <div class="meta-pill">
                     <span class="meta-lbl">DẠNG LŨY THỪA</span>
@@ -112,63 +170,11 @@
                     <span class="meta-val" id="inspect-digits-count">4 chữ số</span>
                 </div>
             </div>
-
             <div>
-                <span class="meta-lbl" style="display:block;margin-bottom:6px">GIÁ TRỊ THẬP PHÂN CHÍNH XÁC (BIGINT):</span>
+                <span class="meta-lbl" style="display:block;margin-bottom:6px">GIÁ TRỊ THẬP PHÂN CHÍNH XÁC:</span>
                 <div class="inspect-box" id="inspect-exact-val">2048</div>
             </div>
-
-            <button type="button" class="btn-modal-action" id="btn-copy-exact-val">
-                📋 Sao Chép Giá Trị
-            </button>
-        </div>
-    </div>
-
-    <!-- 2. Modal Help & Rules -->
-    <div id="modal-help" class="modal-overlay hidden">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3 class="modal-title">📖 LUẬT CHƠI 2048 INFINITE</h3>
-                <button type="button" class="btn-ctrl btn-close-modal" data-target="modal-help">✕</button>
-            </div>
-
-            <div style="font-size:0.92rem;line-height:1.6;color:#cbd5e1;display:flex;flex-direction:column;gap:10px">
-                <p>• <b>Không giới hạn 2048:</b> Bạn có thể tiếp tục hợp nhất lên 4096, 8192, 65536, 2^50, 2^500... mãi mãi!</p>
-                <p>• <b>Toán học chính xác tuyệt đối:</b> Sử dụng công nghệ <code>BigInt</code> giúp lưu trữ số nguyên vô hạn chữ số mà không bao giờ bị làm tròn hay sai lệch.</p>
-                <p>• <b>Điều khiển:</b></p>
-                <p style="padding-left:12px">
-                    - <b>PC / Laptop:</b> Dùng 4 phím Mũi tên hoặc W A S D.<br>
-                    - <b>Điện thoại:</b> Vuốt màn hình 4 hướng cực nhạy.
-                </p>
-                <p>• <b>Nút Hoàn tác (Undo):</b> Khôi phục lại nước đi vừa rồi bất cứ khi nào bạn đi nhầm.</p>
-            </div>
-
-            <button type="button" class="btn-modal-action btn-close-modal" data-target="modal-help">
-                Đã Hiểu • Bắt Đầu Chơi
-            </button>
-        </div>
-    </div>
-
-    <!-- 3. Modal Game Over -->
-    <div id="modal-gameover" class="modal-overlay hidden">
-        <div class="modal-card" style="text-align:center">
-            <h2 style="font-size:2rem;font-weight:900;color:#f43f5e">HẾT NƯỚC ĐI!</h2>
-            <p style="color:#94a3b8;font-size:0.9rem">Không còn ô trống hoặc cặp ô nào có thể hợp nhất.</p>
-
-            <div class="inspect-meta-grid" style="margin:12px 0">
-                <div class="meta-pill">
-                    <span class="meta-lbl">TỔNG ĐIỂM</span>
-                    <span class="meta-val" id="gameover-score-val">0</span>
-                </div>
-                <div class="meta-pill">
-                    <span class="meta-lbl">Ô CAO NHẤT</span>
-                    <span class="meta-val" id="gameover-max-tile">2048</span>
-                </div>
-            </div>
-
-            <button type="button" class="btn-modal-action" id="btn-gameover-replay">
-                🔄 Chơi Lại Ván Mới
-            </button>
+            <button type="button" class="btn-modal-action" id="btn-copy-exact-val">📋 Sao Chép Giá Trị</button>
         </div>
     </div>
 

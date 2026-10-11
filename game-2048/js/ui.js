@@ -23,6 +23,11 @@ class UI2048 {
         this.btnNew = document.getElementById('btn-new');
         this.btnSound = document.getElementById('btn-sound');
         this.btnHelp = document.getElementById('btn-help');
+        this.btnFeedback = document.getElementById('btn-feedback');
+
+        this.modalWin = document.getElementById('modal-win');
+        this.btnWinContinue = document.getElementById('btn-win-continue');
+        this.btnWinRestart = document.getElementById('btn-win-restart');
 
         this.modalInspect = document.getElementById('modal-inspect');
         this.modalHelp = document.getElementById('modal-help');
@@ -139,8 +144,10 @@ class UI2048 {
             this.btnUndo.style.opacity = this.engine.history.length === 0 ? '0.5' : '1';
         }
 
-        // Check Game Over
-        if (this.engine.gameOver) {
+        // Check Win / Game Over
+        if (this.engine.won && !this.engine.keepPlaying) {
+            this.showWinModal();
+        } else if (this.engine.gameOver) {
             this.showGameOverModal();
         }
     }
@@ -195,7 +202,9 @@ class UI2048 {
                 this.render(result.merges, result.spawn);
                 this.isAnimating = false;
 
-                if (result.gameOver) {
+                if (result.gameWon) {
+                    this.showWinModal();
+                } else if (result.gameOver) {
                     this.sound.playGameOver();
                 }
             }, 105);
@@ -290,11 +299,13 @@ class UI2048 {
     initButtons() {
         if (this.btnNew) {
             this.btnNew.addEventListener('click', () => {
-                if (this.engine.score > 0n && !this.engine.gameOver) {
+                if (this.engine.score > 0n && !this.engine.gameOver && !this.engine.won) {
                     if (!confirm('Bắt đầu ván mới? Tiến trình hiện tại sẽ được lưu vào kỷ lục.')) {
                         return;
                     }
                 }
+                if (this.modalWin) this.modalWin.classList.add('hidden');
+                if (this.modalGameOver) this.modalGameOver.classList.add('hidden');
                 this.engine.startNewGame();
                 Storage2048.saveGameState(this.engine);
                 this.render();
@@ -319,6 +330,30 @@ class UI2048 {
         if (this.btnHelp) {
             this.btnHelp.addEventListener('click', () => {
                 this.modalHelp.classList.remove('hidden');
+            });
+        }
+
+        if (this.btnFeedback) {
+            this.btnFeedback.addEventListener('click', () => {
+                if (this.modalHelp) this.modalHelp.classList.remove('hidden');
+            });
+        }
+
+        // Win modal actions
+        if (this.btnWinContinue) {
+            this.btnWinContinue.addEventListener('click', () => {
+                if (this.modalWin) this.modalWin.classList.add('hidden');
+                this.engine.continueGame();
+                Storage2048.saveGameState(this.engine);
+            });
+        }
+
+        if (this.btnWinRestart) {
+            this.btnWinRestart.addEventListener('click', () => {
+                if (this.modalWin) this.modalWin.classList.add('hidden');
+                this.engine.startNewGame();
+                Storage2048.saveGameState(this.engine);
+                this.render();
             });
         }
 
@@ -355,6 +390,11 @@ class UI2048 {
                 this.render();
             });
         }
+    }
+
+    showWinModal() {
+        if (this.sound) this.sound.playWin();
+        if (this.modalWin) this.modalWin.classList.remove('hidden');
     }
 
     triggerUndo() {

@@ -15,6 +15,8 @@ class Storage2048 {
                 score: engine.score.toString(),
                 bestScore: engine.bestScore.toString(),
                 gameOver: engine.gameOver,
+                won: engine.won,
+                keepPlaying: engine.keepPlaying,
                 savedAt: Date.now()
             };
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
@@ -52,6 +54,8 @@ class Storage2048 {
                 engine.bestScore = BigInt(data.bestScore);
             }
             engine.gameOver = !!data.gameOver;
+            engine.won = !!data.won;
+            engine.keepPlaying = !!data.keepPlaying;
             return true;
         } catch (e) {
             console.warn('LocalStorage load failed, starting fresh:', e);

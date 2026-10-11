@@ -1,5 +1,5 @@
 /* ==========================================================================
-   2048 — Authentic Classic Design System (Play2048.co Style)
+   2048 — Authentic Classic Form & Clean Design (Play2048.co Style)
    ========================================================================== */
 
 :root {
@@ -12,8 +12,8 @@
     --btn-hover: #9f8a76;
     --score-bg: #bbada0;
     --font-family: 'Rubik', 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-    --radius-board: 6px;
-    --radius-tile: 4px;
+    --radius-board: 8px;
+    --radius-tile: 6px;
 }
 
 *, *::before, *::after {
@@ -35,78 +35,97 @@ html, body {
     touch-action: pan-y;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100dvh;
-}
-
-/* Container — Centered Horizontally & Vertically */
-.game-viewport {
-    max-width: 500px;
+/* Outer Fullscreen Wrapper */
+.page-container {
     width: 100%;
-    margin: auto 0;
-    padding: max(20px, env(safe-area-inset-top)) 15px max(24px, env(safe-area-inset-bottom)) 15px;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 14px;
+    justify-content: space-between;
+    align-items: center;
+    padding: max(16px, env(safe-area-inset-top)) 20px max(14px, env(safe-area-inset-bottom)) 20px;
+    max-width: 980px;
+    margin: 0 auto;
 }
 
-/* Header Area */
-.game-header {
+/* ==========================================================================
+   1. TOP NAVIGATION BAR (play2048.co header)
+   ========================================================================== */
+.top-nav-bar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
+    padding: 4px 0 12px 0;
 }
 
-.brand-box {
+/* Left: Hamburger & 2048 Logo */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-hamburger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px;
+    border-radius: 4px;
+    transition: opacity 0.15s ease;
 }
 
-.brand-title {
-    font-size: 72px;
-    font-weight: 700;
-    line-height: 0.9;
-    letter-spacing: -2px;
+.btn-hamburger:hover {
+    opacity: 0.7;
+}
+
+.hamburger-bar {
+    display: block;
+    width: 22px;
+    height: 3px;
+    background-color: #776e65;
+    border-radius: 2px;
+}
+
+.logo-title {
+    font-size: 38px;
+    font-weight: 800;
     color: #776e65;
+    line-height: 1;
+    letter-spacing: -1px;
 }
 
-.brand-badge {
-    font-size: 13px;
-    font-weight: 700;
-    color: #8f7a66;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 6px;
+/* Center: Dual Score Capsules */
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Score Containers */
-.scores-wrapper {
+.scores-container {
     display: flex;
     gap: 8px;
     position: relative;
 }
 
-.score-box {
-    position: relative;
+.score-card {
     background: var(--score-bg);
-    border-radius: 4px;
-    padding: 6px 16px;
-    min-width: 82px;
+    border-radius: 6px;
+    padding: 5px 16px;
+    min-width: 76px;
     text-align: center;
-    color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
-.score-lbl {
-    font-size: 12px;
+.score-card-lbl {
+    font-size: 11px;
     font-weight: 700;
     color: #eee4da;
     text-transform: uppercase;
@@ -114,8 +133,8 @@ body {
     line-height: 1.2;
 }
 
-.score-val {
-    font-size: 22px;
+.score-card-val {
+    font-size: 21px;
     font-weight: 700;
     color: #ffffff;
     line-height: 1.2;
@@ -125,7 +144,7 @@ body {
 /* Floating Score Gain (+16, +1024) */
 #score-gain-floater {
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 20px;
     font-size: 18px;
     font-weight: 700;
@@ -140,79 +159,81 @@ body {
 
 @keyframes floatUp {
     0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-26px); }
+    100% { opacity: 0; transform: translateY(-24px); }
 }
 
-/* Action Controls Bar (Above Game) */
-.above-game {
+/* Right: Feedback & New Game Button */
+.nav-right {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 12px;
 }
 
-.game-intro {
-    font-size: 15px;
-    color: #776e65;
-    line-height: 1.4;
-}
-
-.game-intro strong {
-    color: #776e65;
-    font-weight: 700;
-}
-
-.control-buttons {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.btn-ctrl {
-    background: var(--btn-bg);
+.btn-feedback {
+    background: transparent;
     border: none;
-    color: #f9f6f2;
-    border-radius: 4px;
-    padding: 0 14px;
-    height: 38px;
+    color: #8f7a66;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: inherit;
+    transition: opacity 0.15s ease;
+}
+
+.btn-feedback:hover {
+    opacity: 0.75;
+    text-decoration: underline;
+}
+
+.btn-new-game {
+    background: var(--btn-bg);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 18px;
     font-size: 14px;
     font-weight: 700;
     font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
     white-space: nowrap;
 }
 
-.btn-ctrl:hover {
+.btn-new-game:hover {
     background: var(--btn-hover);
 }
 
-.btn-ctrl:active {
+.btn-new-game:active {
     transform: scale(0.97);
 }
 
-.btn-ctrl.primary {
-    background: #8f7a66;
+/* ==========================================================================
+   2. CENTERED GAME BOARD
+   ========================================================================== */
+.board-area {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 10px 0;
 }
 
-/* 4x4 Classic Board Container */
 .board-container {
     width: 100%;
+    max-width: 470px;
     aspect-ratio: 1 / 1;
     background: var(--board-bg);
     border-radius: var(--radius-board);
-    padding: 15px;
+    padding: 14px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 15px;
+    gap: 14px;
     touch-action: none;
     position: relative;
-    box-shadow: 0 4px 12px rgba(119, 110, 101, 0.15);
+    box-shadow: 0 4px 18px rgba(119, 110, 101, 0.18);
 }
 
 .grid-cell {
@@ -248,7 +269,7 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 42px;
+    font-size: 40px;
     cursor: pointer;
     line-height: 1;
     user-select: none;
@@ -282,121 +303,129 @@ body {
     100% { transform: scale(1); }
 }
 
-/* Dynamic Font Sizes matching Classic 2048 */
+/* Font Sizes */
 .tile-inner.font-medium {
-    font-size: 34px;
+    font-size: 32px;
 }
 
 .tile-inner.font-small {
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .tile-inner.font-tiny {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .tile-exponent-badge {
     position: absolute;
-    bottom: 4px;
-    right: 6px;
-    font-size: 11px;
+    bottom: 3px;
+    right: 5px;
+    font-size: 10px;
     font-weight: 700;
     background: rgba(0, 0, 0, 0.25);
     color: #ffffff;
-    padding: 1px 5px;
+    padding: 1px 4px;
     border-radius: 3px;
     letter-spacing: 0.5px;
 }
 
-/* Game Explanation Footer */
-.game-explanation {
-    font-size: 14px;
-    line-height: 1.6;
+/* ==========================================================================
+   3. BOTTOM CONTROLS (Undo, Sound, Help with dashes)
+   ========================================================================== */
+.bottom-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0 6px 0;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-ctrl-square {
+    width: 48px;
+    height: 48px;
+    background: #d8cbbe;
+    border: none;
+    border-radius: 8px;
     color: #776e65;
-    border-top: 1px solid #d8d4d0;
-    padding-top: 16px;
-    margin-top: 4px;
-}
-
-.game-explanation strong {
+    font-size: 20px;
     font-weight: 700;
-}
-
-/* Copyright Footer (play2048.co Style) */
-.game-copyright {
-    text-align: center;
-    font-size: 13.5px;
-    line-height: 1.5;
-    color: #8f7a66;
-    opacity: 0.75;
-    letter-spacing: 0.3px;
-    padding-top: 4px;
-    padding-bottom: 8px;
-    user-select: none;
-}
-
-/* Floating Mini Close Button (top-left) */
-#btn-exit-to-studyos {
-    position: fixed;
-    top: max(12px, env(safe-area-inset-top));
-    left: max(12px, env(safe-area-inset-left));
-    z-index: 9999999;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #8f7a66;
-    border: 2px solid #ffffff;
-    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: 900;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    opacity: 0.85;
-    transition: all 0.2s ease;
+    transition: background 0.15s ease, transform 0.1s ease, color 0.15s ease;
 }
 
-#btn-exit-to-studyos:hover {
-    opacity: 1;
-    transform: scale(1.08);
+.btn-ctrl-square:hover {
+    background: #8f7a66;
+    color: #ffffff;
+    transform: translateY(-2px);
 }
 
-/* Modals (Inspect & Game Over) */
+.btn-ctrl-square:active {
+    transform: scale(0.95);
+}
+
+.control-dashes {
+    font-size: 11px;
+    font-weight: 700;
+    color: #cdc1b4;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+/* ==========================================================================
+   4. COPYRIGHT FOOTER
+   ========================================================================== */
+.game-copyright {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #8f7a66;
+    opacity: 0.75;
+    letter-spacing: 0.3px;
+    padding: 10px 0 4px 0;
+    user-select: none;
+}
+
+/* ==========================================================================
+   5. MODALS & OVERLAYS
+   ========================================================================== */
 .modal-overlay {
     position: fixed;
     inset: 0;
     z-index: 999999;
-    background: rgba(238, 228, 218, 0.73);
+    background: rgba(238, 228, 218, 0.78);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    animation: fadeIn 0.15s ease;
 }
 
 .modal-overlay.hidden {
-    display: none !important;
+    display: none;
 }
 
 .modal-card {
     background: #faf8ef;
-    border: 2px solid #bbada0;
-    border-radius: 8px;
-    max-width: 440px;
+    border-radius: 10px;
     width: 100%;
-    padding: 26px;
-    box-shadow: 0 16px 40px rgba(119, 110, 101, 0.35);
+    max-width: 400px;
+    padding: 28px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    animation: modalIn 0.2s ease-out;
-}
-
-@keyframes modalIn {
-    0% { opacity: 0; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
+    gap: 16px;
+    color: #776e65;
 }
 
 .modal-header {
@@ -406,72 +435,225 @@ body {
 }
 
 .modal-title {
-    font-size: 22px;
-    font-weight: 700;
-    color: #776e65;
-}
-
-.inspect-meta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.meta-pill {
-    background: #eee4da;
-    padding: 10px;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-}
-
-.meta-lbl {
-    font-size: 11px;
-    color: #8f7a66;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.meta-val {
     font-size: 18px;
     font-weight: 700;
     color: #776e65;
-    margin-top: 2px;
 }
 
-.inspect-box {
-    background: #eee4da;
+.btn-close-modal {
+    background: #d8cbbe;
+    border: none;
     border-radius: 4px;
-    padding: 12px;
-    max-height: 180px;
-    overflow-y: auto;
-    word-break: break-all;
-    font-family: monospace;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #776e65;
+}
+
+/* Win Modal Specifics */
+.win-card {
+    text-align: center;
+    border: 3px solid #edc22e;
+    background: #fffdf5;
+}
+
+.win-icon {
+    font-size: 54px;
+    line-height: 1;
+}
+
+.win-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #edc22e;
+    text-shadow: 0 2px 8px rgba(237, 194, 46, 0.3);
+}
+
+.win-msg {
     font-size: 15px;
+    color: #776e65;
     line-height: 1.5;
+}
+
+.win-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-win {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.1s ease;
+}
+
+.btn-win.primary {
+    background: #edc22e;
+    color: #ffffff;
+}
+
+.btn-win.secondary {
+    background: #8f7a66;
+    color: #ffffff;
+}
+
+.btn-win:active {
+    transform: scale(0.97);
+}
+
+/* Game Over Modal */
+.gameover-card {
+    text-align: center;
+}
+
+.gameover-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #776e65;
+}
+
+.gameover-msg {
+    font-size: 14px;
+    color: #8f7a66;
+}
+
+.gameover-stat-box {
+    background: #eee4da;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+}
+
+.gameover-val {
+    font-size: 20px;
+    font-weight: 800;
     color: #776e65;
 }
 
 .btn-modal-action {
     background: #8f7a66;
-    border: none;
     color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
     font-weight: 700;
     font-size: 15px;
-    padding: 12px;
-    border-radius: 4px;
     cursor: pointer;
-    transition: background 0.15s ease;
+    width: 100%;
 }
 
-.btn-modal-action:hover {
-    background: #9f8a76;
+/* Inspect Modal */
+.inspect-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
 }
 
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
+.meta-pill {
+    background: #eee4da;
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: #8f7a66;
+}
+
+.meta-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #776e65;
+}
+
+.inspect-box {
+    background: #eee4da;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    word-break: break-all;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.help-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #776e65;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BREAKPOINTS (Mobile)
+   ========================================================================== */
+@media (max-width: 640px) {
+    .page-container {
+        padding: 12px 14px;
+    }
+
+    .top-nav-bar {
+        gap: 8px;
+    }
+
+    .logo-title {
+        font-size: 30px;
+    }
+
+    .score-card {
+        padding: 4px 10px;
+        min-width: 64px;
+    }
+
+    .score-card-lbl {
+        font-size: 10px;
+    }
+
+    .score-card-val {
+        font-size: 17px;
+    }
+
+    .btn-feedback {
+        display: none; /* Hide feedback text on narrow mobile to save header space */
+    }
+
+    .btn-new-game {
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+
+    .board-container {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .tile-inner {
+        font-size: 30px;
+    }
+
+    .tile-inner.font-medium {
+        font-size: 24px;
+    }
+
+    .tile-inner.font-small {
+        font-size: 19px;
+    }
+
+    .tile-inner.font-tiny {
+        font-size: 15px;
     }
 }
