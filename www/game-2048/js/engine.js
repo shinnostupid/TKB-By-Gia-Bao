@@ -1,1 +1,262 @@
-const a0_0x472df5=a0_0x4cdc;(function(_0x1a7e46,_0x391b8a){const _0x112416=a0_0x4cdc,_0x4e009e=_0x1a7e46();while(!![]){try{const _0x5ae776=parseInt(_0x112416(0x175,'QHQX'))/0x1+-parseInt(_0x112416(0x1a4,'M4F$'))/0x2+-parseInt(_0x112416(0x1bd,'Genl'))/0x3*(-parseInt(_0x112416(0x13e,'M%ck'))/0x4)+-parseInt(_0x112416(0x18c,'7$5n'))/0x5+-parseInt(_0x112416(0x139,'JKil'))/0x6+parseInt(_0x112416(0x146,'kfJv'))/0x7+parseInt(_0x112416(0x158,'jWLd'))/0x8;if(_0x5ae776===_0x391b8a)break;else _0x4e009e['push'](_0x4e009e['shift']());}catch(_0x456671){_0x4e009e['push'](_0x4e009e['shift']());}}}(a0_0x33bd,0x86b35));class Infinite2048Engine{constructor(_0x1eb957=0x4){const _0x22b1b6=a0_0x4cdc;this[_0x22b1b6(0x18e,'&n0s')]=_0x1eb957,this[_0x22b1b6(0x14f,'49YJ')]=this[_0x22b1b6(0x1b2,'QHQX')](),this[_0x22b1b6(0x1b6,'zhYc')]=0x0n,this[_0x22b1b6(0x140,'MC3e')]=0x0n,this[_0x22b1b6(0x18d,'ePs4')]=[],this[_0x22b1b6(0x132,'zhYc')]=0xf,this[_0x22b1b6(0x182,'Ly9u')]=![],this[_0x22b1b6(0x14e,'JKil')]=null,this[_0x22b1b6(0x12e,'Js%W')]=[];}[a0_0x472df5(0x17e,'Ly9u')](){const _0x19ccbb=a0_0x472df5;return Array[_0x19ccbb(0x128,'9#g2')]({'length':this[_0x19ccbb(0x18e,'&n0s')]},()=>Array(this[_0x19ccbb(0x1ae,'hiis')])[_0x19ccbb(0x145,'654a')](null));}[a0_0x472df5(0x151,'emNP')](_0x2736aa){const _0x2e25ff=a0_0x472df5;return _0x2736aa[_0x2e25ff(0x148,'ePs4')](_0x584ce7=>[..._0x584ce7]);}[a0_0x472df5(0x1a1,'cQST')](){const _0x407fe7=a0_0x472df5;this[_0x407fe7(0x1be,'TXO%')]=this[_0x407fe7(0x160,'49YJ')](),this[_0x407fe7(0x150,'QYQx')]=0x0n,this[_0x407fe7(0x18d,'ePs4')]=[],this[_0x407fe7(0x1a9,'JzxK')]=![],this[_0x407fe7(0x185,'654a')]=null,this[_0x407fe7(0x12e,'Js%W')]=[],this[_0x407fe7(0x16a,'Gd2#')](),this[_0x407fe7(0x17b,'9#g2')]();}[a0_0x472df5(0x180,'zxrT')](){const _0x25080a=a0_0x472df5,_0x44de77=[];for(let _0x206c53=0x0;_0x206c53<this[_0x25080a(0x17a,'gHj9')];_0x206c53++){for(let _0x4e026a=0x0;_0x4e026a<this[_0x25080a(0x184,'t1vF')];_0x4e026a++){this[_0x25080a(0x152,'6DND')][_0x206c53][_0x4e026a]===null&&_0x44de77[_0x25080a(0x13c,'BFR1')]({'r':_0x206c53,'c':_0x4e026a});}}return _0x44de77;}[a0_0x472df5(0x174,'BFR1')](){const _0x15be15=a0_0x472df5,_0x4f5899=this[_0x15be15(0x13a,'!%*x')]();if(_0x4f5899[_0x15be15(0x16f,'8vZ]')]===0x0)return null;const _0x5767a9=_0x4f5899[Math[_0x15be15(0x189,'BFR1')](Math[_0x15be15(0x154,'kfJv')]()*_0x4f5899[_0x15be15(0x1b8,'zF8@')])],_0x4d555b=Math[_0x15be15(0x1a3,'Nmd*')]()<0.9?0x2n:0x4n;return this[_0x15be15(0x130,'M%ck')][_0x5767a9['r']][_0x5767a9['c']]=_0x4d555b,this[_0x15be15(0x1af,'emNP')]={'r':_0x5767a9['r'],'c':_0x5767a9['c'],'value':_0x4d555b},this[_0x15be15(0x1b4,'BFR1')];}[a0_0x472df5(0x1a2,'kfJv')](_0x278506){const _0x5dcf0a=a0_0x472df5,_0x1b9fa6=[];for(let _0x3c4a94=0x0;_0x3c4a94<_0x278506[_0x5dcf0a(0x15f,'49YJ')];_0x3c4a94++){_0x278506[_0x3c4a94]!==null&&_0x1b9fa6[_0x5dcf0a(0x135,'Gd2#')]({'val':_0x278506[_0x3c4a94],'origIdx':_0x3c4a94});}const _0x2abba7=Array(_0x278506[_0x5dcf0a(0x12b,'QYQx')])[_0x5dcf0a(0x12a,'9#g2')](null);let _0x2bfd9c=0x0,_0x2de05c=0x0n;const _0x1238d6=[];let _0x49b366=![],_0x4544f4=0x0;while(_0x4544f4<_0x1b9fa6[_0x5dcf0a(0x173,'ePs4')]){const _0x3e6802=_0x1b9fa6[_0x4544f4],_0x13ac8d=_0x1b9fa6[_0x4544f4+0x1];if(_0x13ac8d&&_0x3e6802[_0x5dcf0a(0x163,'7$5n')]===_0x13ac8d[_0x5dcf0a(0x15d,'tnZW')]){const _0xd4286d=_0x3e6802[_0x5dcf0a(0x164,'YC!$')]*0x2n;_0x2abba7[_0x2bfd9c]=_0xd4286d,_0x2de05c+=_0xd4286d,_0x1238d6[_0x5dcf0a(0x178,'Zh7G')]({'targetIdx':_0x2bfd9c,'fromA':_0x3e6802[_0x5dcf0a(0x162,'hiis')],'fromB':_0x13ac8d[_0x5dcf0a(0x129,'gHj9')],'value':_0xd4286d}),(_0x3e6802[_0x5dcf0a(0x1bf,'&n0s')]!==_0x2bfd9c||_0x13ac8d[_0x5dcf0a(0x1b7,'1Cj3')]!==_0x2bfd9c)&&(_0x49b366=!![]),_0x2bfd9c++,_0x4544f4+=0x2;}else _0x2abba7[_0x2bfd9c]=_0x3e6802[_0x5dcf0a(0x133,'Genl')],_0x3e6802[_0x5dcf0a(0x14a,'!%*x')]!==_0x2bfd9c&&(_0x49b366=!![]),_0x2bfd9c++,_0x4544f4++;}return{'result':_0x2abba7,'scoreGain':_0x2de05c,'merges':_0x1238d6,'moved':_0x49b366};}[a0_0x472df5(0x136,'GTOX')](_0x8af5ef){const _0xdc046c=a0_0x472df5;if(this[_0xdc046c(0x156,'JKil')])return![];const _0xcfd16c=this[_0xdc046c(0x14b,'AbWj')](this[_0xdc046c(0x130,'M%ck')]),_0x3ee750=this[_0xdc046c(0x15a,'Nmd*')];let _0x2e1077=![],_0x277a4c=0x0n;const _0x2b9331=[];if(_0x8af5ef===_0xdc046c(0x1a7,']FO['))for(let _0x1aa523=0x0;_0x1aa523<this[_0xdc046c(0x190,'BFR1')];_0x1aa523++){const _0x54b17d=this[_0xdc046c(0x19b,'&n0s')][_0x1aa523],{result:_0x3af668,scoreGain:_0x327eb9,merges:_0x5269e1,moved:_0x553586}=this[_0xdc046c(0x14d,'tnZW')](_0x54b17d);if(_0x553586)_0x2e1077=!![];_0x277a4c+=_0x327eb9,this[_0xdc046c(0x1bb,'tnZW')][_0x1aa523]=_0x3af668,_0x5269e1[_0xdc046c(0x143,'Genl')](_0x432ed4=>_0x2b9331[_0xdc046c(0x138,'49YJ')]({'r':_0x1aa523,'c':_0x432ed4[_0xdc046c(0x18b,'7$5n')],'value':_0x432ed4[_0xdc046c(0x166,'Ly9u')]}));}else{if(_0x8af5ef===_0xdc046c(0x195,'M4F$'))for(let _0x73e953=0x0;_0x73e953<this[_0xdc046c(0x18a,'8vZ]')];_0x73e953++){const _0x57cc04=[...this[_0xdc046c(0x127,'Gd2#')][_0x73e953]][_0xdc046c(0x155,'ePs4')](),{result:_0x46efa0,scoreGain:_0x342868,merges:_0x3830d6,moved:_0x2a939d}=this[_0xdc046c(0x1ad,'31[6')](_0x57cc04);if(_0x2a939d)_0x2e1077=!![];_0x277a4c+=_0x342868,this[_0xdc046c(0x15e,'GTOX')][_0x73e953]=_0x46efa0[_0xdc046c(0x194,'QQ1g')](),_0x3830d6[_0xdc046c(0x13f,'Gd2#')](_0x9fe4da=>_0x2b9331[_0xdc046c(0x12f,'jWLd')]({'r':_0x73e953,'c':this[_0xdc046c(0x1ac,'QQ1g')]-0x1-_0x9fe4da[_0xdc046c(0x177,'!%*x')],'value':_0x9fe4da[_0xdc046c(0x137,'Js%W')]}));}else{if(_0x8af5ef==='up')for(let _0x4a4fd2=0x0;_0x4a4fd2<this[_0xdc046c(0x179,'9#g2')];_0x4a4fd2++){const _0x1dc449=[];for(let _0x1eb103=0x0;_0x1eb103<this[_0xdc046c(0x17c,'Gd2#')];_0x1eb103++)_0x1dc449[_0xdc046c(0x12f,'jWLd')](this[_0xdc046c(0x17d,'QQ1g')][_0x1eb103][_0x4a4fd2]);const {result:_0x500f00,scoreGain:_0x1cedd8,merges:_0x55da7a,moved:_0x74857d}=this[_0xdc046c(0x193,'Gd2#')](_0x1dc449);if(_0x74857d)_0x2e1077=!![];_0x277a4c+=_0x1cedd8;for(let _0x416fce=0x0;_0x416fce<this[_0xdc046c(0x13d,'emNP')];_0x416fce++)this[_0xdc046c(0x19e,'31[6')][_0x416fce][_0x4a4fd2]=_0x500f00[_0x416fce];_0x55da7a[_0xdc046c(0x19c,'QYQx')](_0x193796=>_0x2b9331[_0xdc046c(0x1b9,'YC!$')]({'r':_0x193796[_0xdc046c(0x147,'654a')],'c':_0x4a4fd2,'value':_0x193796[_0xdc046c(0x198,']FO[')]}));}else{if(_0x8af5ef===_0xdc046c(0x1a6,'qxEG'))for(let _0x24c8bf=0x0;_0x24c8bf<this[_0xdc046c(0x172,'Genl')];_0x24c8bf++){const _0x188302=[];for(let _0x300181=this[_0xdc046c(0x190,'BFR1')]-0x1;_0x300181>=0x0;_0x300181--)_0x188302[_0xdc046c(0x19a,'kfJv')](this[_0xdc046c(0x176,'Ly9u')][_0x300181][_0x24c8bf]);const {result:_0x35ef18,scoreGain:_0x44d04d,merges:_0x481f99,moved:_0x4bf2eb}=this[_0xdc046c(0x197,'AbWj')](_0x188302);if(_0x4bf2eb)_0x2e1077=!![];_0x277a4c+=_0x44d04d;for(let _0xcf336f=0x0;_0xcf336f<this[_0xdc046c(0x157,'6DND')];_0xcf336f++){this[_0xdc046c(0x1ab,'Genl')][this[_0xdc046c(0x134,'M%ck')]-0x1-_0xcf336f][_0x24c8bf]=_0x35ef18[_0xcf336f];}_0x481f99[_0xdc046c(0x17f,'JKil')](_0x47da71=>_0x2b9331[_0xdc046c(0x135,'Gd2#')]({'r':this[_0xdc046c(0x1b5,'X&%M')]-0x1-_0x47da71[_0xdc046c(0x19f,'ePs4')],'c':_0x24c8bf,'value':_0x47da71[_0xdc046c(0x1c0,'M%ck')]}));}}}}if(!_0x2e1077)return![];this[_0xdc046c(0x14c,'kfJv')][_0xdc046c(0x12c,'tnZW')]({'board':_0xcfd16c,'score':_0x3ee750});this[_0xdc046c(0x1ba,'JKil')][_0xdc046c(0x16e,'7$5n')]>this[_0xdc046c(0x181,'!%*x')]&&this[_0xdc046c(0x18d,'ePs4')][_0xdc046c(0x1b1,'9#g2')]();this[_0xdc046c(0x171,'1Cj3')]+=_0x277a4c;this[_0xdc046c(0x1a8,'TXO%')]>this[_0xdc046c(0x187,'!%*x')]&&(this[_0xdc046c(0x19d,'7$5n')]=this[_0xdc046c(0x165,'&n0s')]);const _0x363313=this[_0xdc046c(0x186,'kfJv')]();return this[_0xdc046c(0x196,'M%ck')]=this[_0xdc046c(0x1a5,'gHj9')](),{'moved':!![],'scoreGain':_0x277a4c,'merges':_0x2b9331,'spawn':_0x363313,'gameOver':this[_0xdc046c(0x149,'&n0s')]};}[a0_0x472df5(0x15b,'49YJ')](){const _0x21cc04=a0_0x472df5;if(this[_0x21cc04(0x18d,'ePs4')][_0x21cc04(0x1b8,'zF8@')]===0x0)return![];const _0x13ae50=this[_0x21cc04(0x12d,'jWLd')][_0x21cc04(0x15c,'kfJv')]();return this[_0x21cc04(0x130,'M%ck')]=this[_0x21cc04(0x170,'654a')](_0x13ae50[_0x21cc04(0x1be,'TXO%')]),this[_0x21cc04(0x188,'pLPG')]=_0x13ae50[_0x21cc04(0x144,'X&%M')],this[_0x21cc04(0x141,'!%*x')]=![],this[_0x21cc04(0x1bc,'Js%W')]=null,!![];}[a0_0x472df5(0x16b,'SEuN')](){const _0x409e75=a0_0x472df5;for(let _0x373d5b=0x0;_0x373d5b<this[_0x409e75(0x1c3,'SEuN')];_0x373d5b++){for(let _0x573430=0x0;_0x573430<this[_0x409e75(0x142,'TXO%')];_0x573430++){if(this[_0x409e75(0x15e,'GTOX')][_0x373d5b][_0x573430]===null)return![];}}for(let _0x3f9537=0x0;_0x3f9537<this[_0x409e75(0x184,'t1vF')];_0x3f9537++){for(let _0x1b1ff3=0x0;_0x1b1ff3<this[_0x409e75(0x1a0,'zhYc')];_0x1b1ff3++){const _0xda302c=this[_0x409e75(0x16c,']FO[')][_0x3f9537][_0x1b1ff3];if(_0x1b1ff3+0x1<this[_0x409e75(0x1c2,'AbWj')]&&this[_0x409e75(0x14f,'49YJ')][_0x3f9537][_0x1b1ff3+0x1]===_0xda302c)return![];if(_0x3f9537+0x1<this[_0x409e75(0x183,'QYQx')]&&this[_0x409e75(0x127,'Gd2#')][_0x3f9537+0x1][_0x1b1ff3]===_0xda302c)return![];}}return!![];}[a0_0x472df5(0x192,'BFR1')](){const _0x1699c2=a0_0x472df5;let _0x4e7688=0x0n;for(let _0x4f5ada=0x0;_0x4f5ada<this[_0x1699c2(0x1b3,'31[6')];_0x4f5ada++){for(let _0x55bae0=0x0;_0x55bae0<this[_0x1699c2(0x13d,'emNP')];_0x55bae0++){const _0x5e05be=this[_0x1699c2(0x167,'*izY')][_0x4f5ada][_0x55bae0];if(_0x5e05be!==null&&_0x5e05be>_0x4e7688)_0x4e7688=_0x5e05be;}}return _0x4e7688;}static[a0_0x472df5(0x1c1,'pLPG')](_0x24a25d){const _0x62a1b4=a0_0x472df5;if(!_0x24a25d||_0x24a25d<=0x0n)return 0x0;return _0x24a25d[_0x62a1b4(0x18f,'JKil')](0x2)[_0x62a1b4(0x13b,'gHj9')]-0x1;}}function a0_0x33bd(){const _0x3c0af8=['WRBcGmoifSoPAdddSmkx','xmoYW5hcV8oU','eCkiy8kKvG','o8kDW6rja8o0WRrHW6Gs','W5qQW7dcQr0','nmosW7/cUMaJWQy','WRlcOJDLWO3cLG','W57dTmkSWOrZjSkE','WR3cGmowb8o1BJtdTq','W4uSW6VcVG','WPdcOIldJCo5AMhcJmkcBb4DWQm','zSkvs0qmWRldSa','WPJcTmoCW4Oz','s8oZW5tcOG','WRdcRcK','WQVdMuO','FczrocO','uSo4W57cQSo+W6G','xCoVW5xcRmo+W6xcJM3cKSksqSkSWQToW6VcUG','uCoBnCoUa8omfXZcJSoMW7Scrq','WQXdW5ZcNH7cJeu','WO/cH8kX','CSkTW5y','yafnW4mS','iwGlW6tdQW','W4RcJCkAuSkL','W53cJmkFrCkNyxVdISkG','WOX7CCkweZJdLa7cQezmaa','WR3cMfFdNtldU1yhBq','W77cQCkDDc5oW5C5b8kvDWVcMa','cJ/dUqrv','d8kVWOJdTCk8WRhdVNRcImkssmk/WRa','WPxcG8kZWPBcL3m','W67dT8kZpSkKdG','WR3cJGxcUuhcUL1mkgC','WRFcQWWKW4m','r0/dJmkS','W4ddTmk0WOz1pq','CmkDwLWqWPldQNjv','pSkJWP7dHmoMWPzTCCk5u2pcUq','nwygW6pdQG','WRC6WRmOwcCmsZO','W7rfW64y','jbpdJHm','sKFdKSoQ','jaRdLqfEAxjZAa','WR3cGuZdJW','W7/dM3BdTX4','nhScW7ddUSoCnuBcGSkeDmo+DZNcGmou','WRZcJSojj8oBEZK','W69yW7rNW4FdHSkzsu7cVmoLWRf6','WQ46WRKhvcaXqddcPW','mgGkW7tdGCopfvK','eCkcDSkZ','W61egCo/','WRlcGXNcO3FcIfnAna','WRpcSZH2WOZcR8omWQZdGq','WQe+WRi7BJaQxsC','umoFk8k9W6i','zCkbveqm','W7hdU8kNpa','WO3cH8kVWPBcHM/cRCoXWOm','W4JdLmoLW4NdLsRdKCoVWPhcKLFdLSoj','W4tdUmkPWPvUj8kc','yaTyW5q','WQ7cJSoOfSoiCt/dOa','Cmkequ4','WPlcQc3dI8o1AghcLSkfza4cWR8','zmkit2yFWR7dL3DCWRm','WR3cHf/dJJNdO1yfBq','W6/dKwhdOaGRW7q','qCo7bGRdJq','W7ZcPK42W5aTdSk4','W5zTsIJdJ8oOWRxdOaC','hJhdTanu','W5dcIKZdSaXOhCoDW5JdTmoBW5bs','WRdcTIPP','Cq1dW4mT','bmkeFSktuSkxrW','WPVcG8kUWOxcShJcI8oNWP4','W6/dLSopW6RcTG','W5JdSmkOWOzKiCkYW4KD','WPHmWQi1','bmkTqJ0hFe0RimkHzLS','WRpcRZbLWOFcT8omWQ7dGq','WPNcTSoDW5WtW6e','aSkQwvVcJhOBWRhcUmkTWOTzha','wKBdJCoSomkSffNdS1PAbKq','W7yzyaK','bdxdVGi','B8kHW5RcVSkg','W6W3WPNdKSkSWRJdMhG','W63cHYdcN23cUNu','vKNdL8k7xa','W67dNw3dOa','W77dLCohW7ZcT8kKWQpcS8kq','WRbyW4/cNa','nmkqW7HtnCogWRP3W7q','WRadWQPgWQilFeeOW50el8o4','jbldNrbe','zmoPW43cK8kKW4j9v8kyFvBcKSoVWOddSSk5','W77dKmouW70','B8kmsf8TWRBdOMLE','W4JcN8kFFq','WPHgWRCIW7O','WQVcUGOXW6/cVSok','W5KMkCohuwe','Dmk5W4KS','WRlcImoifSovAIG','WR/dL0DHW7S','umkJWQeWrSkXdKpcKq','b0pdVmkbCCoQWOW','FSkTW5tcVSkh','FbblW5yaWQeJ','W63cPK8MW7O','rmozmmkkW79dWQiii1pcKa','W5zOwsK','W67cQmkcCG','WQZcH1FdMdG','mqJdMXS','vLZdGCoOgSkpdq','mrpdMbO','dSkoySkXr8kC','WQ3dJvv7','W4NdS2NcISkIkcG','umkJWQeWwmkUgvhcJa','W5hdR2NcLG','W7NcQeiHW7S','W5ODW6bPWQPCW6WOWPdcIdDNBa','WOzeWQayW7yzWQWPWQFcOa','qKFdMG','W6JcRLK2','WR7cNuxdGG','CYzglW','sSkJWR4XCa','tSoOW4pcPq','W67dKSkmvmkjkMpdTCkazSoejCod','WQq+WRukucmXvGhcU095WQO','vuVdHSoOj8kd','C8kysem','k8kyW7fc','WQJdTrrMWQDPw8kBWRnuWQChjq','WQJcH0tdRZ3dJfC','W4qsWPJcIthcRCktWORdRG','WQq6WQWQCIuGxq','B8kRW4/cQq','uKNdHmkmwColWQm','W4JcLCkkAGq','WRJcIWBcUW','W7pdS2a5W5ldG8kDWRRdIuPXESot','WQRcGXJcSehcJhTjiG','W4hdSmkQ','DanpW5qgWRm+AW','WQWPWQGODdC9','W4zTtcldJ8oMWRpdRXax','WQJcQIP1WO3cICoC','WQ7dLe93W7PgfSkfWQq'];a0_0x33bd=function(){return _0x3c0af8;};return a0_0x33bd();}function a0_0x4cdc(_0x101274,_0x3c8cda){_0x101274=_0x101274-0x127;const _0x33bd7f=a0_0x33bd();let _0x4cdce6=_0x33bd7f[_0x101274];if(a0_0x4cdc['oAUjzo']===undefined){var _0x3ae78a=function(_0x211a10){const _0xfe7364='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x1eb957='',_0x2736aa='';for(let _0x584ce7=0x0,_0x44de77,_0x206c53,_0x4e026a=0x0;_0x206c53=_0x211a10['charAt'](_0x4e026a++);~_0x206c53&&(_0x44de77=_0x584ce7%0x4?_0x44de77*0x40+_0x206c53:_0x206c53,_0x584ce7++%0x4)?_0x1eb957+=String['fromCharCode'](0xff&_0x44de77>>(-0x2*_0x584ce7&0x6)):0x0){_0x206c53=_0xfe7364['indexOf'](_0x206c53);}for(let _0x4f5899=0x0,_0x5767a9=_0x1eb957['length'];_0x4f5899<_0x5767a9;_0x4f5899++){_0x2736aa+='%'+('00'+_0x1eb957['charCodeAt'](_0x4f5899)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x2736aa);};const _0x42285=function(_0x4d555b,_0x278506){let _0x1b9fa6=[],_0x2abba7=0x0,_0x2bfd9c,_0x2de05c='';_0x4d555b=_0x3ae78a(_0x4d555b);let _0x1238d6;for(_0x1238d6=0x0;_0x1238d6<0x100;_0x1238d6++){_0x1b9fa6[_0x1238d6]=_0x1238d6;}for(_0x1238d6=0x0;_0x1238d6<0x100;_0x1238d6++){_0x2abba7=(_0x2abba7+_0x1b9fa6[_0x1238d6]+_0x278506['charCodeAt'](_0x1238d6%_0x278506['length']))%0x100,_0x2bfd9c=_0x1b9fa6[_0x1238d6],_0x1b9fa6[_0x1238d6]=_0x1b9fa6[_0x2abba7],_0x1b9fa6[_0x2abba7]=_0x2bfd9c;}_0x1238d6=0x0,_0x2abba7=0x0;for(let _0x49b366=0x0;_0x49b366<_0x4d555b['length'];_0x49b366++){_0x1238d6=(_0x1238d6+0x1)%0x100,_0x2abba7=(_0x2abba7+_0x1b9fa6[_0x1238d6])%0x100,_0x2bfd9c=_0x1b9fa6[_0x1238d6],_0x1b9fa6[_0x1238d6]=_0x1b9fa6[_0x2abba7],_0x1b9fa6[_0x2abba7]=_0x2bfd9c,_0x2de05c+=String['fromCharCode'](_0x4d555b['charCodeAt'](_0x49b366)^_0x1b9fa6[(_0x1b9fa6[_0x1238d6]+_0x1b9fa6[_0x2abba7])%0x100]);}return _0x2de05c;};a0_0x4cdc['OaPqos']=_0x42285,a0_0x4cdc['JTuZLs']={},a0_0x4cdc['oAUjzo']=!![];}const _0x5d30ae=_0x33bd7f[0x0];a0_0x4cdc['YYxkxR']!==_0x5d30ae&&(a0_0x4cdc['JTuZLs']={},a0_0x4cdc['YYxkxR']=_0x5d30ae);const _0x13b27a=a0_0x4cdc['JTuZLs'][_0x101274];return _0x13b27a===undefined?(a0_0x4cdc['MAqmIO']===undefined&&(a0_0x4cdc['MAqmIO']=!![]),_0x4cdce6=a0_0x4cdc['OaPqos'](_0x4cdce6,_0x3c8cda),a0_0x4cdc['JTuZLs'][_0x101274]=_0x4cdce6):_0x4cdce6=_0x13b27a,_0x4cdce6;}typeof module!==a0_0x472df5(0x168,'*izY')&&module[a0_0x472df5(0x153,'gkZB')]&&(module[a0_0x472df5(0x159,'BFR1')]=Infinite2048Engine);
+/**
+ * 2048 INFINITE — Pure BigInt Core Game Engine
+ * Strictly maintains exact arbitrary-precision arithmetic without limits.
+ * No max value restrictions. Fully supports infinite 2^k scaling.
+ */
+
+class Infinite2048Engine {
+    constructor(size = 4) {
+        this.size = size;
+        this.board = this.createEmptyBoard();
+        this.score = 0n;
+        this.bestScore = 0n;
+        this.history = []; // For Undo functionality
+        this.maxHistory = 15;
+        this.gameOver = false;
+        this.lastSpawn = null;
+        this.lastMoves = [];
+    }
+
+    createEmptyBoard() {
+        return Array.from({ length: this.size }, () => Array(this.size).fill(null));
+    }
+
+    cloneBoard(b) {
+        return b.map(row => [...row]);
+    }
+
+    startNewGame() {
+        this.board = this.createEmptyBoard();
+        this.score = 0n;
+        this.history = [];
+        this.gameOver = false;
+        this.lastSpawn = null;
+        this.lastMoves = [];
+
+        this.spawnTile();
+        this.spawnTile();
+    }
+
+    getEmptyCells() {
+        const cells = [];
+        for (let r = 0; r < this.size; r++) {
+            for (let c = 0; c < this.size; c++) {
+                if (this.board[r][c] === null) {
+                    cells.push({ r, c });
+                }
+            }
+        }
+        return cells;
+    }
+
+    spawnTile() {
+        const emptyCells = this.getEmptyCells();
+        if (emptyCells.length === 0) return null;
+
+        const cell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        // 90% chance of 2n, 10% chance of 4n
+        const val = Math.random() < 0.9 ? 2n : 4n;
+        this.board[cell.r][cell.c] = val;
+        this.lastSpawn = { r: cell.r, c: cell.c, value: val };
+        return this.lastSpawn;
+    }
+
+    /**
+     * Slide and merge a single 1D line of BigInts
+     * Returns: { newLine, scoreGain, merges, moved }
+     */
+    slideLine(line) {
+        const nonNulls = [];
+        for (let i = 0; i < line.length; i++) {
+            if (line[i] !== null) {
+                nonNulls.push({ val: line[i], origIdx: i });
+            }
+        }
+
+        const result = Array(line.length).fill(null);
+        let targetIdx = 0;
+        let scoreGain = 0n;
+        const merges = [];
+        let moved = false;
+
+        let i = 0;
+        while (i < nonNulls.length) {
+            const current = nonNulls[i];
+            const next = nonNulls[i + 1];
+
+            if (next && current.val === next.val) {
+                // Merge two equal adjacent tiles
+                const mergedVal = current.val * 2n;
+                result[targetIdx] = mergedVal;
+                scoreGain += mergedVal;
+                merges.push({
+                    targetIdx,
+                    fromA: current.origIdx,
+                    fromB: next.origIdx,
+                    value: mergedVal
+                });
+                if (current.origIdx !== targetIdx || next.origIdx !== targetIdx) {
+                    moved = true;
+                }
+                targetIdx++;
+                i += 2; // Both tiles consumed
+            } else {
+                result[targetIdx] = current.val;
+                if (current.origIdx !== targetIdx) {
+                    moved = true;
+                }
+                targetIdx++;
+                i++;
+            }
+        }
+
+        return { result, scoreGain, merges, moved };
+    }
+
+    /**
+     * Execute a move in one of 4 directions: 'left', 'right', 'up', 'down'
+     * Returns true if the board changed, false otherwise.
+     */
+    move(direction) {
+        if (this.gameOver) return false;
+
+        const prevBoard = this.cloneBoard(this.board);
+        const prevScore = this.score;
+
+        let movedOverall = false;
+        let totalScoreGain = 0n;
+        const allMerges = [];
+
+        if (direction === 'left') {
+            for (let r = 0; r < this.size; r++) {
+                const row = this.board[r];
+                const { result, scoreGain, merges, moved } = this.slideLine(row);
+                if (moved) movedOverall = true;
+                totalScoreGain += scoreGain;
+                this.board[r] = result;
+                merges.forEach(m => allMerges.push({ r, c: m.targetIdx, value: m.value }));
+            }
+        } else if (direction === 'right') {
+            for (let r = 0; r < this.size; r++) {
+                const reversed = [...this.board[r]].reverse();
+                const { result, scoreGain, merges, moved } = this.slideLine(reversed);
+                if (moved) movedOverall = true;
+                totalScoreGain += scoreGain;
+                this.board[r] = result.reverse();
+                merges.forEach(m => allMerges.push({ r, c: this.size - 1 - m.targetIdx, value: m.value }));
+            }
+        } else if (direction === 'up') {
+            for (let c = 0; c < this.size; c++) {
+                const col = [];
+                for (let r = 0; r < this.size; r++) col.push(this.board[r][c]);
+                const { result, scoreGain, merges, moved } = this.slideLine(col);
+                if (moved) movedOverall = true;
+                totalScoreGain += scoreGain;
+                for (let r = 0; r < this.size; r++) this.board[r][c] = result[r];
+                merges.forEach(m => allMerges.push({ r: m.targetIdx, c, value: m.value }));
+            }
+        } else if (direction === 'down') {
+            for (let c = 0; c < this.size; c++) {
+                const col = [];
+                for (let r = this.size - 1; r >= 0; r--) col.push(this.board[r][c]);
+                const { result, scoreGain, merges, moved } = this.slideLine(col);
+                if (moved) movedOverall = true;
+                totalScoreGain += scoreGain;
+                for (let r = 0; r < this.size; r++) {
+                    this.board[this.size - 1 - r][c] = result[r];
+                }
+                merges.forEach(m => allMerges.push({ r: this.size - 1 - m.targetIdx, c, value: m.value }));
+            }
+        }
+
+        if (!movedOverall) {
+            return false;
+        }
+
+        // Save state to undo history
+        this.history.push({
+            board: prevBoard,
+            score: prevScore
+        });
+        if (this.history.length > this.maxHistory) {
+            this.history.shift();
+        }
+
+        // Update score
+        this.score += totalScoreGain;
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+        }
+
+        // Spawn new tile after valid move
+        const newSpawn = this.spawnTile();
+
+        // Check for Game Over
+        this.gameOver = this.checkGameOver();
+
+        return {
+            moved: true,
+            scoreGain: totalScoreGain,
+            merges: allMerges,
+            spawn: newSpawn,
+            gameOver: this.gameOver
+        };
+    }
+
+    undo() {
+        if (this.history.length === 0) return false;
+
+        const lastState = this.history.pop();
+        this.board = this.cloneBoard(lastState.board);
+        this.score = lastState.score;
+        this.gameOver = false;
+        this.lastSpawn = null;
+        return true;
+    }
+
+    checkGameOver() {
+        // If any cell is empty, game is NOT over
+        for (let r = 0; r < this.size; r++) {
+            for (let c = 0; c < this.size; c++) {
+                if (this.board[r][c] === null) return false;
+            }
+        }
+
+        // If any adjacent cells match, game is NOT over
+        for (let r = 0; r < this.size; r++) {
+            for (let c = 0; c < this.size; c++) {
+                const val = this.board[r][c];
+                // Check right
+                if (c + 1 < this.size && this.board[r][c + 1] === val) return false;
+                // Check down
+                if (r + 1 < this.size && this.board[r + 1][c] === val) return false;
+            }
+        }
+
+        return true;
+    }
+
+    getMaxTile() {
+        let max = 0n;
+        for (let r = 0; r < this.size; r++) {
+            for (let c = 0; c < this.size; c++) {
+                const v = this.board[r][c];
+                if (v !== null && v > max) max = v;
+            }
+        }
+        return max;
+    }
+
+    /**
+     * Compute exact power of 2 exponent: 2^k == val
+     * Since val is a power of 2, val.toString(2).length - 1 gives k with zero precision loss.
+     */
+    static getExponent(val) {
+        if (!val || val <= 0n) return 0;
+        return val.toString(2).length - 1;
+    }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Infinite2048Engine;
+}
