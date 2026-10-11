@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mathverse — Mysterious Mathematical Universe</title>
+    <meta name="description" content="Trải nghiệm vũ trụ toán học huyền bí Mathverse. Khám phá không gian các công thức chuyển động và thử thách trí tuệ đỉnh cao.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2309090f'/%3E%3Cpath d='M20 44 L32 20 L44 44 Z' stroke='%23f5f3ef' stroke-width='3' fill='none'/%3E%3Ccircle cx='32' cy='32' r='4' fill='%23f5f3ef'/%3E%3C/svg%3E">
+
+    <!-- Fonts: Cinzel Academic Serif, JetBrains Mono, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- 1. Background Canvas: Mysterious Mathematical Universe -->
+    <canvas id="math-canvas"></canvas>
+
+    <!-- 2. Floating Exit Button to Study OS -->
+    <button type="button" id="btn-exit-to-studyos" onclick="exitGameToStudyOS()" title="Thoát về Góc Học Tập">
+        ✕
+    </button>
+
+    <!-- 3. Foreground Interactive Game Container -->
+    <div class="game-container">
+
+        <!-- Top Header -->
+        <header class="mathverse-header">
+            <div class="brand-group">
+                <h1 class="brand-title">MATHVERSE</h1>
+                <div class="brand-subtitle">MYSTERIOUS MATHEMATICAL UNIVERSE</div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-pill" id="timer-box" class="hidden">
+                    <span class="stat-label">THỜI GIAN</span>
+                    <span class="stat-val urgent-text" id="val-timer">50s</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">ĐIỂM</span>
+                    <span class="stat-val" id="val-score">0</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">COMBO</span>
+                    <span class="stat-val combo-val" id="val-combo">x0</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="stat-label">KỶ LỤC</span>
+                    <span class="stat-val" id="val-best">0</span>
+                </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="control-actions">
+                <button type="button" class="btn-icon" id="btn-cosmos" title="Điều chỉnh hiệu ứng vũ trụ (Mạnh / Dịu / Tắt)">
+                    <span>🌌</span>
+                </button>
+                <button type="button" class="btn-icon" id="btn-sound" title="Bật / Tắt âm thanh">
+                    <span>🔊</span>
+                </button>
+                <button type="button" class="btn-icon" id="btn-help" title="Hướng dẫn">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Glass Game Card -->
+        <main class="main-card">
+
+            <!-- Mode Selector Tabs -->
+            <nav class="mode-tabs">
+                <button type="button" class="mode-tab active" data-mode="EQUATION_BALANCE">
+                    <span>🌌</span> Cân Bằng Phương Trình
+                </button>
+                <button type="button" class="mode-tab" data-mode="QUANTUM_MATRIX">
+                    <span>🔢</span> Ma Trận Quy Luật
+                </button>
+                <button type="button" class="mode-tab" data-mode="SPEED_CALCULUS">
+                    <span>⚡</span> Đua Tốc Độ 50s
+                </button>
+            </nav>
+
+            <!-- Question Display Area -->
+            <section class="question-section">
+                <div class="card-badge" id="card-title">CÂN BẰNG PHƯƠNG TRÌNH</div>
+
+                <div class="formula-display-wrap">
+                    <div class="formula-text" id="card-formula">
+                        7 · ? + 9 = 51
+                    </div>
+                </div>
+
+                <div class="formula-hint" id="card-hint">
+                    💡 Tìm ẩn số ? thỏa mãn phương trình
+                </div>
+            </section>
+
+            <!-- 4 Options Grid -->
+            <div class="options-grid" id="options-grid">
+                <!-- Dynamically populated options -->
+            </div>
+
+        </main>
+
+        <!-- Copyright Footer -->
+        <footer class="game-copyright">
+            Mathverse © 2024–2026 DGB. All rights reserved.
+        </footer>
+
+    </div>
+
+    <!-- Modals -->
+
+    <!-- 1. Help Modal -->
+    <div id="modal-help" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">📖 LUẬT CHƠI MATHVERSE</h3>
+                <button type="button" class="btn-close-modal" data-target="modal-help">✕</button>
+            </div>
+            <div class="help-body">
+                <p>• <b>Vũ trụ Toán học:</b> Nền hiển thị hàng loạt các công thức toán học thực tế chuyển động trên quỹ đạo elip 3D quanh các tâm vô hình.</p>
+                <p>• <b>Chế độ 1 — Cân Bằng Phương Trình:</b> Giải các phương trình đại số, căn thức, lũy thừa để tìm ẩn số còn thiếu.</p>
+                <p>• <b>Chế độ 2 — Ma Trận Quy Luật:</b> Giải mã quy luật các dãy số Fibonacci, số nguyên tố, hình học thiên hà.</p>
+                <p>• <b>Chế độ 3 — Đua Tốc Độ 50s:</b> Chạy đua với thời gian, mỗi câu đúng cộng +2s, sai bị trừ -3s!</p>
+                <p>• <b>Nút 🌌 Góc Phải:</b> Bạn có thể bấm để chuyển đổi cường độ background vũ trụ (Sâu thẳm ➔ Nhẹ dịu ➔ Tắt hẳn) để tập trung làm bài thi.</p>
+            </div>
+            <button type="button" class="btn-modal-action btn-close-modal" data-target="modal-help">Đã Hiểu</button>
+        </div>
+    </div>
+
+    <!-- 2. Game Over Modal (For Speed Mode) -->
+    <div id="modal-gameover" class="modal-overlay hidden">
+        <div class="modal-card" style="text-align:center">
+            <h2 class="modal-title" style="font-size:24px;font-family:'Cinzel',serif;color:#fdfbf7">HẾT THỜI GIAN!</h2>
+            <p style="color:#a1a1aa;font-size:13px;margin:6px 0 16px">Chuyến du hành toán học tốc độ đã kết thúc.</p>
+
+            <div class="go-stats-grid">
+                <div class="go-stat-pill">
+                    <span class="go-lbl">TỔNG ĐIỂM</span>
+                    <span class="go-val" id="go-final-score">0</span>
+                </div>
+                <div class="go-stat-pill">
+                    <span class="go-lbl">MAX COMBO</span>
+                    <span class="go-val" id="go-max-combo">x0</span>
+                </div>
+                <div class="go-stat-pill">
+                    <span class="go-lbl">ĐỘ CHÍNH XÁC</span>
+                    <span class="go-val" id="go-accuracy">0%</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn-modal-action" id="btn-gameover-restart">🔄 Thử Lại Ván Mới</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/math-universe.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/game-engine.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

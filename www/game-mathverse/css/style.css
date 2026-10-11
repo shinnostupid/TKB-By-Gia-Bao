@@ -1,0 +1,531 @@
+/* ==========================================================================
+   MATHVERSE — Mysterious Mathematical Universe Design System
+   Monochromatic, Academic, High-End Luxury, Deep Contrast
+   ========================================================================== */
+
+:root {
+    --bg-universe: #050508;
+    --text-primary: #fdfbf7;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --card-bg: rgba(13, 13, 19, 0.76);
+    --card-border: rgba(255, 255, 255, 0.11);
+    --btn-bg: rgba(24, 24, 34, 0.65);
+    --btn-border: rgba(255, 255, 255, 0.12);
+    --font-serif: 'Cinzel', 'Times New Roman', 'Cambria Math', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --radius-lg: 18px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100dvh;
+    background-color: var(--bg-universe);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background 3D Canvas */
+#math-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Floating Mini Close Button (top-left) */
+#btn-exit-to-studyos {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    left: max(14px, env(safe-area-inset-left));
+    z-index: 9999999;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(20, 20, 28, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+}
+
+#btn-exit-to-studyos:hover {
+    background: rgba(40, 40, 56, 0.95);
+    transform: scale(1.08);
+}
+
+/* Foreground Interactive Game Container */
+.game-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom)) 16px;
+    gap: 16px;
+}
+
+/* ==========================================================================
+   1. TOP HEADER & STATS
+   ========================================================================== */
+.mathverse-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 6px 12px;
+    background: rgba(14, 14, 20, 0.65);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(14px);
+    border-radius: var(--radius-md);
+}
+
+.brand-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-title {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ffffff;
+    line-height: 1.1;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.brand-subtitle {
+    font-size: 9.5px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Stats Pills */
+.stats-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.stat-pill {
+    background: rgba(24, 24, 34, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 5px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 62px;
+}
+
+.stat-pill.urgent {
+    border-color: #ef4444;
+    animation: urgentPulse 0.8s infinite alternate;
+}
+
+@keyframes urgentPulse {
+    from { background: rgba(239, 68, 68, 0.15); }
+    to { background: rgba(239, 68, 68, 0.35); }
+}
+
+.stat-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+.stat-val {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.combo-val.pulse {
+    animation: comboPop 0.3s ease;
+}
+
+@keyframes comboPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); color: #facc15; }
+    100% { transform: scale(1); }
+}
+
+/* Action Controls (Cosmos, Sound, Help) */
+.control-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    background: rgba(24, 24, 34, 0.8);
+    border: 1px solid var(--btn-border);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.15s ease;
+}
+
+.btn-icon:hover {
+    background: rgba(45, 45, 62, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   2. MAIN GLASS GAME CARD
+   ========================================================================== */
+.main-card {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Mode Navigation Tabs */
+.mode-tabs {
+    display: flex;
+    gap: 8px;
+    background: rgba(10, 10, 16, 0.75);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mode-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 9px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.mode-tab:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.mode-tab.active {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Question Area */
+.question-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.card-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.formula-display-wrap {
+    width: 100%;
+    min-height: 110px;
+    background: rgba(8, 8, 12, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 24px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.formula-text {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    font-weight: 700;
+    font-style: italic;
+    color: #fdfbf7;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    text-shadow: 0 0 16px rgba(255, 255, 255, 0.25);
+    word-break: break-word;
+}
+
+.formula-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Options Grid */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.btn-option {
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+    font-size: 21px;
+    font-weight: 700;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.btn-option:hover {
+    background: rgba(38, 38, 52, 0.85);
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
+}
+
+.btn-option:active {
+    transform: scale(0.98);
+}
+
+.btn-option.correct {
+    background: rgba(34, 197, 94, 0.25) !important;
+    border-color: #22c55e !important;
+    color: #4ade80 !important;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+
+.btn-option.wrong {
+    background: rgba(239, 68, 68, 0.25) !important;
+    border-color: #ef4444 !important;
+    color: #f87171 !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+/* ==========================================================================
+   3. COPYRIGHT FOOTER
+   ========================================================================== */
+.game-copyright {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+    padding: 8px 0;
+    user-select: none;
+}
+
+/* ==========================================================================
+   4. MODALS & DIALOGS
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(4, 4, 8, 0.82);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.15s ease;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-card {
+    background: #0e0e15;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 440px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.btn-close-modal {
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-close-modal:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.help-body {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-modal-action {
+    background: #ffffff;
+    color: #050508;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    margin-top: 6px;
+}
+
+.btn-modal-action:hover {
+    opacity: 0.9;
+}
+
+/* Game Over Stats */
+.go-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.go-stat-pill {
+    background: rgba(24, 24, 34, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.go-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.go-val {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE (MOBILE)
+   ========================================================================== */
+@media (max-width: 640px) {
+    .mathverse-header {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .brand-group {
+        text-align: center;
+        width: 100%;
+    }
+
+    .mode-tab {
+        font-size: 11.5px;
+        padding: 8px 6px;
+    }
+
+    .formula-text {
+        font-size: 24px;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-option {
+        padding: 14px 16px;
+        font-size: 18px;
+    }
+}
