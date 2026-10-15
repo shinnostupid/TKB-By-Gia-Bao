@@ -1,83 +1,6 @@
 <!doctype html>
 <html lang="vi">
 <head>
-    <!-- SMART SOURCE CODE & F12 PROTECTION (1ST TIME: RESET, 2ND TIME: CLOSE) -->
-    <script>
-    (function() {
-        if (typeof window === 'undefined') return;
-
-        function triggerSecurityAction() {
-            try {
-                var count = parseInt(sessionStorage.getItem('sec_f12_hits') || '0', 10);
-                count += 1;
-                sessionStorage.setItem('sec_f12_hits', count.toString());
-
-                if (count === 1) {
-                    // Lần 1: Reset lại web mới lại luôn
-                    window.location.reload();
-                } else {
-                    // Lần 2 trở đi: Đóng trang web
-                    try {
-                        window.close();
-                    } catch (_) {}
-                    setTimeout(function() {
-                        try {
-                            window.location.replace('about:blank');
-                        } catch (_) {
-                            document.documentElement.innerHTML = '';
-                        }
-                    }, 50);
-                }
-            } catch (_) {
-                window.location.reload();
-            }
-        }
-
-        // 1. Chặn tất cả phím tắt liên quan lấy mã nguồn / inspect (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
-        window.addEventListener('keydown', function(e) {
-            var isF12 = e.key === 'F12' || e.keyCode === 123;
-            var isCtrlShift = (e.ctrlKey || e.metaKey) && e.shiftKey;
-            var key = (e.key || '').toLowerCase();
-            var isInspect = isCtrlShift && (key === 'i' || key === 'j' || key === 'c');
-            var isSourceOrSave = (e.ctrlKey || e.metaKey) && (key === 'u' || key === 's');
-
-            if (isF12 || isInspect || isSourceOrSave) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-                triggerSecurityAction();
-                return false;
-            }
-        }, true);
-
-        // 2. Chặn chuột phải (Context menu lấy mã nguồn / inspect)
-        window.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-            triggerSecurityAction();
-            return false;
-        }, true);
-
-        // 3. Phát hiện thay đổi kích thước do mở DevTools dock
-        setInterval(function() {
-            var wDiff = window.outerWidth - window.innerWidth;
-            var hDiff = window.outerHeight - window.innerHeight;
-            if (wDiff > 160 || hDiff > 160) {
-                triggerSecurityAction();
-            }
-        }, 800);
-
-        // 4. Bẫy timing debugger khi DevTools mở
-        setInterval(function() {
-            var t0 = Date.now();
-            (function(){debugger;})();
-            if (Date.now() - t0 > 100) {
-                triggerSecurityAction();
-            }
-        }, 1000);
-    })();
-    </script>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -228,6 +151,6 @@
   </div>
 
   <div id="toast"></div>
-  <script>(function(){fetch("app.js?v=85").then(function(r){return r.text()}).then(function(c){var b=new Blob([c], {type:"application/javascript"});var u=URL.createObjectURL(b);var s=document.createElement("script");s.src=u;s.onload=function(){URL.revokeObjectURL(u);s.remove()};document.head.appendChild(s)}).then(null,function(){var s=document.createElement("script");s.src="app.js?v=85";document.head.appendChild(s)})})();</script>
+  <script>(function(){fetch("app.js?v=86").then(function(r){return r.text()}).then(function(c){var b=new Blob([c], {type:"application/javascript"});var u=URL.createObjectURL(b);var s=document.createElement("script");s.src=u;s.onload=function(){URL.revokeObjectURL(u);s.remove()};document.head.appendChild(s)}).then(null,function(){var s=document.createElement("script");s.src="app.js?v=85";document.head.appendChild(s)})})();</script>
 </body>
 </html>
