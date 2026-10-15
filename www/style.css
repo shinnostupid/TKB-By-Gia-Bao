@@ -6027,3 +6027,152 @@ main,
   color: #ffffff;
   border-color: #ef4444;
 }
+
+
+/* ================= ENHANCED WEATHER VISUALS (SUN VS RAIN) ================= */
+.weather-row-pill {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.weather-row-pill.sun {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.weather-row-pill.rain {
+  background: rgba(56, 189, 248, 0.18);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+.weather-row-pill.storm {
+  background: rgba(192, 132, 252, 0.2);
+  color: #d8b4fe;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+}
+.weather-row-pill.cloud {
+  background: rgba(148, 163, 184, 0.16);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* 7-Day Sun/Rain Visual Cards Carousel */
+.weather-visual-carousel {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(130px, 1fr));
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 2px 14px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.weather-visual-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+.weather-visual-carousel::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+}
+
+.weather-visual-day-card {
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  scroll-snap-align: start;
+  min-width: 125px;
+}
+.weather-visual-day-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+.weather-visual-day-card.is-sun {
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+}
+.weather-visual-day-card.is-rain {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.15);
+}
+.weather-visual-day-card.is-storm {
+  border-color: rgba(192, 132, 252, 0.45);
+  box-shadow: 0 4px 14px rgba(192, 132, 252, 0.18);
+}
+.weather-visual-day-card.is-active-day {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.18) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border-color: #38bdf8 !important;
+}
+
+.visual-day-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+.visual-day-badge.sun {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+}
+.visual-day-badge.rain {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+}
+.visual-day-badge.storm {
+  background: linear-gradient(135deg, #9333ea, #6b21a8);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(147, 51, 234, 0.4);
+}
+.visual-day-badge.cloud {
+  background: linear-gradient(135deg, #475569, #334155);
+  color: #f1f5f9;
+}
+
+/* Rain probability progress gauge */
+.rain-gauge-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 2px;
+}
+.rain-gauge-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.rain-gauge-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s;
+}
+
+/* Modal for weather infographic guide */
+.weather-guide-modal-img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  display: block;
+}
