@@ -2,6 +2,84 @@
 <html lang="vi">
 <head>
 
+    <!-- SMART SOURCE CODE & F12 PROTECTION (1ST TIME: RESET, 2ND TIME: CLOSE) -->
+    <script>
+    (function() {
+        if (typeof window === 'undefined') return;
+
+        function triggerSecurityAction() {
+            try {
+                var count = parseInt(sessionStorage.getItem('sec_f12_hits') || '0', 10);
+                count += 1;
+                sessionStorage.setItem('sec_f12_hits', count.toString());
+
+                if (count === 1) {
+                    window.location.reload();
+                } else {
+                    try {
+                        window.close();
+                    } catch (_) {}
+                    setTimeout(function() {
+                        try {
+                            window.location.replace('about:blank');
+                        } catch (_) {
+                            document.documentElement.innerHTML = '';
+                        }
+                    }, 50);
+                }
+            } catch (_) {
+                window.location.reload();
+            }
+        }
+
+        // 1. Chặn phím tắt lấy nguồn / DevTools (F12, Ctrl+Shift+I/J/C, Ctrl+U, Ctrl+S)
+        window.addEventListener('keydown', function(e) {
+            var isF12 = e.key === 'F12' || e.keyCode === 123;
+            var isCtrlShift = (e.ctrlKey || e.metaKey) && e.shiftKey;
+            var key = (e.key || '').toLowerCase();
+            var isInspect = isCtrlShift && (key === 'i' || key === 'j' || key === 'c');
+            var isSourceOrSave = (e.ctrlKey || e.metaKey) && (key === 'u' || key === 's');
+
+            if (isF12 || isInspect || isSourceOrSave) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+                triggerSecurityAction();
+                return false;
+            }
+        }, true);
+
+        // 2. Chặn chuột phải (Context menu)
+        window.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+            triggerSecurityAction();
+            return false;
+        }, true);
+
+        // 3. Phát hiện DevTools mở dock (chỉ trên Desktop)
+        var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+        if (!isMobile) {
+            setInterval(function() {
+                var wDiff = window.outerWidth - window.innerWidth;
+                var hDiff = window.outerHeight - window.innerHeight;
+                if (wDiff > 160 || hDiff > 160) {
+                    triggerSecurityAction();
+                }
+            }, 800);
+
+            // 4. Bẫy debugger
+            setInterval(function() {
+                var t0 = Date.now();
+                (function(){debugger;})();
+                if (Date.now() - t0 > 100) {
+                    triggerSecurityAction();
+                }
+            }, 1000);
+        }
+    })();
+    </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#080c18">
@@ -17,7 +95,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icons/icon-192.png">
   <title>baostudio</title>
-  <link rel="stylesheet" href="style.css?v=91">
+  <link rel="stylesheet" href="style.css?v=92">
   <script>
     if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
@@ -88,7 +166,7 @@
       <section id="content"></section>
           <!-- Copyright Footer by DGB -->
       <footer class="studyos-copyright" style="text-align: center; font-size: 13px; color: var(--text-muted, #94a3b8); opacity: 0.75; letter-spacing: 0.3px; padding: 24px 10px 100px 10px; user-select: none;">
-        BaoStudio © 2024–2026 DGB. All rights reserved.
+        BaoStudio © 2026 DGB. All rights reserved.
       </footer>
     </main>
 
@@ -150,6 +228,6 @@
   </div>
 
   <div id="toast"></div>
-  <script>(function(){fetch("app.js?v=91").then(function(r){return r.text()}).then(function(c){var b=new Blob([c], {type:"application/javascript"});var u=URL.createObjectURL(b);var s=document.createElement("script");s.src=u;s.onload=function(){URL.revokeObjectURL(u);s.remove()};document.head.appendChild(s)}).then(null,function(){var s=document.createElement("script");s.src="app.js?v=91";document.head.appendChild(s)})})();</script>
+  <script>(function(){fetch("app.js?v=92").then(function(r){return r.text()}).then(function(c){var b=new Blob([c], {type:"application/javascript"});var u=URL.createObjectURL(b);var s=document.createElement("script");s.src=u;s.onload=function(){URL.revokeObjectURL(u);s.remove()};document.head.appendChild(s)}).then(null,function(){var s=document.createElement("script");s.src="app.js?v=92";document.head.appendChild(s)})})();</script>
 </body>
 </html>
